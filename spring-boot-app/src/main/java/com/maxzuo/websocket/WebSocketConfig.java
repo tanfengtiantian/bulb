@@ -1,0 +1,87 @@
+package com.maxzuo.websocket;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
+import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.config.ChannelRegistration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+
+import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * WebSocket STOMP服务端
+ * Created by zfh on 2018/10/30
+ */
+@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private static final Integer HEART_BEAT = 10000;
+
+    /**
+     * WebSocket客户端需要连接到的端点的HTTP URL，以便进行WebSocket握手
+     */
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/payBoot/live").setAllowedOrigins("*");
+    }
+
+    /**
+     * 配置MessageBroker
+     *  1.客户端发送的目的地 /app开头会被路由到@MessageMapping注解的方法
+     *  2.使用内置简单的message borker处理客户端的订阅请求，消息广播到具有匹配目标的连接客户机
+     *  3.配置一个任务线程支持心跳，默认不发送心跳到客户端，不接受客户端心跳。
+     *  4.分布式扩展可以使用External Broker配置RabbitMQ等中间件。
+     */
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.setApplicationDestinationPrefixes("/app");
+        ThreadPoolTaskScheduler te = new ThreadPoolTaskScheduler();
+        te.setPoolSize(1);
+        te.setThreadNamePrefix("wss-heartbeat-thread-");
+        te.initialize();
+        registry.enableSimpleBroker("/topic")
+                .setHeartbeatValue(new long[]{HEART_BEAT, HEART_BEAT})
+                .setTaskScheduler(te);
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(new ChannelInterceptor() {
+            @Override
+            public Message<?> preSend(Message<?> message, MessageChannel messageChannel) {
+                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                System.out.println("command：" + accessor.getCommand());
+
+                if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+                    Object raw = message.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
+                    if (raw instanceof Map) {
+                        Object name = ((Map) raw).get("name");
+                        if (name instanceof LinkedList) {
+                            // 设置当前访问器的认证用户
+                            accessor.setUser(new ClientUser(((LinkedList) name).get(0).toString()));
+                        }
+                    }
+                }
+                System.out.println("username: " + accessor.getUser().getName());
+                return message;
+            }
+        });
+    }
+}
