@@ -1,4 +1,4 @@
-package com.maxzuo;
+package com.maxzuo.datastructure;
 
 /**
  * Main主类
@@ -7,6 +7,6 @@ package com.maxzuo;
 public class Main {
 
     public static void main (String[] args) {
-        System.out.println("hello demo");
+
     }
 }

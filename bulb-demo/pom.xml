@@ -45,7 +45,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.maxzuo.Main</mainClass>
+                            <mainClass>com.maxzuo.datastructure.Main</mainClass>
                         </manifest>
                     </archive>
                     <classesDirectory>

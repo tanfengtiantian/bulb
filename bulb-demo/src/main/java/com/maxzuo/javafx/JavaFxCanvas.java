@@ -1,4 +1,4 @@
-package com.maxzuo;
+package com.maxzuo.javafx;
 
 import javafx.application.Application;
 import javafx.scene.Group;
