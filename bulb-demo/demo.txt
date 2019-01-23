@@ -1,0 +1,5 @@
+future
+hello world
+大左
+RandomA
+RandomAccessFile2

@@ -6,7 +6,12 @@ package com.maxzuo.thread;
  */
 public class ThreadLocalDemo {
 
+    private static final ThreadLocal<Integer> THREAD_LOCAL = new ThreadLocal<>();
+
     public static void main(String[] args) {
-        // TODO:
+        THREAD_LOCAL.set(1);
+        System.out.println(THREAD_LOCAL.get());
+        THREAD_LOCAL.remove();
+        System.out.println(THREAD_LOCAL.get());
     }
 }
