@@ -6,36 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 
 /**
- * IO流（文件操作、字符流、字节流、流的转换）
+ * 字节流和字符流
  * Created by zfh on 2019/01/23
  */
-class MainTest {
-
-    @DisplayName("测试操作文件：File")
-    @Test
-    void testOperatorFile() throws IOException {
-        // 当前命令的操作路径：F:\bulb\bulb-demo
-        File file = new File("spring.png");
-        System.out.println("文件是否存在" + file.exists());
-        boolean newFile = file.createNewFile();
-        System.out.println("如果文件不存在，则创建空文件：" + newFile);
-        File tempFileStatus = File.createTempFile("demo", ".txt");
-        System.out.println("使用给定的前缀和后缀创建临时文件: " + tempFileStatus.getPath());
-        System.out.println("文件名：" + file.getName());
-        System.out.println("文件可读状态：" + file.canRead());
-        System.out.println("绝对路径名形式：" + file.getAbsoluteFile());
-        System.out.println("绝对路径字符串：" + file.getAbsolutePath());
-        System.out.println("路径名字符串：：" + file.getPath());
-        System.out.println("isFile：" + file.isFile());
-        System.out.println("isDirectory：" + file.isDirectory());
-        System.out.println("文件的长度：" + file.length());
-        boolean mkdirStatus = file.mkdir();
-        System.out.println("创建抽象路径名指定的目录：" + mkdirStatus);
-        boolean mkdirsStatus = file.mkdirs();
-        System.out.println("创建抽象路径名指定的目录，包括所有必须但不存在的父目录：" + mkdirsStatus);
-        //boolean deleteStatus = file.delete();
-        //System.out.println("文件删除状态：" + deleteStatus);
-    }
+class FileStreamTest {
 
     @DisplayName("测试字符流：FileWriter和FileReader")
     @Test
