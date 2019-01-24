@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -47,7 +48,7 @@ class ChannelTest {
         raf.close();
     }
 
-    @DisplayName("测试通道间数据的传输(直接缓冲区)")
+    @DisplayName("通道之间的数据传输(直接缓冲区)")
     @Test
     void testChannelDataTransport () throws IOException {
         FileChannel inChannel = FileChannel.open(Paths.get("spring.png"), StandardOpenOption.READ);
@@ -59,5 +60,29 @@ class ChannelTest {
 
         inChannel.close();
         outChannel.close();
+    }
+
+    @DisplayName("使用直接缓冲区完成文件的复制(内存映射文件)")
+    @Test
+    void testUseMemoryMapFile() throws IOException {
+        long start = System.currentTimeMillis();
+
+        FileChannel inChannel = FileChannel.open(Paths.get("spring.png"), StandardOpenOption.READ);
+        FileChannel outChannel = FileChannel.open(Paths.get("spring2.png"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+
+        // 内存映射文件
+        MappedByteBuffer inMappedBuf = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size());
+        MappedByteBuffer outMappedBuf = outChannel.map(FileChannel.MapMode.READ_WRITE, 0, inChannel.size());
+
+        // 直接对缓冲区 进行数据的读写操作
+        byte[] dst = new byte[inMappedBuf.limit()];
+        inMappedBuf.get(dst);
+        outMappedBuf.put(dst);
+
+        inChannel.close();
+        outChannel.close();
+
+        long end = System.currentTimeMillis();
+        System.out.println("耗费时间为：" + (end - start));
     }
 }
