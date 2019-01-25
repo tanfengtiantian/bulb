@@ -1,15 +1,16 @@
-package com.maxzuo;
+package com.maxzuo.junit;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("Junit5 测试用例")
-class MainTest {
+class Junit5Test {
 
     @DisplayName("Junit5 集成到Spring 5.0项目")
     @Test
     void testIntegrationSpring () {
+        /// 解释说明
         /*
             依赖包：spring-test-5.0.7.RELEASE.jar
             集成到spring，使用注解：
@@ -25,6 +26,7 @@ class MainTest {
     @DisplayName("Junit5 集成到SpringBoot 2项目")
     @Test
     void testIntegrationSpringBoot () {
+        /// 解释说明
         /*
             依赖包：spring-test-5.0.7.RELEASE.jar
             使用注解
@@ -67,8 +69,8 @@ class MainTest {
     @Test
     void testUsingAssertJ() {
         // 第三方断言库提供的对匹配器的内置支持
-        String name = "dazuo";
-        org.assertj.core.api.Assertions.assertThat(name).as("字符串判断").startsWith("da").endsWith("uo").hasSize(5);
+        //String name = "dazuo";
+        //org.assertj.core.api.Assertions.assertThat(name).as("字符串判断").startsWith("da").endsWith("uo").hasSize(5);
     }
 
     @Nested
