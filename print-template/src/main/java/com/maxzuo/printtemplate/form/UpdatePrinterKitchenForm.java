@@ -50,21 +50,9 @@ public class UpdatePrinterKitchenForm {
 
     /**
      * 验证入参
-     * @param printerKitchenForm {@link UpdatePrinterKitchenForm}
      * @return {@link Result}
      */
-    public Result validateParam (UpdatePrinterKitchenForm printerKitchenForm) {
-        this.id = printerKitchenForm.getId();
-        this.name = printerKitchenForm.getName();
-        this.printerDeviceId = printerKitchenForm.getPrinterDeviceId();
-        this.shopId = printerKitchenForm.getShopId();
-        this.operatorId = printerKitchenForm.getOperatorId();
-        this.documentTypeRules = printerKitchenForm.getDocumentTypeRules();
-        this.table = printerKitchenForm.getTable();
-        this.table = printerKitchenForm.getGoods();
-        this.tableRules = printerKitchenForm.getTableRules();
-        this.goodsRules = printerKitchenForm.getGoodsRules();
-
+    public Result validateParam () {
         Result result = new Result(Result.RESULT_SUCCESS);
         if (id == null) {
             result.setCode(Result.RESULT_FAILURE);

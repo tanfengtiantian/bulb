@@ -26,14 +26,9 @@ public class UpdateCustomTemplateDocumentForm {
 
     /**
      * 验证入参
+     * @return {@link Result}
      */
-    public Result validateParam (UpdateCustomTemplateDocumentForm documentForm) {
-        this.shopId = documentForm.getShopId();
-        this.name = documentForm.getName();
-        this.templateId = documentForm.getTemplateId();
-        this.url = documentForm.getUrl();
-        this.modules = documentForm.getModules();
-
+    public Result validateParam () {
         Result result = new Result(Result.RESULT_SUCCESS);
         if (shopId == null) {
             result.setCode(Result.RESULT_FAILURE);

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class IScShopPrinterKitchenDocumentTypeRulesServiceTest {
     @Autowired
     private IScShopPrinterKitchenDocumentTypeRulesService scShopPrinterKitchenDocumentTypeRulesService;
 
+    @Transactional
     @Test
     public void save() {
         ScShopPrinterKitchenDocumentTypeRules documentTypeRules = new ScShopPrinterKitchenDocumentTypeRules();
@@ -32,6 +34,7 @@ public class IScShopPrinterKitchenDocumentTypeRulesServiceTest {
         Assert.assertTrue(affected > 0);
     }
 
+    @Transactional
     @Test
     public void saveMultipleRecord() {
         List<ScShopPrinterKitchenDocumentTypeRules> documentTypeRulesList = new ArrayList<>(10);
@@ -60,6 +63,7 @@ public class IScShopPrinterKitchenDocumentTypeRulesServiceTest {
         Assert.assertEquals(documentTypeRules.getId().longValue(), 2);
     }
 
+    @Transactional
     @Test
     public void updateByPrimaryKeySelective() {
         ScShopPrinterKitchenDocumentTypeRules documentTypeRules = scShopPrinterKitchenDocumentTypeRulesService.selectByPrimaryKey(2);
@@ -68,6 +72,7 @@ public class IScShopPrinterKitchenDocumentTypeRulesServiceTest {
         Assert.assertTrue(integer > 0);
     }
 
+    @Transactional
     @Test
     public void removeMultipleRecordByPrinterKitchenId() {
         Integer integer = scShopPrinterKitchenDocumentTypeRulesService.removeMultipleRecordByPrinterKitchenId(1);

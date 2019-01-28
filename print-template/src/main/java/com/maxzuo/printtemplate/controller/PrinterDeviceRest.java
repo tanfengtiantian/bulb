@@ -39,7 +39,7 @@ public class PrinterDeviceRest {
     @PostMapping("save")
     public Result save (@RequestAttribute("param") Param param) {
         SavePrinterDeviceForm savePrinterDeviceForm = JSONObject.parseObject(param.getData().toString(), SavePrinterDeviceForm.class);
-        Result result = savePrinterDeviceForm.validateParam(savePrinterDeviceForm);
+        Result result = savePrinterDeviceForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
@@ -124,7 +124,7 @@ public class PrinterDeviceRest {
     @PostMapping("update")
     public Result update (@RequestAttribute("param") Param param) {
         UpdatePrinterDeviceForm updatePrinterDeviceForm = JSONObject.parseObject(param.getData().toString(), UpdatePrinterDeviceForm.class);
-        Result result = updatePrinterDeviceForm.validateParam(updatePrinterDeviceForm);
+        Result result = updatePrinterDeviceForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }

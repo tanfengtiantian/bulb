@@ -62,7 +62,7 @@ public class PrinterKitchenRest {
     @PostMapping("save")
     public Result save (@RequestAttribute("param") Param param) {
         SavePrinterKitchenForm printerKitchenForm = JSONObject.parseObject(param.getData().toString(), SavePrinterKitchenForm.class);
-        Result result = printerKitchenForm.validateParam(printerKitchenForm);
+        Result result = printerKitchenForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
@@ -198,7 +198,7 @@ public class PrinterKitchenRest {
     @PostMapping("update")
     public Result update (@RequestAttribute("param") Param param) {
         UpdatePrinterKitchenForm printerKitchenForm = JSONObject.parseObject(param.getData().toString(), UpdatePrinterKitchenForm.class);
-        Result result = printerKitchenForm.validateParam(printerKitchenForm);
+        Result result = printerKitchenForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }

@@ -30,16 +30,9 @@ public class CustomTemplateDocumentForm {
 
     /**
      * 验证入参
-     * @param documentForm {@link CustomTemplateDocumentForm}
      * @return {@link Result}
      */
-    public Result validateParam (CustomTemplateDocumentForm documentForm) {
-        this.shopId = documentForm.getShopId();
-        this.operatorId = documentForm.getOperatorId();
-        this.name = documentForm.getName();
-        this.documentType = documentForm.getDocumentType();
-        this.url = documentForm.getUrl();
-        this.modules = documentForm.getModules();
+    public Result validateParam () {
 
         Result result = new Result(Result.RESULT_SUCCESS);
         if (shopId == null) {

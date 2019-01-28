@@ -47,20 +47,9 @@ public class SavePrinterKitchenForm {
 
     /**
      * 验证入参
-     * @param printerKitchenForm {@link SavePrinterKitchenForm}
      * @return {@link Result}
      */
-    public Result validateParam (SavePrinterKitchenForm printerKitchenForm) {
-        this.name = printerKitchenForm.getName();
-        this.printerDeviceId = printerKitchenForm.getPrinterDeviceId();
-        this.shopId = printerKitchenForm.getShopId();
-        this.operatorId = printerKitchenForm.getOperatorId();
-        this.documentTypeRules = printerKitchenForm.getDocumentTypeRules();
-        this.table = printerKitchenForm.getTable();
-        this.table = printerKitchenForm.getGoods();
-        this.tableRules = printerKitchenForm.getTableRules();
-        this.goodsRules = printerKitchenForm.getGoodsRules();
-
+    public Result validateParam () {
         Result result = new Result(Result.RESULT_SUCCESS);
         if (StringUtils.isBlank(name)) {
             result.setCode(Result.RESULT_FAILURE);

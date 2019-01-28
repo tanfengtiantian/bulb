@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class IScShopPrinterDeviceServiceTest {
     @Autowired
     private IScShopPrinterDeviceService scShopPrinterDeviceService;
 
+    @Transactional
     @Test
     public void save() {
         ScShopPrinterDevice scShopPrinterDevice = new ScShopPrinterDevice();
@@ -54,6 +56,7 @@ public class IScShopPrinterDeviceServiceTest {
         Assert.assertEquals(pageInfo.getList().get(0).getAddress(), "127.0.0.3");
     }
 
+    @Transactional
     @Test
     public void updateByPrimaryKeySelective() {
         ScShopPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(1);

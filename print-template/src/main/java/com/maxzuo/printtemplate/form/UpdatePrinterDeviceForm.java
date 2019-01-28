@@ -30,17 +30,9 @@ public class UpdatePrinterDeviceForm {
 
     /**
      * 验证入参
-     * @param printerDeviceForm {@link UpdatePrinterDeviceForm}
      * @return {@link Result}
      */
-    public Result validateParam (UpdatePrinterDeviceForm printerDeviceForm) {
-        this.id = printerDeviceForm.getId();
-        this.deviceName = printerDeviceForm.getDeviceName();
-        this.printerDeviceType = printerDeviceForm.getPrinterDeviceType();
-        this.address = printerDeviceForm.getAddress();
-        this.shopId = printerDeviceForm.getShopId();
-        this.operatorId = printerDeviceForm.getOperatorId();
-
+    public Result validateParam () {
         Result result = new Result(Result.RESULT_SUCCESS);
         if (id == null) {
             result.setCode(Result.RESULT_FAILURE);

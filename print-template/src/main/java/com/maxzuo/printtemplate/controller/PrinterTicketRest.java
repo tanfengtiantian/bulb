@@ -537,7 +537,7 @@ public class PrinterTicketRest {
     @PostMapping("save")
     public Result save (@RequestAttribute("param") Param param) {
         CustomTemplateDocumentForm customTemplateDocumentForm = JSONObject.parseObject(param.getData().toString(), CustomTemplateDocumentForm.class);
-        Result result = customTemplateDocumentForm.validateParam(customTemplateDocumentForm);
+        Result result = customTemplateDocumentForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
@@ -641,7 +641,7 @@ public class PrinterTicketRest {
     @PostMapping("update")
     public Result update (@RequestAttribute("param") Param param) {
         UpdateCustomTemplateDocumentForm documentForm = JSON.parseObject(param.getData().toString(), UpdateCustomTemplateDocumentForm.class);
-        Result result = documentForm.validateParam(documentForm);
+        Result result = documentForm.validateParam();
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }

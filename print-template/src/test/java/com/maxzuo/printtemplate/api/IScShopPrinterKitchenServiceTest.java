@@ -20,6 +20,7 @@ public class IScShopPrinterKitchenServiceTest {
     @Autowired
     private IScShopPrinterKitchenService scShopPrinterKitchenService;
 
+    @Transactional
     @Test
     public void save() {
         ScShopPrinterKitchen printerKitchen = new ScShopPrinterKitchen();
@@ -50,6 +51,7 @@ public class IScShopPrinterKitchenServiceTest {
         Assert.assertEquals(printerKitchenPageInfo.getList().get(0).getId().longValue(), 2);
     }
 
+    @Transactional
     @Test
     public void updateByPrimaryKeySelective() {
         ScShopPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(1);

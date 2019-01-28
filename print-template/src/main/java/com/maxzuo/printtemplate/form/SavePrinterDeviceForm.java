@@ -27,16 +27,9 @@ public class SavePrinterDeviceForm {
 
     /**
      * 验证入参
-     * @param printerDeviceForm {@link SavePrinterDeviceForm}
      * @return {@link Result}
      */
-    public Result validateParam (SavePrinterDeviceForm printerDeviceForm) {
-        this.deviceName = printerDeviceForm.getDeviceName();
-        this.printerDeviceType = printerDeviceForm.getPrinterDeviceType();
-        this.address = printerDeviceForm.getAddress();
-        this.shopId = printerDeviceForm.getShopId();
-        this.operatorId = printerDeviceForm.getOperatorId();
-
+    public Result validateParam () {
         Result result = new Result(Result.RESULT_SUCCESS);
         if (StringUtils.isBlank(deviceName)) {
             result.setCode(Result.RESULT_FAILURE);
