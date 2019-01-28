@@ -1,11 +1,11 @@
-package com.maxzuo.printtemplate;
+package com.maxzuo.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Apache RandomStringUtils的使用，生成随机字符串
- * {@link org.apache.commons.lang3.RandomStringUtils}
+ * {@link RandomStringUtils}
  * Created by zfh on 2019/01/05
  */
 public class RandomStringUtilsTest {
