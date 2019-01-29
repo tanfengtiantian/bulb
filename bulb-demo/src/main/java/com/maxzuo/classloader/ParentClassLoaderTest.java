@@ -1,6 +1,5 @@
 package com.maxzuo.classloader;
 
-import com.maxzuo.bytebuddy.model.Fast;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +47,11 @@ class ParentClassLoaderTest {
     @Test
     void getCurrentLoadClass () {
         try {
-            Fast fast = new Fast();
+            /*
+                1.只有类的引用被解析的时候，才会去加载所需要的类。
+                2.每当加载类时，一旦引用另一种类型的代码段被解析，其类加载器就会查找该类中引用的任何类型。这个查找会委托给同一个类加载器。
+                  比如：Fast类的m()方法中引用了Slow类，只有调用Fast类的m()方法时，才会加载Slow类。
+             */
             Field f = ClassLoader.class.getDeclaredField("classes");
             f.setAccessible(true);
             Vector vector = (Vector)f.get(ClassLoader.getSystemClassLoader());
