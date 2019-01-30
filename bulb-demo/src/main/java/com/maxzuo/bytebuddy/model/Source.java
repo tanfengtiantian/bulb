@@ -9,7 +9,7 @@ public class Source {
         return null;
     }
 
-    public String print (Integer id, String desc) {
+    public String print (String name, String title) {
         return null;
     }
 }

@@ -157,6 +157,13 @@ class DefineFieldAndMethodTest {
     @DisplayName("使用@Argument注解")
     @Test
     void testArgumentAnnotations () {
+        /*
+            @Argument(0)：表示源方法参数的位置
+            @AllArguments：目标方法的参数必须是一个数组，源方法的参数必须可分配给目标方法的数组；否则不将当前目标方法视为绑定到源方法的候选方法。
+                           这里说明 候选方法 不代表一定绑定，如果有其它更符合的绑定，将优先匹配。
+            @this：源方法不是静态方法，目标方法标注的参数将分配到 插装对象 的引用。
+            @SuperCall：
+         */
         try {
             String msg = new ByteBuddy()
                     .subclass(Source.class)
@@ -166,23 +173,25 @@ class DefineFieldAndMethodTest {
                     .load(ClassLoader.getSystemClassLoader())
                     .getLoaded()
                     .newInstance()
-                    .print(99,"dazuo");
+                    .print("dazuo", "java开发");
 
-            // @Argument(0) 指定参数的位置
             System.out.println(msg);
         } catch (Exception e) {
             logger.error("异常信息", e);
         }
     }
 
-    @DisplayName("委派静态方法调用-带注释的参数")
+    @DisplayName("委托方法参数注解")
     @Test
     void testInvokeDelegationMethodAndAnnotationArgument () {
         try {
             MemoryDatabase memoryDatabase = new ByteBuddy()
                     .subclass(MemoryDatabase.class)
                     .method(named("load"))
+                    // 调用切面
                     .intercept(MethodDelegation.to(LoggerInterceptor.class))
+                    // 调用父类方法
+                    //.intercept(MethodDelegation.to(ChangingLoggerInterceptor.class))
                     .make()
                     .load(ClassLoader.getSystemClassLoader())
                     .getLoaded()
