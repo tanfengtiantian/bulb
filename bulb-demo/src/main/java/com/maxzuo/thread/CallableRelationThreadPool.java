@@ -7,7 +7,7 @@ import java.util.concurrent.*;
  * @See http://www.cnblogs.com/dolphin0520/p/3949310.html
  * Created by zfh on 2019/1/22
  */
-public class CallableDemo {
+public class CallableRelationThreadPool {
 
     public static void main(String[] args) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(2);
@@ -15,7 +15,8 @@ public class CallableDemo {
         UserRejectHandler rejectHandler = new UserRejectHandler();
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
 
-        // 1.使用Callable+Future获取执行结果
+        System.out.println("main threadId：" + Thread.currentThread().getId());
+        // 1.使用Callable+Future获取执行结果（子线程）
         CallableTask task1 = new CallableTask();
         Future<Integer> result = threadPool.submit(task1);
         try {
@@ -24,7 +25,7 @@ public class CallableDemo {
             e.printStackTrace();
         }
 
-        // 2.使用Callable+FutureTask获取执行结果
+        // 2.使用Callable+FutureTask获取执行结果（子线程）
         CallableTask task2 = new CallableTask();
         FutureTask<Integer> futureTask = new FutureTask<>(task2);
         threadPool.submit(futureTask);
@@ -47,9 +48,8 @@ class CallableTask implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        System.out.println("begin callableTask");
+        System.out.println("CallableTask threadId：" + Thread.currentThread().getId());
         Thread.sleep(3000);
-        System.out.println("done callableTask");
         return 1;
     }
 }
