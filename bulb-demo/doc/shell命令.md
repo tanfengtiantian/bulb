@@ -1,28 +1,38 @@
-#### 启动Java程序的命令
-1.进入classpath目录，运行Main.class文件：
+## 启动Java程序的命令
+1.进入classpath目录，运行Main.class文件
 ```
 $ cd F:/bulb/bulb-demo/target/classes/
 $ java com.maxzuo.agent.Main
 ```
-2.运行Main.class时，指定classpath路径，无依赖：
+2.运行Main.class时，指定classpath路径，无依赖
 ```
 $ java -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main
 ```
-3.运行Main.class时，指定classpath路径，有外部依赖：
+3.运行Main.class时，指定classpath路径，有外部依赖
 ```
 $ java -classpath D:\repository\org\apache\commons\commons-lang3\3.8.1\commons-lang3-3.8.1.jar;F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main
 ```
-4.运行Main.class前，运行探针：
+4.运行Main.class前，运行探针
 ```
 $ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main
 ```
-4.其中：
+5.其中：
 * 指定探针路径和参数："-javaagent:F:\bulb-agent.jar=123"
 * 指定文件编码：-Dfile.encoding=UTF-8
 * -cp和-classpath是一样的功能，-cp是简写。用于指定类运行所依赖其他类的路径，通常是类库，jar包之类，可以为绝对路径，也可以为相对路径。
   多个路径之间window上分号“;”分隔，linux上是分号“:”分隔，用一点“.”代表当前路径。
 
-5.IDEA 启动Java程序的命令
+6.unix系统不挂断执行程序
+```
+$ nohup java -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main > /developer/logs/app.log 2>&1 &
+```
+其中：
+* nohup 可以使得命令永远运行下去和用户终端没有关系。当我们断开ssh 连接的时候不会影响他的运行。
+* \> /developer/logs/app.log 指定输出的文件；补充，在类Unix系统中，/dev/null，或称空设备，是一个特殊的设备文件，它丢弃一切写入其中的数据（但报告写入操作成功），读取它则会立即得到一个EOF。
+* 2>&1 将标准错误重定向到标准输出
+* & 表示后台运行
+
+7.IDEA启动Java程序的命令
 
 下列命令插入了换行符（\r\n）无法作为脚本执行。可以使用idea_start_app.bat脚本运行程序。
 ```
