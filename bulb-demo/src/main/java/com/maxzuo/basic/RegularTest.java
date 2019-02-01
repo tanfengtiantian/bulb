@@ -50,8 +50,9 @@ class RegularTest {
 
     @Test
     void testTemp () {
-        String msg = "[2019-01-31 02:28:25][INFO][access][MessageBroker-1]: record Log：timestamp = 1548916105000";
-        String regex = "\\[(\\d|-|\\s|:)+]" + "\\[[A-Z]+]" + "\\[[a-z]+]" + "\\[[a-zA-Z]+-\\d+]" + ".+";
+        String msg ="2019-02-01 16:14:10,005 [MessageBroker-1] INFO [org.apache.zookeeper.ClientCnxn] - 异常信息 \\njava.lang.RuntimeException: 异常信息\\n\\tat com.maxzuo.MainTest.testLog(MainTest.java:23)";
+        String regex = "(\\d|-)+\\s(\\d|:|,)+" + " " + "\\[\\S+]" + " " + "[A-Z\\s]+" + " " + "\\[[a-zA-Z.]+]" + " - " + ".+";
         System.out.println(msg.matches(regex));
+
     }
 }
