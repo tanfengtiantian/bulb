@@ -5,144 +5,52 @@ GET http://47.98.199.80:9200/_cat/indices?v
 ### 列出每个 Index 所包含的 Type
 GET http://47.98.199.80:9200/_mapping?pretty=true
 ### 新建Index
-PUT http://47.98.199.80:9200/test_zfh
+PUT http://47.98.199.80:9200/zxcity_elk
 ### 删除Index
-DELETE http://47.98.199.80:9200/test_zfh
+DELETE http://47.98.199.80:9200/zxcity_elk
 ### 查看索引
-GET http://47.98.199.80:9200/test_zfh
-### 关闭索引
-POST http://47.98.199.80:9200/test_zfh/_close
-### 开启索引
-POST http://47.98.199.80:9200/test_zfh/_open
-### 创建索引的时候添加类型
-PUT http://47.98.199.80:9200/test_zfh
-
-{
-    "mappings": {
-        "person": {
-            "properties": {
-                "user": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "desc": {
-                    "type": "string"
-                },
-                "sort": {
-                    "type": "integer"
-                }
-            }
-        },
-        "tweet": {
-          "properties": {
-            "message": {
-              "type": "string"
-            }
-          }
-        }
-    }
-}
-### 索引test_zfh的person类型增加一个字段
-PUT http://47.98.199.80:9200/test_zfh/_mapping/person
-
-{
-    "properties": {
-        "salary": {
-            "type": "integer"
-        }
-    }
-}
-### 查看test_zfh的person类型的映射，查看多个索引的映射，用逗号隔开
-GET http://47.98.199.80:9200/test_zfh/_mapping/person
-### 查看某个字段的映射
-GET http://47.98.199.80:9200/test_zfh/_mapping/person/field/message
-### 新增记录，可以不指定ID，返回值JSON对象中的_id字段就是一个随机字符串
-POST http://47.98.199.80:9200/test_zfh/person
-
-{
-  "user": "kimchy",
-  "title": "工程师",
-  "desc": "系统管理",
-  "sort": 5
-}
+GET http://47.98.199.80:9200/zxcity_elk
+### 查看zxcity_elk的person类型的映射，查看多个索引的映射，用逗号隔开
+GET http://47.98.199.80:9200/zxcity_elk/_mapping/file
 ### 通过ID查找记录，pretty=true表示以易读的格式返回；返回的数据中，found字段表示查询成功，_source字段返回原始记录。
 ### 如果查询不到数据，found字段就是false。
-GET http://47.98.199.80:9200/test_zfh/person/1?pretty=true
+GET http://47.98.199.80:9200/zxcity_elk/file/AWioM_tMN7BxFVTpnQA9?pretty=true
 ### 通过ID删除记录
-DELETE http://47.98.199.80:9200/test_zfh/person/1
-### 更新记录，最后的 1 是该记录的ID，它不一定是数字，任意字符串都可以。如果记录不存在，则新增一条。更新数据，版本（version）改变。
-PUT http://47.98.199.80:9200/test_zfh/person/1
-
-{
-  "user": "dazuo",
-  "title": "工程师",
-  "desc": "Java开发",
-  "sort": 2
-}
+DELETE http://47.98.199.80:9200/zxcity_elk/file/AWioM_tMN7BxFVTpnQA9
+### URI搜索使用 q、size等参数（快速测试）
+GET http://47.98.199.80:9200/zxcity_elk/file/_search?q=log_level=INFO&size=1&from=2
+### Elasticsearch的作者们倾向于使用GET提交查询请求，因为他们觉得这个词相比POST来说，能更好的描述这种行为。然而，因为携带交互数据的GET请求
+### 并不被广泛支持，所以search API同样支持POST请求。
 ### 查询所有数据，返回结果的 took字段表示该操作的耗时（单位为毫秒），timed_out字段表示是否超时，hits字段表示命中的记录；
 ### 子字段的含义：total：返回记录数 max_score：最高的匹配程度 hits：返回的记录组成的数组
 ### 返回的记录中，每条记录都有一个_score字段，表示匹配的程序，默认是按照这个字段降序排列。
-GET http://47.98.199.80:9200/test_zfh/person/_search
-
-### Elasticsearch的作者们倾向于使用GET提交查询请求，因为他们觉得这个词相比POST来说，能更好的描述这种行为。然而，因为携带交互数据的GET请求
-### 并不被广泛支持，所以search API同样支持POST请求。
-### 查询desc字段包含“管理”的记录，默认返回10条，可以通过size指定查询的条数，from字段指定位移。
-POST http://47.98.199.80:9200/test_zfh/person/_search
-
-{
-  "query" : { "match" : { "title" : "工程师" }},
-  "size": 2,
-  "from": 0
-}
-### 多个关键词的or搜索，空格隔开（全值匹配）
-POST http://47.98.199.80:9200/test_zfh/person/_search
-
-{
-  "query" : {
-    "match" : { "user" : "dazuo wang" }
-  }
-}
-### 多个关键词的and搜索，使用bool查询
-POST http://47.98.199.80:9200/test_zfh/person/_search
-
-{
-  "query" : {
-    "bool": {
-      "must": [
-        { "match": { "user": "dazuo" } },
-        { "match": { "title": "工程师" } }
-      ]
-    }
-  }
-}
-### URI搜索使用 q、size等参数
-GET http://47.98.199.80:9200/test_zfh/person/_search?q=title:工程师&size=10
-### 使用请求体查询参数
-POST http://47.98.199.80:9200/test_zfh/person/_search
+POST http://47.98.199.80:9200/zxcity_elk/file/_search
 
 {
     "query" : {
-        "term" : { "title" : "工程师" }
+        "bool": {
+            "must": [
+                { "match": { "log_level": "WARN INFO ERROR" }},
+                { "match": { "host": "aliyun" }},
+                { "match": { "finalName": "spring-boot" }},
+                {
+                    "range": {
+                        "log_timestamp": {
+                            "from": "2019-02-02 11:49:20",
+                            "to": "2019-02-02 11:49:26",
+                            "format": "yyyy-MM-dd HH:mm:ss",
+                            "time_zone": "+08:00"
+                        }
+                    }
+                }
+            ]
+        }
     },
     "from": 0,
     "size": 10,
     "sort": [
         {
-            "sort": "asc"
+            "log_timestamp": "desc"
         }
-    ],
-    "_source": {
-        "include": [
-            "user", "title"
-        ],
-        "exclude": [
-            "desc"
-        ]
-    },
-    "fields": [
-        "user"
     ]
 }
-
