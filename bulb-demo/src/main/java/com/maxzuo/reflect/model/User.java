@@ -61,4 +61,8 @@ public class User {
                 ", age=" + age +
                 '}';
     }
+
+    public static class Goods {}
+
+    public class Order {}
 }

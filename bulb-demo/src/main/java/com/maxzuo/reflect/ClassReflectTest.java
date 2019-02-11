@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -59,7 +60,7 @@ class ClassReflectTest {
 
     @DisplayName("构造方法的反射")
     @Test
-    void testConstructorRelect () {
+    void testConstructorReflect () {
         Class<User> userClass = User.class;
         // 获取公共的构造方法，包括继承的
         Constructor<?>[] constructors = userClass.getConstructors();
@@ -78,7 +79,7 @@ class ClassReflectTest {
 
     @DisplayName("成员变量的反射")
     @Test
-    void testFieldRelect () {
+    void testFieldReflect () {
         Class<User> userClass = User.class;
         // 获取当前类的公共变量，包含继承的成员变量
         Field[] fields = userClass.getFields();
@@ -92,7 +93,7 @@ class ClassReflectTest {
 
     @DisplayName("方法的反射")
     @Test
-    void testMethodRelect () {
+    void testMethodReflect () {
         Class<User> userClass = User.class;
         // 获取所有的公共方法，包括继承
         Method[] methods = userClass.getMethods();
@@ -118,7 +119,7 @@ class ClassReflectTest {
 
     @DisplayName("注解的反射")
     @Test
-    void testAnnatationRelect () {
+    void testAnnatationReflect () {
         Class<User> userClass = User.class;
         Annotation[] annotations = userClass.getAnnotations();
         // 如果存在指定类型的注解，返回注解，否则返回Null
@@ -129,5 +130,13 @@ class ClassReflectTest {
         System.out.println("判断类上注解的数量：" + annotations.length);
         System.out.println("注解的类全名：" + annotations[0].annotationType().getName());
         System.out.println("注解的类名：" + annotations[0].annotationType().getSimpleName());
+    }
+
+    @DisplayName("内部类的反射")
+    @Test
+    void testInnerClassReflect () {
+        Class<User> userClass = User.class;
+        Class<?>[] classes = userClass.getClasses();
+        System.out.println(Arrays.toString(classes));
     }
 }
