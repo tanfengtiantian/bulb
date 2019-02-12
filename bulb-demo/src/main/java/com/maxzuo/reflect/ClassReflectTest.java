@@ -91,6 +91,33 @@ class ClassReflectTest {
         System.out.println("第一个成员变量类型：" +  declaredFields[0].getType());
     }
 
+    @DisplayName("成员变量的赋值")
+    @Test
+    void testAssigmentField () {
+        Class<User> userClass = User.class;
+        try {
+            Field message = userClass.getField("message");
+            User user = userClass.newInstance();
+            message.set(user, "hello field");
+            System.out.println("out: " + user.message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("静态成员变量赋值")
+    @Test
+    void testAssigmentStaticField () {
+        Class<User> userClass = User.class;
+        try {
+            Field code = userClass.getField("code");
+            code.set(null, 9999);
+            System.out.println("out: " + User.code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @DisplayName("方法的反射")
     @Test
     void testMethodReflect () {

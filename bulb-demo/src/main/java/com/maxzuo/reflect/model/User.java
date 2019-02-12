@@ -65,4 +65,8 @@ public class User {
     public static class Goods {}
 
     public class Order {}
+
+    public String message;
+
+    public static Integer code;
 }
