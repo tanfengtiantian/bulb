@@ -8,8 +8,4 @@ public class Source {
     public String hello (String name) {
         return null;
     }
-
-    public String print (String name, String title) {
-        return null;
-    }
 }

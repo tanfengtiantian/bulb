@@ -3,18 +3,26 @@ package com.maxzuo.bytebuddy;
 import com.maxzuo.bytebuddy.model.*;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.ClassFileVersion;
+import net.bytebuddy.description.modifier.FieldManifestation;
+import net.bytebuddy.description.modifier.MethodManifestation;
+import net.bytebuddy.description.modifier.Ownership;
 import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
-import net.bytebuddy.implementation.DefaultMethodCall;
-import net.bytebuddy.implementation.FieldAccessor;
-import net.bytebuddy.implementation.FixedValue;
-import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.implementation.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,102 +32,116 @@ import static net.bytebuddy.matcher.ElementMatchers.*;
  * 使用ByteBuddy定义属性和方法
  * Created by zfh on 2019/01/28
  */
+@Token("hello")
 class DefineFieldAndMethodTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DefineFieldAndMethodTest.class);
 
-    @DisplayName("属性和方法")
+    @DisplayName("增加类")
     @Test
-    void testFieldAndMethod () {
-        try {
-            // 创建一个类，匹配toString方法，给定返回值。
-            Object o = new ByteBuddy()
-                    .subclass(Object.class)
-                    .name("com.maxzuo.bytebuddy.Bean")
-                    .method(named("toString"))
-                    .intercept(FixedValue.value("Hello World!"))
-                    .make()
-                    .load(getClass().getClassLoader())
-                    .getLoaded()
-                    // Java reflection API
-                    .newInstance();
-            // 输出：Hello World!
-            System.out.println(o.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void testEnhanceClass () throws NoSuchMethodException, IllegalAccessException, InstantiationException {
+        Token token = getClass().getAnnotation(Token.class);
+        DynamicType.Unloaded<Boss> dynamicType = new ByteBuddy()
+                .subclass(Boss.class)
+                // 序列号 serialVersionUID
+                .serialVersionUid(123456L)
+                // 继承接口
+                .implement(Employee.class)
+                // 定义构造函数
+                //.defineConstructor(Visibility.PUBLIC)
+                // 构造函数的参数
+                //.withParameters(String.class)
+                // 添加字段，设置修饰符 public static final
+                .defineField("name", String.class, Visibility.PUBLIC, Ownership.STATIC, FieldManifestation.FINAL)
+                // 设置默认值（只有在字段声明为 static final时，该值才对代码可见）；还可以为代码不可见的非静态字段设置默认值
+                .value("dazuo")
+                // 字段添加注解
+                .annotateField(token)
+                // 定义Bean的 age 属性（setter/getter），如果设置为 true 属性添加 final 关键字，默认为false
+                .defineProperty("age", Integer.class, false)
+                // 字段添加注解
+                .annotateField(token)
+                // 添加方法，返回值类型void
+                .defineMethod("methodOne", void.class, Visibility.PUBLIC)
+                // 当前方法添加 String 类型的参数
+                .withParameters(String.class)
+                // 方法抛出的异常
+                .throwing(Exception.class)
+                .intercept(FixedValue.value("hello"))
+                // 类的可见性
+                .modifiers(Visibility.PUBLIC)
+                // 类的注解
+                .annotateType(token)
+                // 类的泛型
+                .typeVariable("T")
+                .name("com.maxzuo.demo.ByteBuddyDemo")
+                .make();
+
+        writeToFile(dynamicType.getBytes());
+
+        // 实例化
+        dynamicType.load(getClass().getClassLoader()).getLoaded().newInstance();
     }
 
-    @DisplayName("匹配和覆盖方法的返回值")
+    @DisplayName("方法固定返回值")
     @Test
     void testMatcherMethod () {
-        try {
-            Fast fast = new ByteBuddy()
-                    .subclass(Fast.class)
-                    // 使用多个匹配条件，覆盖 所有匹配的方法
-                    .method(named("m").and(returns(String.class)).and(takesArguments(1)))
-                    .intercept(FixedValue.value("hello m"))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance();
-            // 调用子类方法
-            System.out.println(fast.m("hello"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DynamicType.Unloaded<Object> dynamicType = new ByteBuddy()
+                .subclass(Object.class)
+                .name("com.maxzuo.demo.ByteBuddyDemo")
+                // 按照方法名称匹配 方法
+                .method(named("toString"))
+                // 覆盖toString方法先前的默认值
+                .intercept(FixedValue.value("Hello World!"))
+                .make();
+
+        writeToFile(dynamicType.getBytes());
     }
 
-    @DisplayName("使用不同的规则覆盖不同的方法")
+    @DisplayName("使用多个规则")
     @Test
-    void testUseDifferenceRulesOverrideMethod () {
+    void testUseMultipleRules () {
         try {
             Foo foo = new ByteBuddy()
                     .subclass(Foo.class)
-                    // 第一个规则：匹配定义的任何方法
+                    // 规则一：匹配已声明元素的原始声明类型。
                     .method(isDeclaredBy(Foo.class))
                     .intercept(FixedValue.value("one！"))
-                    // 第二个规则：匹配命名的两个方法
+                    // 规则二：匹配foo命名的方法
                     .method(named("foo"))
                     .intercept(FixedValue.value("two!"))
-                    // 第三个规格：匹配第三个方法
+                    // 规则三：匹配food命名且参数个数为 1 个的方法
                     .method(named("foo").and(takesArguments(1)))
                     .intercept(FixedValue.value("three！"))
+                    // 忽略匹配的方法，不会被覆盖
+                    .ignoreAlso(named("foo").and(takesArguments(1)))
                     .make()
                     .load(ClassLoader.getSystemClassLoader())
                     .getLoaded()
                     .newInstance();
-            // 按照代码书写的顺序匹配，依次覆盖上一级的返回值。
-            System.out.println("bar：" + foo.bar());
-            System.out.println("foo：" + foo.foo());
-            System.out.println("foo：" + foo.foo("hello"));
+
+            // 按照规则顺序匹配，依次覆盖上一级方法
+            System.out.println("methodOne：" + foo.bar());
+            System.out.println("methodTwo：" + foo.foo());
+            System.out.println("methodThree：" + foo.foo("hello"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @DisplayName("探索方法返回固定值")
-    @Test
-    void testFixedValue () {
-        FixedValue.AssignerConfigurable value = FixedValue.value(0);
-        // TODO: 1.固定值常量池 2.存储在该类的静态变量中。
-    }
-
-    @DisplayName("非法的赋值给返回值")
+    @DisplayName("参数类型无法转换")
     @Test
     void testIllegalAssignment () {
         try {
-            Foo foo = new ByteBuddy()
+            new ByteBuddy()
                     .subclass(Foo.class)
+                    // 匹配目标方法
                     .method(named("foo"))
-                    .intercept(FixedValue.value(0))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance();
-            System.out.println("返回值：" + foo.foo());
+                    // 目标方法的返回值是 String 类型，此时赋值Integer类型，将由于 参数类型无法转换 抛出异常
+                    .intercept(FixedValue.value(111))
+                    .make();
+
         } catch (Exception e) {
-            // 创建类型时，整数非法赋值给返回的方法String。此时将抛出IllegalArgumentException异常
             logger.error("异常信息", e);
         }
     }
@@ -132,56 +154,29 @@ class DefineFieldAndMethodTest {
             提供了最大的自由度。方法委托定义了动态创建类型的方法，以将任何调用转发给可能位于动态类型之外的另一个方法。这样，动态类
             的逻辑可以使用普通Java表示，而只有通过代码生成实现与另一个方法的绑定。
 
+            目标方法的注解：
+              @Argument(0)：表示源方法参数的位置
+              @AllArguments：目标方法的参数必须是一个数组，源方法的参数必须可分配给目标方法的数组；否则不将当前目标方法视为绑定到源方法的候选方法。
+                           这里说明 候选方法 不代表一定绑定，如果有其它更符合的绑定，将优先匹配。
+              @this：源实例对象的引用 将分配到 目标方法的参数。生成代码：return Target.print3(this)
+              @SuperCall：
+
             总结：
               1.Byte Buddy不要求将目标方法与 源方法 相同命名。String类型比Object类型更具体，因此匹配第一个方法。
               2.Target类如果存在 多个 相同参数不同命名的方法，将抛出不能匹配模糊性异常。
               3.Target类的方法必须是 public static 修饰的方法。
          */
-        try {
-            String msg = new ByteBuddy()
-                    .subclass(Source.class)
-                    .method(named("hello"))
-                    .intercept(MethodDelegation.to(Target.class))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance()
-                    .hello("dazuo");
+        DynamicType.Unloaded<Source> dynamicType = new ByteBuddy()
+                .subclass(Source.class)
+                .method(named("hello"))
+                .intercept(MethodDelegation.to(Target.class))
+                .name("com.maxzuo.bytebuddy.SourceSub")
+                .make();
 
-            System.out.println("msg: " + msg);
-        } catch (Exception e) {
-            logger.error("异常信息", e);
-        }
+        writeToFile(dynamicType.getBytes());
     }
 
-    @DisplayName("使用@Argument注解")
-    @Test
-    void testArgumentAnnotations () {
-        /*
-            @Argument(0)：表示源方法参数的位置
-            @AllArguments：目标方法的参数必须是一个数组，源方法的参数必须可分配给目标方法的数组；否则不将当前目标方法视为绑定到源方法的候选方法。
-                           这里说明 候选方法 不代表一定绑定，如果有其它更符合的绑定，将优先匹配。
-            @this：源方法不是静态方法，目标方法标注的参数将分配到 插装对象 的引用。
-            @SuperCall：
-         */
-        try {
-            String msg = new ByteBuddy()
-                    .subclass(Source.class)
-                    .method(named("print"))
-                    .intercept(MethodDelegation.to(Target.class))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance()
-                    .print("dazuo", "java开发");
-
-            System.out.println(msg);
-        } catch (Exception e) {
-            logger.error("异常信息", e);
-        }
-    }
-
-    @DisplayName("委托方法参数注解")
+    @DisplayName("@SuperCall注解")
     @Test
     void testInvokeDelegationMethodAndAnnotationArgument () {
         try {
@@ -203,26 +198,20 @@ class DefineFieldAndMethodTest {
         }
     }
 
-    @DisplayName("委托给实例方法")
+    @DisplayName("委托实例方法")
     @Test
     void testDelegationInstanceMethod () {
-        try {
-            String msg = new ByteBuddy()
-                    .subclass(Source.class)
-                    .method(named("hello"))
-                    .intercept(MethodDelegation.to(new Target()))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance()
-                    .hello("hello");
-            System.out.println("msg: " + msg);
-        } catch (Exception e) {
-            logger.error("异常信息", e);
-        }
+        DynamicType.Unloaded<Source> dynamicType = new ByteBuddy()
+                .subclass(Source.class)
+                .method(named("hello"))
+                .intercept(MethodDelegation.to(new Target()))
+                .name("com.maxzuo.bytebuddy.SourceSub")
+                .make();
+
+        writeToFile(dynamicType.getBytes());
     }
 
-    @DisplayName("调用默认方法")
+    @DisplayName("调用接口的默认方法")
     @Test
     void testInvokeDefaultMethod () {
         try {
@@ -243,6 +232,23 @@ class DefineFieldAndMethodTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @DisplayName("调用指定的方法")
+    @Test
+    void testInvokeTargetMethod () throws NoSuchMethodException, IllegalAccessException, InstantiationException {
+        DynamicType.Unloaded<Boss> dynamicType = new ByteBuddy()
+                .subclass(Boss.class, ConstructorStrategy.Default.NO_CONSTRUCTORS)
+                // 命中方法
+                .defineConstructor(Visibility.PUBLIC)
+                //.withParameters(System.class)
+                .intercept(MethodCall.construct(Boss.class.getDeclaredConstructor()))
+                .name("com.maxzuo.bytebuddy.SourceSub")
+                .make();
+
+        writeToFile(dynamicType.getBytes());
+
+        dynamicType.load(getClass().getClassLoader()).getLoaded().newInstance();
     }
 
     @DisplayName("访问字段")
@@ -278,6 +284,30 @@ class DefineFieldAndMethodTest {
 
         } catch (Exception e) {
             logger.error("异常信息", e);
+        }
+    }
+
+    /**
+     * 将字节数组写入.class文件中
+     * @param bytes 字节数组
+     */
+    private void writeToFile (byte[] bytes) {
+        File file = new File("ByteBuddy.class");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            fos.flush();
+            fos.write(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

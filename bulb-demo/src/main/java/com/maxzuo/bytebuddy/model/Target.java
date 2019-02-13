@@ -1,12 +1,5 @@
 package com.maxzuo.bytebuddy.model;
 
-import net.bytebuddy.implementation.bind.annotation.AllArguments;
-import net.bytebuddy.implementation.bind.annotation.Argument;
-import net.bytebuddy.implementation.bind.annotation.This;
-
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by zfh on 2019/01/29
  */
@@ -16,23 +9,32 @@ public class Target {
         System.out.println("init target constructor");
     }
 
-    public String hello (String name) {
+    public String method (String name) {
         return "init intecept " + name;
     }
 
-    //public static String print (@Argument(1) String title, @Argument(0) String name) {
-    //    return "title: " + title + ", name:" + name;
+    /** @Argument(0) 接收第一个参数 */
+    //public static String methodOne (@Argument(0) String var1) {
+    //    return "methodOne: " + var1;
     //}
 
-    //public static String print2 (@AllArguments String[] array) {
-    //    System.out.println("array: " + Arrays.toString(array));
-    //    return "print2";
+    /** @AllArguments 接收数组 */
+    //public static String methodTwo (@AllArguments String[] array) {
+    //    System.out.println("methodTwo: " + Arrays.toString(array));
+    //    return null;
     //}
 
-    public static String print3 (@This Object object) {
-        System.out.println("object: " + object);
-        return "print3";
-    }
+    /** @This 接收源实例对象的引用 */
+    //public static String methodThree (@This Object object) {
+    //    System.out.println("methodThree: " + object);
+    //    return null;
+    //}
+
+    /// TODO：待定
+    //public static String methodFour (@Super Object object) {
+    //    System.out.println("methodFour: " + object);
+    //    return null;
+    //}
 
     //public static String intecept (String name) {
     //    return "intecept " + name;
