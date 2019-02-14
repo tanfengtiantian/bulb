@@ -16,13 +16,17 @@ $ java -classpath D:\repository\org\apache\commons\commons-lang3\3.8.1\commons-l
 ```
 $ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main
 ```
-5.其中：
+5.运行jar文件前，运行探针
+```
+$ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -jar F:\bulb\spring-boot-app\target\spring-boot-app.jar
+```
+6.其中：
 * 指定探针路径和参数："-javaagent:F:\bulb-agent.jar=123"
 * 指定文件编码：-Dfile.encoding=UTF-8
 * -cp和-classpath是一样的功能，-cp是简写。用于指定类运行所依赖其他类的路径，通常是类库，jar包之类，可以为绝对路径，也可以为相对路径。
   多个路径之间window上分号“;”分隔，linux上是分号“:”分隔，用一点“.”代表当前路径。
 
-6.unix系统不挂断执行程序
+7.unix系统不挂断执行程序
 ```
 $ nohup java -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main > /developer/logs/app.log 2>&1 &
 ```
@@ -32,7 +36,7 @@ $ nohup java -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main >
 * 2>&1 将标准错误重定向到标准输出
 * & 表示后台运行
 
-7.IDEA启动Java程序的命令
+8.IDEA启动Java程序的命令
 
 下列命令插入了换行符（\r\n）无法作为脚本执行。可以使用idea_start_app.bat脚本运行程序。
 ```

@@ -94,30 +94,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.maxzuo.nio.BufferTest</mainClass>
-                        </manifest>
-                    </archive>
-                    <classesDirectory>
-                    </classesDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
-                <configuration>
-                    <properties>
-                        <includeTags>fast</includeTags>
-                        <excludeTags>slow</excludeTags>
-                    </properties>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
