@@ -16,7 +16,7 @@ import java.util.List;
  *  2.JVM进行垃圾回收
  *    System.gc()方法是建议垃圾收集器尽快进行垃圾收集，具体何时执行仍由JVM来判断。
  *    System.runFinalization()方法的作用是强制调用已经失去引用对象的finalize()
- *  3.测试VM的参数（可能由于参数的顺序导致无法启动）
+ *  3.测试VM的参数
  *    -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -Xms10m -Xmx10m -XX:HeapDumpPath=F:/heapdump.hprof
  * </pre>
  * Created by zfh on 2019/02/14
