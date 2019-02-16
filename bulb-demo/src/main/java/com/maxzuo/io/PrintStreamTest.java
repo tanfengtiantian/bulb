@@ -24,6 +24,16 @@ class PrintStreamTest {
         }
     }
 
+    @DisplayName("标准错误输出流")
+    @Test
+    void testSystemError () {
+        // “标准”错误输出流。此流已打开并准备接受输出数据。
+        // 通常，此流对应于显示器输出或者由主机环境或用户指定的另一个输出目标。按照惯例，此输出流用于显示错误消息，或者显示那些
+        // 即使用户输出流（变量 out 的值）已经重定向到通常不被连续监视的某一文件或其他目标，也应该立刻引起用户注意的其他信息。
+        PrintStream printStream = System.err;
+        printStream.println("hello error!");
+    }
+
     @DisplayName("标准输出流")
     @Test
     void testSystemOut () {
