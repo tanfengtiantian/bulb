@@ -3,9 +3,7 @@ package com.maxzuo.io;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -54,4 +52,28 @@ class PrintStreamTest {
         ps.println("hello print!");
         ps.close();
     }
+
+    @DisplayName("输出重定向")
+    @Test
+    void testRedirectOutputStream () throws Exception {
+        PrintStream ps = new PrintStream("demo.txt");
+        System.setOut(ps);
+
+        // 输出到文件中
+        System.out.println("hello redirectOutputStream");
+    }
+
+    @DisplayName("输入重定向")
+    @Test
+    void testRedirectInputStream () throws Exception {
+        InputStream ps = new FileInputStream("demo.txt");
+        System.setIn(ps);
+
+        Scanner scanner = new Scanner(System.in);
+        // 读完整个文件，就会终止
+        while (scanner.hasNext()) {
+            System.out.println(scanner.nextLine());
+        }
+    }
+
 }
