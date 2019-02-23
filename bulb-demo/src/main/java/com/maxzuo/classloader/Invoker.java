@@ -11,7 +11,26 @@ public class Invoker {
 
     public static void main (String[] args) {
         //loadClassFile();
-        loadJarFile();
+        //loadJarFile();
+        testMultipleClassFile();
+    }
+
+    /** 测试不同类加载器加载类 */
+    private static void testMultipleClassFile () {
+        try {
+            CustomClassLoader customClassLoader = new CustomClassLoader();
+            Class<?> aClass = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader);
+            Class<?> aClass1 = customClassLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
+            // 输出：true
+            System.out.println(aClass == aClass1);
+
+            CustomClassLoader customClassLoader2 = new CustomClassLoader();
+            Class<?> aClass2 = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader2);
+            // 输出：false
+            System.out.println(aClass == aClass2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /** 动态加载外部class文件 */
