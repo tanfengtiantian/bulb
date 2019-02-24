@@ -1,0 +1,25 @@
+package com.maxzuo.thread;
+
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * 线程工厂
+ * Created by zfh on 2019/02/24
+ */
+public class ThreadFactoryExample implements ThreadFactory {
+
+    private final AtomicInteger nextId = new AtomicInteger(1);
+
+    private final String namePrefix;
+
+    public ThreadFactoryExample (String name) {
+        namePrefix = "UserThreadFactory's " + name + "-Worker-";
+    }
+
+    @Override
+    public Thread newThread(Runnable task) {
+        String name = namePrefix + nextId.getAndIncrement();
+        return new Thread(null, task, name, 0);
+    }
+}

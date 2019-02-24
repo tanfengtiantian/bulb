@@ -11,8 +11,8 @@ public class CallableRelationThreadPool {
 
     public static void main(String[] args) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(2);
-        UserThreadFactory threadFactory = new UserThreadFactory("一号机房");
-        UserRejectHandler rejectHandler = new UserRejectHandler();
+        ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
+        RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
 
         System.out.println("main threadId：" + Thread.currentThread().getId());
