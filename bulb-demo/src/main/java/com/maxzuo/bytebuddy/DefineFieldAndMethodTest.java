@@ -1,5 +1,6 @@
 package com.maxzuo.bytebuddy;
 
+import com.maxzuo.bytebuddy.annotations.TokenImpl;
 import com.maxzuo.bytebuddy.model.*;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.ClassFileVersion;
@@ -17,7 +18,10 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 
 import static net.bytebuddy.matcher.ElementMatchers.*;
@@ -26,55 +30,57 @@ import static net.bytebuddy.matcher.ElementMatchers.*;
  * 使用ByteBuddy定义属性和方法
  * Created by zfh on 2019/01/28
  */
-@Token("hello")
 class DefineFieldAndMethodTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DefineFieldAndMethodTest.class);
 
-    @DisplayName("增加类")
+    @DisplayName("增强类的属性和方法")
     @Test
-    void testEnhanceClass () throws NoSuchMethodException, IllegalAccessException, InstantiationException {
-        Token token = getClass().getAnnotation(Token.class);
+    void testEnhanceClass () throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         DynamicType.Unloaded<Boss> dynamicType = new ByteBuddy()
-                .subclass(Boss.class)
+                // 构造函数策略
+                .subclass(Boss.class, ConstructorStrategy.Default.NO_CONSTRUCTORS)
                 // 序列号 serialVersionUID
                 .serialVersionUid(123456L)
+                // 类的可见性
+                .modifiers(Visibility.PUBLIC)
+                // 类的注解
+                .annotateType(new TokenImpl())
+                // 类的泛型
+                .typeVariable("T")
                 // 继承接口
                 .implement(Employee.class)
                 // 定义构造函数
-                //.defineConstructor(Visibility.PUBLIC)
+                .defineConstructor(Visibility.PUBLIC)
+                // 调用特定的构造函数
+                .intercept(MethodCall.invoke(Boss.class.getDeclaredConstructor()))
                 // 构造函数的参数
-                //.withParameters(String.class)
                 // 添加字段，设置修饰符 public static final
                 .defineField("name", String.class, Visibility.PUBLIC, Ownership.STATIC, FieldManifestation.FINAL)
                 // 设置默认值（只有在字段声明为 static final时，该值才对代码可见）；还可以为代码不可见的非静态字段设置默认值
                 .value("dazuo")
                 // 字段添加注解
-                .annotateField(token)
+                .annotateField(new TokenImpl())
                 // 定义Bean的 age 属性（setter/getter），如果设置为 true 属性添加 final 关键字，默认为false
                 .defineProperty("age", Integer.class, false)
                 // 字段添加注解
-                .annotateField(token)
+                .annotateField(new TokenImpl())
                 // 添加方法，返回值类型void
                 .defineMethod("methodOne", void.class, Visibility.PUBLIC)
                 // 当前方法添加 String 类型的参数
                 .withParameters(String.class)
                 // 方法抛出的异常
                 .throwing(Exception.class)
+                // 固定返回值，也可以委派给其它方法
                 .intercept(FixedValue.value("hello"))
-                // 类的可见性
-                .modifiers(Visibility.PUBLIC)
-                // 类的注解
-                .annotateType(token)
-                // 类的泛型
-                .typeVariable("T")
                 .name("com.maxzuo.demo.ByteBuddyDemo")
                 .make();
 
         writeToFile(dynamicType.getBytes());
 
-        // 实例化
-        dynamicType.load(getClass().getClassLoader()).getLoaded().newInstance();
+        Class<? extends Boss> loaded = dynamicType.load(getClass().getClassLoader()).getLoaded();
+        Constructor<?>[] constructors = loaded.getDeclaredConstructors();
+        System.out.println("构造函数：" + Arrays.toString(constructors));
     }
 
     @DisplayName("方法固定返回值")
@@ -209,16 +215,18 @@ class DefineFieldAndMethodTest {
     @Test
     void testInvokeDefaultMethod () {
         try {
-            Class<?> aClass = new ByteBuddy(ClassFileVersion.JAVA_V8)
+            DynamicType.Unloaded<Object> dynamicType = new ByteBuddy(ClassFileVersion.JAVA_V8)
                     .subclass(Object.class)
                     .implement(IFast.class)
                     .implement(ISlow.class)
                     // 实现不同接口的相同方法，定义优先加载
                     .method(named("m")).intercept(DefaultMethodCall.prioritize(IFast.class))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
-                    .getLoaded();
+                    .make();
 
+            // 写入文件
+            writeToFile(dynamicType.getBytes());
+
+            Class<?> aClass = dynamicType.load(ClassLoader.getSystemClassLoader()).getLoaded();
             Object o1 = aClass.newInstance();
             Method m = aClass.getMethod("m");
             Object invoke = m.invoke(o1);
@@ -228,45 +236,59 @@ class DefineFieldAndMethodTest {
         }
     }
 
-    @DisplayName("调用指定的方法")
+    @DisplayName("调用特定的方法")
     @Test
-    void testInvokeTargetMethod () throws NoSuchMethodException, IllegalAccessException, InstantiationException {
+    void testInvokeSpecificMethod () throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         DynamicType.Unloaded<Boss> dynamicType = new ByteBuddy()
-                .subclass(Boss.class, ConstructorStrategy.Default.NO_CONSTRUCTORS)
-                // 命中方法
-                .defineConstructor(Visibility.PUBLIC)
-                //.withParameters(System.class)
-                .intercept(MethodCall.construct(Boss.class.getDeclaredConstructor()))
+                .subclass(Boss.class)
+                // 拦截目标方法
+                .method(named("talk"))
+                /// 调用特定的静态方法，无参
+                .intercept(MethodCall.invoke(Source.class.getMethod("methodOne")))
+                /// 调用特定的静态方法，同时指定参数
+                //.intercept(MethodCall.invoke(Source.class.getMethod("methodTwo", String.class)).with("dazuo"))
+                /// 调用特定的实例方法，同时指定参数
+                //.intercept(MethodCall.invoke(Source.class.getMethod("methodThree", String.class)).on(new Source()).with("dazuo"))
                 .name("com.maxzuo.bytebuddy.SourceSub")
                 .make();
 
         writeToFile(dynamicType.getBytes());
 
-        dynamicType.load(getClass().getClassLoader()).getLoaded().newInstance();
+        // 调用方法（委托方法 覆盖 原始方法）
+        dynamicType.load(getClass().getClassLoader()).getLoaded().newInstance().talk();
     }
 
     @DisplayName("访问字段")
     @Test
     void testFieldAccessor () {
-        // TODO:
         try {
             Class<? extends UserType> dynamicUserType = new ByteBuddy()
                     .subclass(UserType.class)
                     .method(not(isDeclaredBy(Object.class)))
+                    // 任何拦截的方法在提供的 实例字段 上调用非静态方法。要被认为是有效的委托目标，方法必须对插装类型可见和可访问。
                     .intercept(MethodDelegation.toField("interceptor"))
                     .defineField("interceptor", Interceptor.class, Visibility.PRIVATE)
                     .implement(InterceptionAccessor.class)
-                    .intercept(FieldAccessor.ofBeanProperty())
+                    /// 通过方法名称，派生出字段的名称
+                    //.intercept(FieldAccessor.ofBeanProperty())
+                    // 或者指定访问的字段名称
+                    .intercept(FieldAccessor.ofField("interceptor"))
+                    .name("com.maxzuo.bytebuddy.SourceSub")
                     .make()
                     .load(getClass().getClassLoader())
                     .getLoaded();
 
-            InstanceCreator factory = new ByteBuddy()
+            DynamicType.Unloaded<InstanceCreator> dynamicType = new ByteBuddy()
                     .subclass(InstanceCreator.class)
-                    .method(not(isDeclaredBy(Object.class)))
+                    .method(named("makeInstance"))
+                    // 对于截获方法的调用都会返回给定目标类型的新实例。
                     .intercept(MethodDelegation.toConstructor(dynamicUserType))
-                    .make()
-                    .load(ClassLoader.getSystemClassLoader())
+                    .make();
+
+            // 写入文件
+            writeToFile(dynamicType.getBytes());
+
+            InstanceCreator factory = dynamicType.load(ClassLoader.getSystemClassLoader())
                     .getLoaded()
                     .newInstance();
 

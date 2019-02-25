@@ -1,4 +1,4 @@
-package com.maxzuo.bytebuddy.model;
+package com.maxzuo.bytebuddy.annotations;
 
 import java.lang.annotation.*;
 import java.lang.annotation.Target;
@@ -10,5 +10,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE, ElementType.FIELD})
 public @interface Token {
-    String value();
 }
