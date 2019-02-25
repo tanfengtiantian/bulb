@@ -5,5 +5,6 @@ package com.maxzuo.spi;
  */
 public interface IDeveloper {
 
-    String getPrograme();
+    /** 演示方法 */
+    void say ();
 }

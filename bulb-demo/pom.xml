@@ -70,11 +70,6 @@
             <version>1.11</version>
         </dependency>
         <dependency>
-            <groupId>com.maxzuo.bulb</groupId>
-            <artifactId>bulb-spi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.2</version>

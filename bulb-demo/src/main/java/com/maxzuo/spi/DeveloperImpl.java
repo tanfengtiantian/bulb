@@ -5,7 +5,8 @@ package com.maxzuo.spi;
  */
 public class DeveloperImpl implements IDeveloper {
 
-    public String getPrograme() {
-        return "Developer test";
+    @Override
+    public void say () {
+        System.out.println("Developer test");
     }
 }
