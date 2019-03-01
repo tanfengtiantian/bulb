@@ -56,6 +56,9 @@ public class ScShopPrinterCustomComponent implements Serializable {
     /** 序号 */
     private Integer sort;
 
+    /** 启用状态：0 未启用 1已启用 */
+    private Integer enable;
+
     /** 是否删除：0-未删除 1-删除 */
     private Integer delete;
 
@@ -185,6 +188,14 @@ public class ScShopPrinterCustomComponent implements Serializable {
         this.sort = sort;
     }
 
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
     public Integer getDelete() {
         return delete;
     }
@@ -227,6 +238,7 @@ public class ScShopPrinterCustomComponent implements Serializable {
                 ", column=" + column +
                 ", width=" + width +
                 ", sort=" + sort +
+                ", enable=" + enable +
                 ", delete=" + delete +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +

@@ -196,12 +196,13 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_system_component`(
   `label` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '组件名称',
   `value` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '组件值',
   `value_style` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '组件值排版属性',
-  `placeholder` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '占位符，例如：#{orderSource}',
+  `placeholder` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '占位符，例如：#{orderSource}',
   `type` VARCHAR(10) NOT NULL DEFAULT '' COMMENT '组件类型：hidden-隐藏（refId） text-文本 grid-网格 title-表格标题 category-分类 head-表格头',
   `row` INT NOT NULL DEFAULT 0 COMMENT '行号',
   `column` INT NOT NULL DEFAULT 0 COMMENT '列号',
   `width` INT NOT NULL DEFAULT 0 COMMENT '宽度，百分比',
   `sort` INT NOT NULL DEFAULT 0 COMMENT '序号',
+  `is_enable` tinyint NOT NULL DEFAULT 1 COMMENT '启用状态：0 未启用 1已启用',
   `create_time` datetime DEFAULT NULL COMMENT '添加时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY(`id`),
@@ -240,10 +241,10 @@ VALUES (103001, 3, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now()
 (103005, 3, 103001, 0, '数量', '数量', '{"fontSize": 1,"textAlign":"right"}', '数量', 'head', 3, 3, 20, 5, now(), now()),
 (103006, 3, 103001, 0, '价格', '价格', '{"fontSize": 1,"textAlign":"right"}', '价格', 'head', 3, 4, 20, 6, now(), now()),
 -- 商品表格体，用于占位
-(103007, 3, 103001, 0, '商品', '1.回锅肉', '{"fontSize": 1,"textAlign":"left"}', '商品', 'text', 4, 1, 40, 7, now(), now()),
-(103008, 3, 103001, 0, '单价', '16.00', '{"fontSize": 1,"textAlign":"right"}', '单价', 'text', 4, 2, 20, 8, now(), now()),
-(103009, 3, 103001, 0, '数量', '1/份', '{"fontSize": 1,"textAlign":"right"}', '数量', 'text', 4, 3, 20, 9, now(), now()),
-(103010, 3, 103001, 0, '价格', '16.00', '{"fontSize": 1,"textAlign":"right"}', '价格', 'text', 4, 4, 20, 10, now(), now()),
+(103007, 3, 103001, 0, '商品', '1.回锅肉', '{"fontSize": 1,"textAlign":"left"}', '#{good}', 'text', 4, 1, 40, 7, now(), now()),
+(103008, 3, 103001, 0, '单价', '16.00', '{"fontSize": 1,"textAlign":"right"}', '#{price}', 'text', 4, 2, 20, 8, now(), now()),
+(103009, 3, 103001, 0, '数量', '1/份', '{"fontSize": 1,"textAlign":"right"}', '#{number}', 'text', 4, 3, 20, 9, now(), now()),
+(103010, 3, 103001, 0, '价格', '16.00', '{"fontSize": 1,"textAlign":"right"}', '#{amount}', 'text', 4, 4, 20, 10, now(), now()),
 (103011, 3, 103001, 103014, '商品备注', '【备注:多放肉】', '{"fontSize": 1,"textAlign":"left"}', '#{memo}', 'text', 5, 1, 100, 11, now(), now()),
 (103012, 3, 103001, 0, '商品优惠名称', '【单品5折】', '{"fontSize": 1,"textAlign":"left"}', '#{dishDiscountName}', 'text', 6, 1, 60, 12, now(), now()),
 (103013, 3, 103001, 0, '商品优惠价格', '-10.00', '{"fontSize": 1,"textAlign":"right"}', '#{dishDiscountPrice}', 'text', 6, 1, 40, 13, now(), now()),
@@ -279,7 +280,7 @@ VALUES (103001, 3, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now()
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (104001, 4, 0, 0, '结算明细', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (104002, 4, 104001, 0, '商品原价合计', '商品原价合计', '{"fontSize": 1,"textAlign":"left"}', '商品原价合计', 'text', 2, 1, 70, 2, now(), now()),
-(104003, 4, 104001, 0, '商品原价合计金额', '16.00', '{"fontSize": 1,"textAlign":"right"}', '', 'text', 2, 2, 30, 3, now(), now()),
+(104003, 4, 104001, 0, '商品原价合计金额', '16.00', '{"fontSize": 1,"textAlign":"right"}', '#{goodTotalAmount}', 'text', 2, 2, 30, 3, now(), now()),
 (104004, 4, 104001, 0, '原始押金', '原始押金', '{"fontSize": 1,"textAlign":"left"}', '原始押金', 'text', 3, 1, 70, 4, now(), now()),
 (104005, 4, 104001, 0, '原始押金金额', '16.00', '{"fontSize": 1,"textAlign":"right"}', '#{depositPay}', 'text', 3, 2, 30, 5, now(), now()),
 (104006, 4, 104001, 0, '已退押金', '已退押金', '{"fontSize": 1,"textAlign":"left"}', '已退押金', 'text', 4, 1, 70, 6, now(), now()),
@@ -388,16 +389,16 @@ INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id,
 VALUES (107001, 7, 0, 0, '自定义二维码', '文案内容', '{"fontSize": 1,"textAlign":"center"}', '文案内容', 'text', 1, 1, 100, 1, now(), now());
 -- 结账单：moduleId = 8
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
-VALUES (108001, 8, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"center"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
+VALUES (108001, 8, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (108002, 8, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(108003, 8, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(108004, 8, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(108005, 8, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now()),
+(108003, 8, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(108004, 8, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '打印:#{printTime}', 'text', 3, 1, 100, 4, now(), now()),
+(108005, 8, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now()),
 -- 商户信息
-(108006, 8, 0, 0, '商户信息', '', '', '', 'grid', 4, 1, 100, 6, now(), now()),
-(108007, 8, 108006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 5, 1, 100, 7, now(), now()),
-(108008, 8, 108006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 6, 1, 100, 8, now(), now()),
-(108009, 8, 108006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 7, 1, 100, 9, now(), now());
+(108006, 8, 0, 0, '商户信息', '', '', '', 'grid', 5, 1, 100, 6, now(), now()),
+(108007, 8, 108006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 6, 1, 100, 7, now(), now()),
+(108008, 8, 108006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 7, 1, 100, 8, now(), now()),
+(108009, 8, 108006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 客看单：module= 9
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
@@ -451,13 +452,13 @@ VALUES
 -- module= 13
 (213001, 13, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (213002, 13, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(213003, 13, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(213004, 13, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(213005, 13, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now()),
-(213006, 13, 0, 0, '商户信息', '', '', '', 'grid', 4, 1, 100, 6, now(), now()),
-(213007, 13, 213006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 5, 1, 100, 7, now(), now()),
-(213008, 13, 213006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 6, 1, 100, 8, now(), now()),
-(213009, 13, 213006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 7, 1, 100, 9, now(), now());
+(213003, 13, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(213004, 13, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '打印:#{printTime}', 'text', 3, 1, 100, 4, now(), now()),
+(213005, 13, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now()),
+(213006, 13, 0, 0, '商户信息', '', '', '', 'grid', 5, 1, 100, 6, now(), now()),
+(213007, 13, 213006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 6, 1, 100, 7, now(), now()),
+(213008, 13, 213006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 7, 1, 100, 8, now(), now()),
+(213009, 13, 213006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 预结单 moduleId = 14
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
@@ -551,13 +552,13 @@ VALUES
 -- moduleId = 20
 (320001, 20, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (320002, 20, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(320003, 20, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(320004, 20, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(320005, 20, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"center"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now()),
-(320006, 20, 0, 0, '商户信息', '', '', '', 'grid', 4, 1, 100, 6, now(), now()),
-(320007, 20, 0, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 5, 1, 100, 7, now(), now()),
-(320008, 20, 0, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 6, 1, 100, 8, now(), now()),
-(320009, 20, 0, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 7, 1, 100, 9, now(), now());
+(320003, 20, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(320004, 20, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '打印:#{printTime}', 'text', 3, 1, 100, 4, now(), now()),
+(320005, 20, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now()),
+(320006, 20, 0, 0, '商户信息', '', '', '', 'grid', 5, 1, 100, 6, now(), now()),
+(320007, 20, 0, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 6, 1, 100, 7, now(), now()),
+(320008, 20, 0, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 7, 1, 100, 8, now(), now()),
+(320009, 20, 0, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 
 -- 消费清单
@@ -730,13 +731,13 @@ VALUES
 -- moduleId = 28
 (328001, 28, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (328002, 28, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(328003, 28, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(328004, 28, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(328005, 28, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now()),
-(328006, 28, 0, 0, '商户信息', '', '', '', 'grid', 4, 1, 100, 6, now(), now()),
-(328007, 28, 328006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 5, 1, 100, 7, now(), now()),
-(328008, 28, 328006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 6, 1, 100, 8, now(), now()),
-(328009, 28, 328006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 1, 1, 100, 9, now(), now());
+(328003, 28, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(328004, 28, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 3, 1, 100, 4, now(), now()),
+(328005, 28, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now()),
+(328006, 28, 0, 0, '商户信息', '', '', '', 'grid', 5, 1, 100, 6, now(), now()),
+(328007, 28, 328006, 0, '商户地址', 'XX市XX地址', '{"fontSize": 1,"textAlign":"center"}', '#{shopAddress}', 'text', 6, 1, 100, 7, now(), now()),
+(328008, 28, 328006, 0, '商户电话号码', '15XXXXXXXXX', '{"fontSize": 1,"textAlign":"center"}', '#{shopPhone}', 'text', 7, 1, 100, 8, now(), now()),
+(328009, 28, 328006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 厨总单
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
@@ -781,9 +782,9 @@ VALUES
 -- moduleId = 32
 (332001, 32, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (332002, 32, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(332003, 32, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(332004, 32, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(332005, 32, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now());
+(332003, 32, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(332004, 32, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 3, 2, 100, 4, now(), now()),
+(332005, 32, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now());
 
 -- 堂口单
 INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
@@ -827,9 +828,9 @@ VALUES
 -- moduleId = 36
 (336001, 36, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (336002, 36, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
-(336003, 36, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 50, 3, now(), now()),
-(336004, 36, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 2, 2, 50, 4, now(), now()),
-(336005, 36, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 3, 1, 50, 5, now(), now());
+(336003, 36, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
+(336004, 36, 0, 0, '打印', '打印:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"right"}', '打印:#{printTime}', 'text', 3, 1, 100, 4, now(), now()),
+(336005, 36, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now());
 
 
 -- -----------------------------------------------------

@@ -15,20 +15,21 @@
         <result column="column" property="column" javaType="int" jdbcType="INTEGER" />
         <result column="width" property="width" javaType="int" jdbcType="INTEGER" />
         <result column="sort" property="sort" javaType="int" jdbcType="INTEGER" />
+        <result column="is_enable" property="enable" javaType="int" jdbcType="TINYINT" />
         <result column="create_time" property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" javaType="Date" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time
+        id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, is_enable, create_time, update_time
     </sql>
 
     <insert id="insertPrinterSystemComponent" parameterType="com.maxzuo.printtemplate.model.ScShopPrinterSystemComponent" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sc_shop_printer_system_component
         (
-            module_id, parentId, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time
+            module_id, parentId, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, is_enable, create_time, update_time
         )
-        VALUES(#{moduleId}, #{parentId}, #{refId}, #{label}, #{value}, #{valueStyle}, #{placeholder}, #{type}, #{row}, #{column}, #{width}, #{sort}, now(), now())
+        VALUES(#{moduleId}, #{parentId}, #{refId}, #{label}, #{value}, #{valueStyle}, #{placeholder}, #{type}, #{row}, #{column}, #{width}, #{sort}, #{enable}, now(), now())
     </insert>
 
     <select id="selectPrinterSystemComponentListByTemplateTypeId" parameterType="int" resultMap="BaseResultMap">

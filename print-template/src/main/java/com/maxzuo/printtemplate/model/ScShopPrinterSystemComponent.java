@@ -50,6 +50,9 @@ public class ScShopPrinterSystemComponent implements Serializable {
     /** 序号 */
     private Integer sort;
 
+    /** 启用状态：0 未启用 1已启用 */
+    private Integer enable;
+
     /** 创建时间 */
     private Date createTime;
 
@@ -160,6 +163,14 @@ public class ScShopPrinterSystemComponent implements Serializable {
         this.sort = sort;
     }
 
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -192,6 +203,7 @@ public class ScShopPrinterSystemComponent implements Serializable {
                 ", column=" + column +
                 ", width=" + width +
                 ", sort=" + sort +
+                ", enable=" + enable +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
