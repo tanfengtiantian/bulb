@@ -19,6 +19,8 @@
         <module>bulb-model</module>
         <module>bulb-user-provider</module>
         <module>bulb-order-provider</module>
+        <module>bulb-web</module>
+        <module>bulb-agent</module>
+        <module>bulb-demo</module>
     </modules>
-
 </project>
