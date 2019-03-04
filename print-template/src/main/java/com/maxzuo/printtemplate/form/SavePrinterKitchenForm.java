@@ -2,10 +2,10 @@ package com.maxzuo.printtemplate.form;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchen;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenDocumentTypeRules;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenGoodsRules;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenTableRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchen;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenDocumentTypeRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenGoodsRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenTableRules;
 import com.maxzuo.printtemplate.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 
@@ -98,10 +98,10 @@ public class SavePrinterKitchenForm {
 
     /**
      * 获取 出票口实体对象
-     * @return {@link ScShopPrinterKitchen}
+     * @return {@link ScOperationPrinterKitchen}
      */
-    public ScShopPrinterKitchen getScShopPrinterKitchen () {
-        ScShopPrinterKitchen scShopPrinterKitchen = new ScShopPrinterKitchen();
+    public ScOperationPrinterKitchen getScShopPrinterKitchen () {
+        ScOperationPrinterKitchen scShopPrinterKitchen = new ScOperationPrinterKitchen();
         scShopPrinterKitchen.setName(name);
         scShopPrinterKitchen.setPrinterDeviceId(printerDeviceId);
         scShopPrinterKitchen.setTable(table);
@@ -117,11 +117,11 @@ public class SavePrinterKitchenForm {
      * @param printerKitchenId 出票口ID
      * @return list
      */
-    public List<ScShopPrinterKitchenDocumentTypeRules> getDocumentTypeRulesList(Integer printerKitchenId) {
+    public List<ScOperationPrinterKitchenDocumentTypeRules> getDocumentTypeRulesList(Integer printerKitchenId) {
         JSONArray jsonArray = JSONObject.parseArray(documentTypeRules);
-        List<ScShopPrinterKitchenDocumentTypeRules> kitchenDocumentTypeRulesList = new ArrayList<>(10);
+        List<ScOperationPrinterKitchenDocumentTypeRules> kitchenDocumentTypeRulesList = new ArrayList<>(10);
         for (Object item : jsonArray) {
-            ScShopPrinterKitchenDocumentTypeRules scShopPrinterKitchenDocumentTypeRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScShopPrinterKitchenDocumentTypeRules.class);
+            ScOperationPrinterKitchenDocumentTypeRules scShopPrinterKitchenDocumentTypeRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScOperationPrinterKitchenDocumentTypeRules.class);
             scShopPrinterKitchenDocumentTypeRules.setPrinterKitchenId(printerKitchenId);
             scShopPrinterKitchenDocumentTypeRules.setDelete(0);
             kitchenDocumentTypeRulesList.add(scShopPrinterKitchenDocumentTypeRules);
@@ -134,11 +134,11 @@ public class SavePrinterKitchenForm {
      * @param printerKitchenId 出票口ID
      * @return list
      */
-    public List<ScShopPrinterKitchenTableRules> getTableRulesList(Integer printerKitchenId) {
+    public List<ScOperationPrinterKitchenTableRules> getTableRulesList(Integer printerKitchenId) {
         JSONArray tableRulesArray = JSONObject.parseArray(tableRules);
-        List<ScShopPrinterKitchenTableRules> tableRulesList = new ArrayList<>(10);
+        List<ScOperationPrinterKitchenTableRules> tableRulesList = new ArrayList<>(10);
         for (Object item: tableRulesArray) {
-            ScShopPrinterKitchenTableRules tableRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScShopPrinterKitchenTableRules.class);
+            ScOperationPrinterKitchenTableRules tableRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScOperationPrinterKitchenTableRules.class);
             tableRules.setPrinterKitchenId(printerKitchenId);
             tableRules.setDelete(0);
             tableRulesList.add(tableRules);
@@ -151,11 +151,11 @@ public class SavePrinterKitchenForm {
      * @param printerKitchenId 出票口ID
      * @return list
      */
-    public List<ScShopPrinterKitchenGoodsRules> getGoodsRulesList(Integer printerKitchenId) {
+    public List<ScOperationPrinterKitchenGoodsRules> getGoodsRulesList(Integer printerKitchenId) {
         JSONArray goodsRulesArray = JSONObject.parseArray(goodsRules);
-        List<ScShopPrinterKitchenGoodsRules> goodsRulesList = new ArrayList<>(10);
+        List<ScOperationPrinterKitchenGoodsRules> goodsRulesList = new ArrayList<>(10);
         for (Object item: goodsRulesArray) {
-            ScShopPrinterKitchenGoodsRules goodsRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScShopPrinterKitchenGoodsRules.class);
+            ScOperationPrinterKitchenGoodsRules goodsRules = JSONObject.parseObject(JSONObject.toJSONString(item), ScOperationPrinterKitchenGoodsRules.class);
             goodsRules.setPrinterKitchenId(printerKitchenId);
             goodsRules.setDelete(0);
             goodsRulesList.add(goodsRules);

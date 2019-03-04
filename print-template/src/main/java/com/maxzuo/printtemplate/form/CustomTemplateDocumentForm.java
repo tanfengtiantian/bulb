@@ -1,6 +1,6 @@
 package com.maxzuo.printtemplate.form;
 
-import com.maxzuo.printtemplate.model.ScShopPrinterTemplateDocument;
+import com.maxzuo.printtemplate.model.ScOperationPrinterTemplateDocument;
 import com.maxzuo.printtemplate.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 
@@ -64,10 +64,10 @@ public class CustomTemplateDocumentForm {
 
     /**
      * 入参对象转换为实体对象
-     * @return {@link ScShopPrinterTemplateDocument}
+     * @return {@link ScOperationPrinterTemplateDocument}
      */
-    public ScShopPrinterTemplateDocument convertToScShopPrinterTemplateDocument () {
-        ScShopPrinterTemplateDocument templateDocument = new ScShopPrinterTemplateDocument();
+    public ScOperationPrinterTemplateDocument convertToScShopPrinterTemplateDocument () {
+        ScOperationPrinterTemplateDocument templateDocument = new ScOperationPrinterTemplateDocument();
         templateDocument.setName(name);
         templateDocument.setDocumentType(documentType);
         templateDocument.setUrl(url);

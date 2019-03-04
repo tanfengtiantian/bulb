@@ -2,17 +2,17 @@ package com.maxzuo.printtemplate.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.maxzuo.printtemplate.api.IScShopPrinterKitchenDocumentTypeRulesService;
-import com.maxzuo.printtemplate.api.IScShopPrinterKitchenGoodsRulesService;
-import com.maxzuo.printtemplate.api.IScShopPrinterKitchenService;
-import com.maxzuo.printtemplate.api.IScShopPrinterKitchenTableRulesService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterKitchenDocumentTypeRulesService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterKitchenGoodsRulesService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterKitchenService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterKitchenTableRulesService;
 import com.maxzuo.printtemplate.dto.Param;
 import com.maxzuo.printtemplate.form.SavePrinterKitchenForm;
 import com.maxzuo.printtemplate.form.UpdatePrinterKitchenForm;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchen;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenDocumentTypeRules;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenGoodsRules;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchenTableRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchen;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenDocumentTypeRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenGoodsRules;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchenTableRules;
 import com.maxzuo.printtemplate.vo.PrinterKitchenIntegrationVO;
 import com.maxzuo.printtemplate.vo.PrinterKitchenVO;
 import com.maxzuo.printtemplate.vo.Result;
@@ -43,16 +43,16 @@ public class PrinterKitchenRest {
     private static final Logger logger = LoggerFactory.getLogger(PrinterKitchenRest.class);
 
     @Autowired
-    private IScShopPrinterKitchenService scShopPrinterKitchenService;
+    private IScOperationPrinterKitchenService scShopPrinterKitchenService;
 
     @Autowired
-    private IScShopPrinterKitchenDocumentTypeRulesService scShopPrinterKitchenDocumentTypeRulesService;
+    private IScOperationPrinterKitchenDocumentTypeRulesService scShopPrinterKitchenDocumentTypeRulesService;
 
     @Autowired
-    private IScShopPrinterKitchenTableRulesService scShopPrinterKitchenTableRulesService;
+    private IScOperationPrinterKitchenTableRulesService scShopPrinterKitchenTableRulesService;
 
     @Autowired
-    private IScShopPrinterKitchenGoodsRulesService scShopPrinterKitchenGoodsRulesService;
+    private IScOperationPrinterKitchenGoodsRulesService scShopPrinterKitchenGoodsRulesService;
 
     /**
      * 新增出票口
@@ -80,7 +80,7 @@ public class PrinterKitchenRest {
             result.setMsg("添加成功！");
         } catch (Exception e) {
             if (printerKitchenId > 0) {
-                ScShopPrinterKitchen scShopPrinterKitchen = new ScShopPrinterKitchen();
+                ScOperationPrinterKitchen scShopPrinterKitchen = new ScOperationPrinterKitchen();
                 scShopPrinterKitchen.setDelete(1);
                 scShopPrinterKitchenService.updateByPrimaryKeySelective(scShopPrinterKitchen);
             }
@@ -110,10 +110,10 @@ public class PrinterKitchenRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        PageInfo<ScShopPrinterKitchen> printerKitchenPageInfo = scShopPrinterKitchenService.listPrinterKitchenByShopId(shopId, page, rows);
+        PageInfo<ScOperationPrinterKitchen> printerKitchenPageInfo = scShopPrinterKitchenService.listPrinterKitchenByShopId(shopId, page, rows);
         if (printerKitchenPageInfo != null) {
             List<PrinterKitchenVO> printerKitchenVOList = new ArrayList<>(10);
-            for (ScShopPrinterKitchen printerKitchen : printerKitchenPageInfo.getList()) {
+            for (ScOperationPrinterKitchen printerKitchen : printerKitchenPageInfo.getList()) {
                 PrinterKitchenVO printerKitchenVO = new PrinterKitchenVO();
                 BeanUtils.copyProperties(printerKitchen, printerKitchenVO);
                 printerKitchenVO.setCreateTime(DateFormatUtils.format(printerKitchen.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
@@ -145,16 +145,16 @@ public class PrinterKitchenRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenId);
+        ScOperationPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenId);
         if (printerKitchen == null || Integer.valueOf(1).equals(printerKitchen.getDelete()) || !shopId.equals(printerKitchen.getShopId())) {
             result.setMsg("出票口不存在！");
         } else {
             PrinterKitchenIntegrationVO printerKitchenIntegrationVO = new PrinterKitchenIntegrationVO();
             BeanUtils.copyProperties(printerKitchen, printerKitchenIntegrationVO);
 
-            List<ScShopPrinterKitchenDocumentTypeRules> documentTypeRulesList = scShopPrinterKitchenDocumentTypeRulesService.listPrinterKitchenDocumentTypeRulesByPrinterKitchenId(printerKitchenId);
+            List<ScOperationPrinterKitchenDocumentTypeRules> documentTypeRulesList = scShopPrinterKitchenDocumentTypeRulesService.listPrinterKitchenDocumentTypeRulesByPrinterKitchenId(printerKitchenId);
             List<Map<String, Object>> documentTypeRules = new ArrayList<>(10);
-            for (ScShopPrinterKitchenDocumentTypeRules kitchenDocumentTypeRules : documentTypeRulesList) {
+            for (ScOperationPrinterKitchenDocumentTypeRules kitchenDocumentTypeRules : documentTypeRulesList) {
                 Map<String, Object> documentTypeRulesItem = new HashMap<>(10);
                 documentTypeRulesItem.put("documentTypeId", kitchenDocumentTypeRules.getDocumentTypeId());
                 documentTypeRulesItem.put("number", kitchenDocumentTypeRules.getNumber());
@@ -163,8 +163,8 @@ public class PrinterKitchenRest {
             }
             List<Map<String, Object>> tableRules = new ArrayList<>(10);
             if (Integer.valueOf(1).equals(printerKitchen.getTable())) {
-                List<ScShopPrinterKitchenTableRules> kitchenTableRulesList = scShopPrinterKitchenTableRulesService.listPrinterKitchenTableRulesByPrinterKitchenId(printerKitchenId);
-                for (ScShopPrinterKitchenTableRules kitchenTableRules : kitchenTableRulesList) {
+                List<ScOperationPrinterKitchenTableRules> kitchenTableRulesList = scShopPrinterKitchenTableRulesService.listPrinterKitchenTableRulesByPrinterKitchenId(printerKitchenId);
+                for (ScOperationPrinterKitchenTableRules kitchenTableRules : kitchenTableRulesList) {
                     Map<String, Object> tableRulesItem = new HashMap<>(10);
                     tableRulesItem.put("tableId", kitchenTableRules.getTableId());
                     tableRules.add(tableRulesItem);
@@ -172,8 +172,8 @@ public class PrinterKitchenRest {
             }
             List<Map<String, Object>> goodsRules = new ArrayList<>(10);
             if (Integer.valueOf(1).equals(printerKitchen.getGoods())) {
-                List<ScShopPrinterKitchenGoodsRules> printerKitchenGoodsRulesList = scShopPrinterKitchenGoodsRulesService.listPrinterKitchenGoodsRulesByPrinterKitchenId(printerKitchenId);
-                for (ScShopPrinterKitchenGoodsRules kitchenGoodsRules : printerKitchenGoodsRulesList) {
+                List<ScOperationPrinterKitchenGoodsRules> printerKitchenGoodsRulesList = scShopPrinterKitchenGoodsRulesService.listPrinterKitchenGoodsRulesByPrinterKitchenId(printerKitchenId);
+                for (ScOperationPrinterKitchenGoodsRules kitchenGoodsRules : printerKitchenGoodsRulesList) {
                     Map<String, Object> goodsRulesItem = new HashMap<>(10);
                     goodsRulesItem.put("goodsId", kitchenGoodsRules.getGoodsId());
                     goodsRulesItem.put("stockId", kitchenGoodsRules.getStockId());
@@ -202,7 +202,7 @@ public class PrinterKitchenRest {
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
-        ScShopPrinterKitchen oldPrinterKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenForm.getId());
+        ScOperationPrinterKitchen oldPrinterKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenForm.getId());
         if (oldPrinterKitchen == null || Integer.valueOf(1).equals(oldPrinterKitchen.getDelete()) || !printerKitchenForm.getShopId().equals(oldPrinterKitchen.getShopId())) {
             result.setCode(Result.RESULT_FAILURE);
             result.setMsg("出票口不存在！");
@@ -244,7 +244,7 @@ public class PrinterKitchenRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenId);
+        ScOperationPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(printerKitchenId);
         if (printerKitchen == null || Integer.valueOf(1).equals(printerKitchen.getDelete()) || !shopId.equals(printerKitchen.getShopId())) {
             result.setMsg("出票口不存在！");
         } else {

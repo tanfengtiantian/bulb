@@ -1,11 +1,11 @@
--- CREATE DATABASE IF NOT EXISTS `sc_shop` CHARACTER SET = utf8mb4;
+-- CREATE DATABASE IF NOT EXISTS `sc_operation` CHARACTER SET = utf8mb4;
 
 SET NAMES utf8mb4;
 
--- ------------------------------------------
--- Table structure for sc_shop_printer_device
--- ------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_device` (
+-- -----------------------------------------------
+-- Table structure for sc_operation_printer_device
+-- -----------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_device` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `device_name` varchar(30) NOT NULL DEFAULT '' COMMENT '名称',
   `printer_device_type` tinyint NOT NULL DEFAULT 0 COMMENT '打印机类型：1-服务器 2-网络打印机',
@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_device` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '打印机表';
 
 
--- -------------------------------------------
--- Table structure for sc_shop_printer_kitchen
--- -------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen` (
+-- ------------------------------------------------
+-- Table structure for sc_operation_printer_kitchen
+-- ------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_kitchen` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '出票口名称',
   `printer_device_id` int NOT NULL DEFAULT 0 COMMENT '打印机id',
@@ -45,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '出票口';
 
 
--- ---------------------------------------------------------------
--- Table structure for sc_shop_printer_kitchen_document_type_rules
--- ---------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_document_type_rules` (
+-- --------------------------------------------------------------------
+-- Table structure for sc_operation_printer_kitchen_document_type_rules
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_kitchen_document_type_rules` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `printer_kitchen_id` int(11) NOT NULL DEFAULT 0 COMMENT '出票口id',
   `document_type_id` int NOT NULL DEFAULT 0 COMMENT '票据类型',
@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_document_type_rules` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '出票口票据类型';
 
 
--- -------------------------------------------------------
--- Table structure for sc_shop_printer_kitchen_table_rules
--- -------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_table_rules` (
+-- ------------------------------------------------------------
+-- Table structure for sc_operation_printer_kitchen_table_rules
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_kitchen_table_rules` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `printer_kitchen_id` int(11) NOT NULL DEFAULT 0 COMMENT '出票口id',
   `table_id` int(11) NOT NULL DEFAULT 0 COMMENT '桌台号',
@@ -79,10 +79,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_table_rules` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '出票口配置桌台区域';
 
 
--- -------------------------------------------------------
--- Table structure for sc_shop_printer_kitchen_goods_rules
--- -------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_goods_rules` (
+-- ------------------------------------------------------------
+-- Table structure for sc_operation_printer_kitchen_goods_rules
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_kitchen_goods_rules` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `printer_kitchen_id` int(11) NOT NULL DEFAULT 0 COMMENT '出票口id',
   `goods_id` int(11) NOT NULL DEFAULT 0 COMMENT '商品id',
@@ -97,10 +97,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_kitchen_goods_rules` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '出票口配置打印菜品';
 
 
--- -------------------------------------------------
--- Table structure for sc_shop_printer_document_type
--- -------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_document_type` (
+-- ------------------------------------------------------
+-- Table structure for sc_operation_printer_document_type
+-- ------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_document_type` (
   `id` INT UNSIGNED AUTO_INCREMENT,
   `name` VARCHAR(10) NOT NULL DEFAULT '' COMMENT '类型名称',
   `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态：0-禁用 1-启用',
@@ -109,20 +109,20 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_document_type` (
   PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '打印模板类型表';
 
--- ----------------------------------------
--- Record for sc_shop_printer_document_type
--- ----------------------------------------
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(1, '结账单', 1, now(), now());
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(2, '客看单', 1, now(), now());
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(3, '预结单', 1, now(), now());
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(4, '消费清单', 1, now(), now());
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(5, '厨总单', 1, now(), now());
-INSERT INTO `sc_shop_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(6, '堂口单', 1, now(), now());
+-- ---------------------------------------------
+-- Record for sc_operation_printer_document_type
+-- ---------------------------------------------
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(1, '结账单', 1, now(), now());
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(2, '客看单', 1, now(), now());
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(3, '预结单', 1, now(), now());
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(4, '消费清单', 1, now(), now());
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(5, '厨总单', 1, now(), now());
+INSERT INTO `sc_operation_printer_document_type` (id, `name`, status, create_time, update_time) VALUES(6, '堂口单', 1, now(), now());
 
--- ---------------------------------------------------
--- Table structure for sc_shop_printer_template_module
--- ---------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_template_module` (
+-- --------------------------------------------------------
+-- Table structure for sc_operation_printer_template_module
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_template_module` (
   `id` INT UNSIGNED AUTO_INCREMENT,
   `module_name` VARCHAR(10) NOT NULL COMMENT '模块名称',
   `module_describe` VARCHAR(30) NOT NULL COMMENT '模块描述',
@@ -133,11 +133,11 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_template_module` (
   PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '打印模板模块表';
 
--- ------------------------------------------
--- Record for sc_shop_printer_template_module
--- ------------------------------------------
+-- -----------------------------------------------
+-- Record for sc_operation_printer_template_module
+-- -----------------------------------------------
 -- 结账单模块
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 1, 1, now(), now()),
 ('基础信息', '配置桌台号、流水号、订单号等', 1, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 1, 3, now(), now()),
@@ -147,14 +147,14 @@ INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, docu
 ('二维码', '配置二维码', 1, 7, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 1, 8, now(), now());
 -- 客看单模块
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 2, 1, now(), now()),
 ('基础信息', '配置桌台号、流水号、订单号等', 2, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 2, 3, now(), now()),
 ('二维码', '配置二维码', 2, 4, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 2, 5, now(), now());
 -- 预结单模块
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 3, 1, now(), now()),
 ('基础信息', '配置桌台号、流水号、订单号等', 3, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 3, 3, now(), now()),
@@ -163,7 +163,7 @@ INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, docu
 ('二维码', '配置二维码', 3, 6, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 3, 7, now(), now());
 -- 消费清单模块
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 4, 1, now(), now()),
 ('基础信息', '配置桌台号、流水号、订单号等', 4, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 4, 3, now(), now()),
@@ -173,22 +173,22 @@ INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, docu
 ('二维码', '配置二维码', 4, 7, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 4, 8, now(), now());
 -- 厨总单模块
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 5, 1, now(), now()),
 ('基础信息', '配置桌台号、流水号、订单号等', 5, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 5, 3, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 5, 4, now(), now());
 -- 堂口单
-INSERT INTO `sc_shop_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
+INSERT INTO `sc_operation_printer_template_module`(module_name, module_describe, document_type, sort, create_time, update_time) VALUES
 ('标题', '定义商户LOGO & 票据名称', 6, 1, now(), now()),
 ('基本信息', '配置桌台号、流水号、订单号等', 6, 2, now(), now()),
 ('订单明细', '配置商品、单价、数量、总价等', 6, 3, now(), now()),
 ('底栏', '配置服务员、时间、商户信息等', 6, 4, now(), now());
 
--- ----------------------------------------------------
--- Table structure for sc_shop_printer_system_component
--- ----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_system_component`(
+-- ---------------------------------------------------------
+-- Table structure for sc_operation_printer_system_component
+-- ---------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_system_component`(
   `id` INTEGER UNSIGNED AUTO_INCREMENT,
   `module_id` INT NOT NULL DEFAULT 0 COMMENT '模块id',
   `parent_id` INT NOT NULL DEFAULT 0 COMMENT '父组件id',
@@ -212,17 +212,17 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_system_component`(
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '打印模板系统组件表';
 
 
--- -------------------------------------------
--- Record for sc_shop_printer_system_component
--- -------------------------------------------
+-- ------------------------------------------------
+-- Record for sc_operation_printer_system_component
+-- ------------------------------------------------
 -- 结账单：moduleId = 1
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (101001, 1, 0, 0, '商户logo', '商户logo', '{"fontSize": 4,"textAlign":"center"}', '#{shopLogo}', 'text', 1, 1, 100, 1, now(), now()),
 (101002, 1, 0, 0, '店铺名称', '店铺名称', '{"fontSize": 4,"textAlign":"center"}', '#{shopName}', 'text', 2, 1, 100, 2, now(), now()),
 (101003, 1, 0, 0, '票据名称', '结账单', '{"fontSize": 4,"textAlign":"center"}', '#{ticketType}', 'text', 3, 1, 100, 3, now(), now()),
 (101004, 1, 0, 0, '发票号', '发票号:xxxxxxxxx', '{"fontSize": 1,"textAlign":"left"}', '发票号:#{taxNumber}', 'text', 4, 1, 100, 4, now(), now());
 -- 结账单：moduleId = 2
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (102001, 2, 0, 0, '桌台号', '桌台号:1', '{"fontSize": 1,"textAlign":"left"}', '桌台号:#{tableNum}', 'text', 1, 1, 70, 1, now(), now()),
 (102002, 2, 0, 0, '流水号', '流水号:1', '{"fontSize": 1,"textAlign":"right"}', '流水号:#{serialNum}', 'text', 1, 2, 30, 2, now(), now()),
 (102003, 2, 0, 0, '订单号', '订单号:201608221001', '{"fontSize": 1,"textAlign":"left"}', '订单号:#{orderNum}', 'text', 2, 1, 80, 3, now(), now()),
@@ -232,7 +232,7 @@ VALUES (102001, 2, 0, 0, '桌台号', '桌台号:1', '{"fontSize": 1,"textAlign"
 (102007, 2, 0, 0, '反结账原订单流水号', '反结账原订单流水号:2', '{"fontSize": 1,"textAlign":"left"}', '反结账原订单流水号:#{reverseAccountOldOrderNum}', 'text', 5, 1, 100, 7, now(), now()),
 (102008, 2, 0, 0, '就餐人数详情', '成人2位，儿童1位，老人1位', '{"fontSize": 1,"textAlign":"left"}', '#{mealPeopleDetail}', 'text', 6, 1, 100, 8, now(), now());
 -- 结账单：moduleId = 3
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (103001, 3, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (103002, 3, 103001, 0, '中类名称', '中类(价格)', '{"fontSize": 1,"textAlign":"center"}', '#{goodMiddleCategoryName}', 'category', 2, 1, 100, 2, now(), now()),
 -- 商品表格头
@@ -277,7 +277,7 @@ VALUES (103001, 3, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now()
 (103035, 3, 103034, 0, '消费税税率', '消费税5%', '{"fontSize": 1,"textAlign":"left"}', '#{consumptionTaxName}', 'text', 19, 1, 70, 35, now(), now()),
 (103036, 3, 103034, 0, '消费税金额', '6.00', '{"fontSize": 1,"textAlign":"right"}', '#{consumptionTaxAmount}', 'text', 19, 2, 30, 36, now(), now());
 -- 结账单：moduleId = 4
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (104001, 4, 0, 0, '结算明细', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (104002, 4, 104001, 0, '商品原价合计', '商品原价合计', '{"fontSize": 1,"textAlign":"left"}', '商品原价合计', 'text', 2, 1, 70, 2, now(), now()),
 (104003, 4, 104001, 0, '商品原价合计金额', '16.00', '{"fontSize": 1,"textAlign":"right"}', '#{goodTotalAmount}', 'text', 2, 2, 30, 3, now(), now()),
@@ -298,7 +298,7 @@ VALUES (104001, 4, 0, 0, '结算明细', '', '', '', 'grid', 1, 1, 100, 1, now()
 (104018, 4, 104017, 0, '应付金额', '应付金额', '{"fontSize": 4,"textAlign":"left"}', '应付金额', 'text', 11, 1, 70, 18, now(), now()),
 (104019, 4, 104017, 0, '应付金额', '216.00', '{"fontSize": 1,"textAlign":"right"}', '#{goodTotalAmountPay}', 'text', 11, 2, 30, 19, now(), now());
 -- 结账单：moduleId = 5
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (105001, 5, 0, 0, '财务处理', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (105002, 5, 105001, 0, '抹零', '抹零', '{"fontSize": 1,"textAlign":"left"}', '抹零', 'text', 2, 1, 70, 2, now(), now()),
 (105003, 5, 105001, 0, '抹零金额', '-6.00', '{"fontSize": 1,"textAlign":"right"}', '#{quiteZero}', 'text', 2, 2, 30, 3, now(), now()),
@@ -339,7 +339,7 @@ VALUES (105001, 5, 0, 0, '财务处理', '', '', '', 'grid', 1, 1, 100, 1, now()
 (105032, 5, 105029, 0, '消费后', '消费后:100', '{"fontSize": 1,"textAlign":"right"}', '消费后:#{valueCardAfter}', 'text', 19, 2, 50, 32, now(), now()),
 (105033, 5, 0, 0, '签字区', '签字区', '{"fontSize": 2,"textAlign":"left"}', '签字区', 'text', 20, 1, 100, 33, now(), now());
 -- 结账单：moduleId = 6
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (106001, 6, 0, 0, '作废商品', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (106002, 6, 106001, 0, '作废商品', '作废商品', '{"fontSize": 2,"textAlign":"right"}', '作废商品', 'title', 2, 1, 100, 2, now(), now()),
 (106003, 6, 106001, 0, '中类名称', '中类(价格)', '{"fontSize": 1,"textAlign":"center"}', '#{goodMiddleCategoryNameDiscard}', 'category', 3, 1, 100, 3, now(), now()),
@@ -385,10 +385,10 @@ VALUES (106001, 6, 0, 0, '作废商品', '', '', '', 'grid', 1, 1, 100, 1, now()
 (106040, 6, 106039, 0, '反结账理由', '反结账理由', '{"fontSize": 2,"textAlign":"left"}', '反结账理由', 'title', 23, 1, 100, 40, now(), now()),
 (106041, 6, 106039, 0, '反结账理由', '收款错误需要进行反结账', '{"fontSize": 1,"textAlign":"left"}', '#{reverseAccountReason}', 'text', 24, 1, 100, 41, now(), now());
 -- 结账单：moduleId = 7
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (107001, 7, 0, 0, '自定义二维码', '文案内容', '{"fontSize": 1,"textAlign":"center"}', '文案内容', 'text', 1, 1, 100, 1, now(), now());
 -- 结账单：moduleId = 8
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES (108001, 8, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textAlign":"left"}', '服务员:#{waiter}', 'text', 1, 1, 50, 1, now(), now()),
 (108002, 8, 0, 0, '操作员', '操作员:王五', '{"fontSize": 1,"textAlign":"right"}', '操作员:#{cashier}', 'text', 1, 2, 50, 2, now(), now()),
 (108003, 8, 0, 0, '开单', '开单:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '开单:#{openBillingTime}', 'text', 2, 1, 100, 3, now(), now()),
@@ -401,7 +401,7 @@ VALUES (108001, 8, 0, 0, '服务员', '服务员:李四', '{"fontSize": 1,"textA
 (108009, 8, 108006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 客看单：module= 9
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (209001, 9, 0, 0, '商户logo', '', '{"fontSize": 1,"textAlign":"center"}', '#{shopLogo}', 'text', 1, 1, 100, 1, now(), now()),
 (209002, 9, 0, 0, '店铺名称', '店铺名称', '{"fontSize": 1,"textAlign":"center"}', '#{shopName}', 'text', 2, 1, 100, 2, now(), now()),
@@ -414,7 +414,7 @@ VALUES
 (210005, 10, 0, 0, '会员', '会员:张三(150XXXXXXXX)', '{"fontSize": 1,"textAlign":"left"}', '会员:#{memberNum}', 'text', 3, 1, 100, 5, now(), now()),
 (210006, 10, 0, 0, '就餐人数详情', '成人2位，儿童1位，老人1位', '{"fontSize": 1,"textAlign":"left"}', '#{mealPeopleDetail}', 'text', 4, 1, 100, 6, now(), now());
 -- module= 11
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (211001, 11, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (211002, 11, 211001, 0, '中类名称', '中类(价格)', '{"fontSize": 1,"textAlign":"center"}', '#{goodMiddleCategoryName}', 'category', 2, 1, 100, 2, now(), now()),
@@ -446,7 +446,7 @@ VALUES
 (211028, 11, 211017, 0, '备注', '【备注:多放肉】', '{"fontSize": 1,"textAlign":"left"}', '#{memo}', 'text', 14, 1, 100, 28, now(), now()),
 (211029, 11, 0, 0, '整单备注', '整单备注:不要太辣', '{"fontSize": 1,"textAlign":"left"}', '整单备注:#{orderMemo}', 'text', 15, 1, 100, 29, now(), now());
 -- module= 12
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (212001, 12, 0, 0, '自定义二维码', '文案内容', '{"fontSize": 1,"textAlign":"center"}', '文案内容', 'text', 1, 1, 100, 1, now(), now()),
 -- module= 13
@@ -461,7 +461,7 @@ VALUES
 (213009, 13, 213006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 预结单 moduleId = 14
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (314001, 14, 0, 0, '商户logo', '', '{"fontSize": 1,"textAlign":"center"}', '#{shopLogo}', 'text', 1, 1, 100, 1, now(), now()),
 (314002, 14, 0, 0, '店铺名称', '店铺名称', '{"fontSize": 1,"textAlign":"center"}', '#{shopName}', 'text', 2, 1, 100, 2, now(), now()),
@@ -475,7 +475,7 @@ VALUES
 (315006, 15, 0, 0, '反结账原订单流水号', '反结账原订单流水号:2', '{"fontSize": 1,"textAlign":"left"}', '反结账原订单流水号:#{reverseAccountOldOrderNum}', 'text', 4, 1, 100, 6, now(), now()),
 (315007, 15, 0, 0, '就餐人数详情', '成人2位，儿童1位，老人1位', '{"fontSize": 1,"textAlign":"left"}', '#{mealPeopleDetail}', 'text', 5, 1, 100, 7, now(), now());
 -- moduleId = 16
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (316001, 16, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (316002, 16, 316001, 0, '中类名称', '中类(价格)', '{"fontSize": 1,"textAlign":"center"}', '#{goodMiddleCategoryName}', 'category', 2, 1, 100, 2, now(), now()),
@@ -512,7 +512,7 @@ VALUES
 (316033, 16, 316032, 0, '消费税税率', '消费税5%', '{"fontSize": 1,"textAlign":"left"}', '#{consumptionTaxName}', 'text', 20, 1, 70, 33, now(), now()),
 (316034, 16, 316032, 0, '消费税金额', '6.00', '{"fontSize": 1,"textAlign":"right"}', '#{consumptionTaxAmount}', 'text', 20, 2, 30, 34, now(), now());
 -- moduleId = 17
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (317001, 17, 0, 0, '结算明细', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (317002, 17, 317001, 0, '商品原价合计', '商品原价合计', '{"fontSize": 1,"textAlign":"left"}', '商品原价合计', 'text', 2, 1, 70, 2, now(), now()),
@@ -531,7 +531,7 @@ VALUES
 (317015, 17, 317014, 0, '应付金额', '应付金额', '{"fontSize": 1,"textAlign":"left"}', '应付金额', 'text', 9, 1, 70, 15, now(), now()),
 (317016, 17, 317014, 0, '应付金额', '216.00', '{"fontSize": 1,"textAlign":"right"}', '#{goodTotalAmountPay}', 'text', 9, 2, 30, 16, now(), now());
 -- moduleId = 18
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (318001, 18, 0, 0, '作废商品', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (318002, 18, 318001, 0, '作废商品', '作废商品', '{"fontSize": 1,"textAlign":"left"}', '作废商品', 'title', 2, 1, 100, 2, now(), now()),
@@ -562,7 +562,7 @@ VALUES
 
 
 -- 消费清单
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (321001, 21, 0, 0, '商户logo', '商户logo', '{"fontSize": 1,"textAlign":"center"}', '#{shopLogo}', 'text', 1, 1, 100, 1, now(), now()),
 (321002, 21, 0, 0, '店铺名称', '店铺名称', '{"fontSize": 1,"textAlign":"center"}', '#{shopName}', 'text', 2, 1, 100, 2, now(), now()),
@@ -585,7 +585,7 @@ VALUES
 (322014, 22, 0, 0, '收货人电话', '155****5555', '{"fontSize": 1,"textAlign":"left"}', '#{receiverPhone}', 'text', 12, 1, 100, 14, now(), now()),
 (322015, 22, 0, 0, '送达信息', 'MM-DD HH:mm送达', '{"fontSize": 1,"textAlign":"left"}', '#{transitTime}', 'text', 13, 1, 100, 15, now(), now());
 -- moduleId = 23
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (323001, 23, 0, 0, '商品表格', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (323002, 23, 323001, 0, '中类名称', '中类(价格)', '{"fontSize": 1,"textAlign":"center"}', '#{goodMiddleCategoryName}', 'category', 2, 1, 100, 2, now(), now()),
@@ -624,7 +624,7 @@ VALUES
 (323035, 23, 323034, 0, '消费税税率', '消费税5%', '{"fontSize": 1,"textAlign":"left"}', '#{consumptionTaxName}', 'text', 21, 1, 70, 35, now(), now()),
 (323036, 23, 323034, 0, '消费税金额', '6.00', '{"fontSize": 1,"textAlign":"right"}', '#{consumptionTaxAmount}', 'text', 21, 2, 30, 36, now(), now());
 -- moduleId = 24
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (324001, 24, 0, 0, '结算明细', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (324002, 24, 324001, 0, '商品原价合计', '商品原价合计', '{"fontSize": 1,"textAlign":"left"}', '商品原价合计', 'text', 2, 1, 50, 2, now(), now()),
@@ -646,7 +646,7 @@ VALUES
 (324018, 24, 324017, 0, '应付金额', '应付金额', '{"fontSize": 1,"textAlign":"left"}', '应付金额', 'text', 11, 1, 50, 18, now(), now()),
 (324019, 24, 324017, 0, '应付金额', '216.00', '{"fontSize": 1,"textAlign":"right"}', '#{goodTotalAmountPay}', 'text', 11, 2, 50, 19, now(), now());
 -- moduleId = 25
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (325001, 25, 0, 0, '财务处理', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (325002, 25, 325001, 0, '抹零', '抹零', '{"fontSize": 1,"textAlign":"left"}', '抹零', 'text', 2, 1, 50, 2, now(), now()),
@@ -686,7 +686,7 @@ VALUES
 (325036, 25, 0, 0, '发票信息', '发票:公司抬头', '{"fontSize": 1,"textAlign":"left"}', '发票:#{invoice}', 'text', 24, 1, 100, 35, now(), now()),
 (325037, 25, 0, 0, '签字区', '签字区', '{"fontSize": 1,"textAlign":"left"}', '签字区', 'text', 25, 1, 100, 36, now(), now());
 -- moduleId = 26
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (326001, 26, 0, 0, '反结账原订单信息', '', '', '', 'grid', 1, 1, 100, 1, now(), now()),
 (326002, 26, 326001, 0, '反结账原订单信息', '反结账原订单信息', '{"fontSize": 1,"textAlign":"left"}', '反结账原订单信息', 'title', 2, 1, 100, 2, now(), now()),
@@ -721,7 +721,7 @@ VALUES
 (326031, 26, 326030, 0, '反结账理由', '反结账理由', '{"fontSize": 1,"textAlign":"left"}', '反结账理由', 'title', 17, 1, 100, 31, now(), now()),
 (326032, 26, 326030, 0, '反结账理由', '收款错误需要进行反结账', '{"fontSize": 1,"textAlign":"left"}', '#{reverseAccountReason}', 'text', 18, 1, 100, 32, now(), now());
 -- moduleId = 27
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (327001, 27, 0, 0, 'On Moblie配送二维码', '二维码ID', '{"fontSize": 1,"textAlign":"center"}', '#{codeId}', 'text', 1, 1, 100, 1, now(), now()),
 (327002, 27, 0, 0, '自定义二维码', '扫码关注公众号,有惊喜哟~', '{"fontSize": 1,"textAlign":"center"}', '扫码关注公众号,有惊喜哟~', 'text', 2, 1, 100, 2, now(), now()),
@@ -740,7 +740,7 @@ VALUES
 (328009, 28, 328006, 0, '商户自定义内容', '欢迎下次光临', '{"fontSize": 1,"textAlign":"center"}', '欢迎下次光临', 'text', 8, 1, 100, 9, now(), now());
 
 -- 厨总单
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (329001, 29, 0, 0, '票据名称', '厨总单', '{"fontSize": 1,"textAlign":"center"}', '#{ticketType}', 'text', 1, 1, 100, 1, now(), now()),
 -- moduleId = 30
@@ -787,7 +787,7 @@ VALUES
 (332005, 32, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now());
 
 -- 堂口单
-INSERT INTO `sc_shop_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
+INSERT INTO `sc_operation_printer_system_component`(id, module_id, parent_id, ref_id, label, `value`, value_style, placeholder, `type`, row, `column`, width, sort, create_time, update_time)
 VALUES
 (333001, 33, 0, 0, '票据名称', '堂口单', '{"fontSize": 1,"textAlign":"center"}', '#{ticketType}', 'text', 1, 1, 100, 1, now(), now()),
 -- moduleId = 34
@@ -833,10 +833,10 @@ VALUES
 (336005, 36, 0, 0, '操作时间', '操作:YYYY-MM-DD HH:MM:SS', '{"fontSize": 1,"textAlign":"left"}', '操作:#{operationTime}', 'text', 4, 1, 100, 5, now(), now());
 
 
--- -----------------------------------------------------
--- Table structrue for sc_shop_printer_template_document
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_template_document` (
+-- ----------------------------------------------------------
+-- Table structrue for sc_operation_printer_template_document
+-- ----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_template_document` (
   `id` INT UNSIGNED AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '模板名称',
   `document_type` INT NOT NULL DEFAULT 0 COMMENT '文档类型',
@@ -852,10 +852,10 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_template_document` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 0 DEFAULT CHARSET = utf8mb4 COMMENT '打印模板表';
 
 
--- --------------------------------------------
--- Record for sc_shop_printer_template_document
--- --------------------------------------------
-INSERT INTO `sc_shop_printer_template_document`(id, `name`, document_type, url, status, shop_id, creator_id, creator_name, create_time, update_time)
+-- -------------------------------------------------
+-- Record for sc_operation_printer_template_document
+-- -------------------------------------------------
+INSERT INTO `sc_operation_printer_template_document`(id, `name`, document_type, url, status, shop_id, creator_id, creator_name, create_time, update_time)
 VALUES
 (1, '系统模板-结账单', 1, '', 1, 0, 0, 'system', now(), now()),
 (2, '系统模板-客看单', 2, '', 1, 0, 0, 'system', now(), now()),
@@ -865,10 +865,10 @@ VALUES
 (6, '系统模板-堂口单', 6, '', 1, 0, 0, 'system', now(), now());
 
 
--- ----------------------------------------------------
--- Table structure for sc_shop_printer_custom_component
--- ----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sc_shop_printer_custom_component` (
+-- ---------------------------------------------------------
+-- Table structure for sc_operation_printer_custom_component
+-- ---------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sc_operation_printer_custom_component` (
   `id` int(11) UNSIGNED AUTO_INCREMENT,
   `document_template_id` int(11) NOT NULL DEFAULT 0 COMMENT '模板id',
   `system_component_id` int(11) NOT NULL NULL DEFAULT 0 COMMENT '系统组件id',
@@ -878,90 +878,90 @@ CREATE TABLE IF NOT EXISTS `sc_shop_printer_custom_component` (
   KEY `idx_systemComponentId`(`system_component_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT '自定义组件表';
 
--- -------------------------------------------
--- Record for sc_shop_printer_custom_component
--- -------------------------------------------
+-- ------------------------------------------------
+-- Record for sc_operation_printer_custom_component
+-- ------------------------------------------------
 -- 系统模板-结账单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   1 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 1
 );
 -- 系统模板-客看单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   2 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 2
 );
 -- 系统模板-预结单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   3 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 3
 );
 -- 系统模板-消费清单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   4 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 4
 );
 -- 系统模板-厨总单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   5 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 5
 );
 -- 系统模板-堂口单
-INSERT INTO sc_shop_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
+INSERT INTO sc_operation_printer_custom_component(document_template_id, system_component_id, value_style, is_delete)
 SELECT
   6 AS document_template_id,
   sc.id AS system_component_id,
   sc.value_style,
   0 AS is_delete
-FROM sc_shop_printer_system_component sc
+FROM sc_operation_printer_system_component sc
 WHERE sc.module_id IN
 (
   SELECT id
-  FROM sc_shop_printer_template_module sm
+  FROM sc_operation_printer_template_module sm
   WHERE sm.document_type = 6
 );

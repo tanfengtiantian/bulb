@@ -3,11 +3,11 @@ package com.maxzuo.printtemplate;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.maxzuo.printtemplate.api.IScShopPrinterCustomComponentService;
-import com.maxzuo.printtemplate.api.IScShopPrinterKitchenService;
-import com.maxzuo.printtemplate.model.ScShopPrinterCustomComponent;
-import com.maxzuo.printtemplate.model.ScShopPrinterKitchen;
-import com.maxzuo.printtemplate.model.ScShopPrinterSystemComponent;
+import com.maxzuo.printtemplate.api.IScOperationPrinterCustomComponentService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterKitchenService;
+import com.maxzuo.printtemplate.model.ScOperationPrinterCustomComponent;
+import com.maxzuo.printtemplate.model.ScOperationPrinterKitchen;
+import com.maxzuo.printtemplate.model.ScOperationPrinterSystemComponent;
 import com.maxzuo.printtemplate.vo.PrinterKitchenVO;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -34,14 +34,14 @@ public class MainTest {
     private static final Logger logger = LoggerFactory.getLogger(MainTest.class);
 
     @Autowired
-    private IScShopPrinterCustomComponentService scShopPrinterCustomComponentService;
+    private IScOperationPrinterCustomComponentService scOperationPrinterCustomComponentService;
 
     @Autowired
-    private IScShopPrinterKitchenService scShopPrinterKitchenService;
+    private IScOperationPrinterKitchenService scOperationPrinterKitchenService;
 
     @Test
     public void testConvertToVO () {
-        ScShopPrinterKitchen printerKitchen = scShopPrinterKitchenService.getByPrimaryKey(1);
+        ScOperationPrinterKitchen printerKitchen = scOperationPrinterKitchenService.getByPrimaryKey(1);
         PrinterKitchenVO printerKitchenVO = new PrinterKitchenVO();
         BeanUtils.copyProperties(printerKitchen, printerKitchenVO);
         System.out.println("printerKitchenVO: " + printerKitchenVO);
@@ -69,7 +69,7 @@ public class MainTest {
             Integer documentId = 10;
 
             JSONArray modules = jsonObject.getJSONArray("modules");
-            List<ScShopPrinterCustomComponent> customComponentList = new ArrayList<>(30);
+            List<ScOperationPrinterCustomComponent> customComponentList = new ArrayList<>(30);
             for (Object item : modules) {
                 JSONArray rows = ((JSONObject) item).getJSONArray("rows");
                 for (Object row : rows) {
@@ -116,7 +116,7 @@ public class MainTest {
 
             System.out.println("size: " + customComponentList.size());
             System.out.println("JSON: " + JSON.toJSON(customComponentList));
-            Integer integer = scShopPrinterCustomComponentService.saveMultiplePrinterCustomComponent(customComponentList);
+            Integer integer = scOperationPrinterCustomComponentService.saveMultiplePrinterCustomComponent(customComponentList);
             System.out.println("受影响的条数： " + integer);
             System.out.println("耗时：" + (System.currentTimeMillis() - startTimeStamp) + "ms");
         } catch (Exception e) {
@@ -130,9 +130,9 @@ public class MainTest {
      * @param componentStr 系统组件
      * @param customComponentList 自定义组件列表
      */
-    private void convertCustomComponent (Integer documentId, String componentStr, List<ScShopPrinterCustomComponent> customComponentList) {
-        ScShopPrinterSystemComponent systemComponent = JSONObject.parseObject(componentStr, ScShopPrinterSystemComponent.class);
-        ScShopPrinterCustomComponent customComponent = new ScShopPrinterCustomComponent();
+    private void convertCustomComponent (Integer documentId, String componentStr, List<ScOperationPrinterCustomComponent> customComponentList) {
+        ScOperationPrinterSystemComponent systemComponent = JSONObject.parseObject(componentStr, ScOperationPrinterSystemComponent.class);
+        ScOperationPrinterCustomComponent customComponent = new ScOperationPrinterCustomComponent();
         customComponent.setDocumentTemplateId(documentId);
         customComponent.setSystemComponentId(systemComponent.getId());
         customComponent.setValueStyle(systemComponent.getValueStyle());

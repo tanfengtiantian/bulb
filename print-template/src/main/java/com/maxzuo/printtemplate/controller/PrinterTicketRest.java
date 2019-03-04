@@ -35,28 +35,28 @@ public class PrinterTicketRest {
     private final Logger logger = LoggerFactory.getLogger(PrinterTicketRest.class);
 
     @Autowired
-    private IScShopPrinterDocumentTypeService scShopPrinterDocumentTypeService;
+    private IScOperationPrinterDocumentTypeService scShopPrinterDocumentTypeService;
 
     @Autowired
-    private IScShopPrinterTemplateModuleService scShopPrinterTemplateModuleService;
+    private IScOperationPrinterTemplateModuleService scShopPrinterTemplateModuleService;
 
     @Autowired
-    private IScShopPrinterTemplateDocumentService scShopPrinterTemplateDocumentService;
+    private IScOperationPrinterTemplateDocumentService scShopPrinterTemplateDocumentService;
 
     @Autowired
-    private IScShopPrinterSystemComponentService scShopPrinterSystemComponentService;
+    private IScOperationPrinterSystemComponentService scShopPrinterSystemComponentService;
 
     @Autowired
-    private IScShopPrinterCustomComponentService scShopPrinterCustomComponentService;
+    private IScOperationPrinterCustomComponentService scShopPrinterCustomComponentService;
 
     /**
      * 票据类型
      */
     @PostMapping("queryType")
     public Result queryType () {
-        List<ScShopPrinterDocumentType> typeList = scShopPrinterDocumentTypeService.listPrinterDocumentType();
+        List<ScOperationPrinterDocumentType> typeList = scShopPrinterDocumentTypeService.listPrinterDocumentType();
         List<PrinterDocumentTypeVO> typeVOList = new ArrayList<>(10);
-        for (ScShopPrinterDocumentType documentType : typeList) {
+        for (ScOperationPrinterDocumentType documentType : typeList) {
             PrinterDocumentTypeVO typeVO = new PrinterDocumentTypeVO();
             BeanUtils.copyProperties(documentType, typeVO);
             typeVOList.add(typeVO);
@@ -84,8 +84,8 @@ public class PrinterTicketRest {
         }
         // 模板列表（含默认的模板）
         List<PrinterTemplateDocumentVO> templateList = new ArrayList<>(10);
-        List<ScShopPrinterTemplateDocument> scShopPrinterTemplateDocuments = scShopPrinterTemplateDocumentService.listPrinterTemplateDocumentByShopIdAndDocumentType(shopId, documentType);
-        for (ScShopPrinterTemplateDocument templateDocument : scShopPrinterTemplateDocuments) {
+        List<ScOperationPrinterTemplateDocument> scShopPrinterTemplateDocuments = scShopPrinterTemplateDocumentService.listPrinterTemplateDocumentByShopIdAndDocumentType(shopId, documentType);
+        for (ScOperationPrinterTemplateDocument templateDocument : scShopPrinterTemplateDocuments) {
             PrinterTemplateDocumentVO templateVO = new PrinterTemplateDocumentVO();
             BeanUtils.copyProperties(templateDocument, templateVO);
             templateVO.setDefaultTemplet(0);
@@ -93,11 +93,11 @@ public class PrinterTicketRest {
                 templateVO.setDefaultTemplet(1);
             }
             // 查询模板组件
-            List<ScShopPrinterCustomComponent> customComponentList = scShopPrinterCustomComponentService.listPrinterTemplateCustomComponentByTemplateId(templateDocument.getId());
+            List<ScOperationPrinterCustomComponent> customComponentList = scShopPrinterCustomComponentService.listPrinterTemplateCustomComponentByTemplateId(templateDocument.getId());
             Map<Integer, List<Object>> previewRowsMap = buildPreviewComponentStructure(customComponentList);
-            List<ScShopPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(templateDocument.getDocumentType());
+            List<ScOperationPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(templateDocument.getDocumentType());
             List<Map<String, Object>> modules = new ArrayList<>(10);
-            for (ScShopPrinterTemplateModule templateModule : moduleList) {
+            for (ScOperationPrinterTemplateModule templateModule : moduleList) {
                 Map<String, Object> module = new HashMap<>(10);
                 module.put("moduleId", templateModule.getId());
                 module.put("moduleName", templateModule.getModuleName());
@@ -132,17 +132,17 @@ public class PrinterTicketRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
+        ScOperationPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocument == null || Integer.valueOf(0).equals(templateDocument.getStatus()) || !documentType.equals(templateDocument.getDocumentType())) {
             result.setMsg("模板不存在！");
             return result;
         }
 
-        List<ScShopPrinterSystemComponent> scShopPrinterSystemComponents = scShopPrinterSystemComponentService.listPrinterSystemComponentByTemplateType(templateDocument.getDocumentType());
+        List<ScOperationPrinterSystemComponent> scShopPrinterSystemComponents = scShopPrinterSystemComponentService.listPrinterSystemComponentByTemplateType(templateDocument.getDocumentType());
         Map<Integer, List<Object>> listMap = buildSystemComponentStructure(scShopPrinterSystemComponents);
-        List<ScShopPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(documentType);
+        List<ScOperationPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(documentType);
         List<Map<String, Object>> modules = new ArrayList<>(10);
-        for (ScShopPrinterTemplateModule templateModule : moduleList) {
+        for (ScOperationPrinterTemplateModule templateModule : moduleList) {
             Map<String, Object> module = new HashMap<>(10);
             module.put("moduleId", templateModule.getId());
             module.put("moduleName", templateModule.getModuleName());
@@ -164,9 +164,9 @@ public class PrinterTicketRest {
      * @param systemComponentList 组件列表
      * @return 按模块划分组件，K -> 模块名 V -> components
      */
-    private Map<Integer, List<Object>> buildSystemComponentStructure (List<ScShopPrinterSystemComponent> systemComponentList) {
+    private Map<Integer, List<Object>> buildSystemComponentStructure (List<ScOperationPrinterSystemComponent> systemComponentList) {
         Map<Integer, List<Object>> moduleComponentMap = new HashMap<>(10);
-        for (ScShopPrinterSystemComponent systemComponent : systemComponentList) {
+        for (ScOperationPrinterSystemComponent systemComponent : systemComponentList) {
             List<Object> components = new ArrayList<>();
             // 1.判断所属模块
             if (moduleComponentMap.containsKey(systemComponent.getModuleId())) {
@@ -191,7 +191,7 @@ public class PrinterTicketRest {
                 for (Object item : components) {
                     if (item instanceof Map) {
                         Map<String, Object> oldComponentItem = (Map<String, Object>) item;
-                        ScShopPrinterSystemComponent component = (ScShopPrinterSystemComponent) oldComponentItem.get("component");
+                        ScOperationPrinterSystemComponent component = (ScOperationPrinterSystemComponent) oldComponentItem.get("component");
                         if (component.getId().equals(systemComponent.getParentId())) {
                             componentItem = oldComponentItem;
                         }
@@ -224,9 +224,9 @@ public class PrinterTicketRest {
                                 } else {
                                     thead.put("tableRowSet", tableRowSet);
                                 }
-                                List<ScShopPrinterSystemComponent> columnSet = new ArrayList<>(10);
+                                List<ScOperationPrinterSystemComponent> columnSet = new ArrayList<>(10);
                                 if (tableRowSet.containsKey("columnSet")) {
-                                    columnSet = (List<ScShopPrinterSystemComponent>) tableRowSet.get("columnSet");
+                                    columnSet = (List<ScOperationPrinterSystemComponent>) tableRowSet.get("columnSet");
                                 } else {
                                     tableRowSet.put("columnSet", columnSet);
                                 }
@@ -240,23 +240,23 @@ public class PrinterTicketRest {
                                 } else {
                                     componentItem.put("tbody", tbody);
                                 }
-                                List<Map<String, List<ScShopPrinterSystemComponent>>> tbodyTableRowSet = new ArrayList<>(10);
+                                List<Map<String, List<ScOperationPrinterSystemComponent>>> tbodyTableRowSet = new ArrayList<>(10);
                                 if (tbody.containsKey("tableRowSet")) {
-                                    tbodyTableRowSet = (List<Map<String, List<ScShopPrinterSystemComponent>>>) tbody.get("tableRowSet");
+                                    tbodyTableRowSet = (List<Map<String, List<ScOperationPrinterSystemComponent>>>) tbody.get("tableRowSet");
                                 } else {
                                     tbody.put("tableRowSet", tbodyTableRowSet);
                                 }
-                                List<ScShopPrinterSystemComponent> tbodyColumnSet = new ArrayList<>(10);
-                                for (Map<String, List<ScShopPrinterSystemComponent>> tbodyColumnSetItem : tbodyTableRowSet) {
-                                    List<ScShopPrinterSystemComponent> oldTbodyColumnSet = tbodyColumnSetItem.get("columnSet");
-                                    for (ScShopPrinterSystemComponent anOldTbodyColumnSet : oldTbodyColumnSet) {
+                                List<ScOperationPrinterSystemComponent> tbodyColumnSet = new ArrayList<>(10);
+                                for (Map<String, List<ScOperationPrinterSystemComponent>> tbodyColumnSetItem : tbodyTableRowSet) {
+                                    List<ScOperationPrinterSystemComponent> oldTbodyColumnSet = tbodyColumnSetItem.get("columnSet");
+                                    for (ScOperationPrinterSystemComponent anOldTbodyColumnSet : oldTbodyColumnSet) {
                                         if (anOldTbodyColumnSet.getRow().equals(systemComponent.getRow())) {
                                             tbodyColumnSet = oldTbodyColumnSet;
                                         }
                                     }
                                 }
                                 if (tbodyColumnSet.size() == 0) {
-                                    Map<String, List<ScShopPrinterSystemComponent>> tbodyColumnSetItem = new HashMap<>(16);
+                                    Map<String, List<ScOperationPrinterSystemComponent>> tbodyColumnSetItem = new HashMap<>(16);
                                     tbodyColumnSetItem.put("columnSet", tbodyColumnSet);
                                     tbodyTableRowSet.add(tbodyColumnSetItem);
                                 }
@@ -276,9 +276,9 @@ public class PrinterTicketRest {
      * @param customComponentList 组件列表
      * @return 按模块划分组件，K -> 模块名 V -> components
      */
-    private Map<Integer, List<Object>> buildPreviewComponentStructure(List<ScShopPrinterCustomComponent> customComponentList) {
+    private Map<Integer, List<Object>> buildPreviewComponentStructure(List<ScOperationPrinterCustomComponent> customComponentList) {
         Map<Integer, List<Object>> moduleComponentMap = new HashMap<>(10);
-        for (ScShopPrinterCustomComponent customComponent : customComponentList) {
+        for (ScOperationPrinterCustomComponent customComponent : customComponentList) {
             List<Object> components = new ArrayList<>();
             // 1.判断所属模块
             if (moduleComponentMap.containsKey(customComponent.getModuleId())) {
@@ -303,7 +303,7 @@ public class PrinterTicketRest {
                 for (Object item : components) {
                     if (item instanceof Map) {
                         Map<String, Object> oldComponentItem = (Map<String, Object>) item;
-                        ScShopPrinterCustomComponent component = (ScShopPrinterCustomComponent) oldComponentItem.get("component");
+                        ScOperationPrinterCustomComponent component = (ScOperationPrinterCustomComponent) oldComponentItem.get("component");
                         if (component.getSystemComponentId().equals(customComponent.getParentId())) {
                             componentItem = oldComponentItem;
                         }
@@ -336,9 +336,9 @@ public class PrinterTicketRest {
                                 } else {
                                     thead.put("tableRowSet", tableRowSet);
                                 }
-                                List<ScShopPrinterCustomComponent> columnSet = new ArrayList<>(10);
+                                List<ScOperationPrinterCustomComponent> columnSet = new ArrayList<>(10);
                                 if (tableRowSet.containsKey("columnSet")) {
-                                    columnSet = (List<ScShopPrinterCustomComponent>) tableRowSet.get("columnSet");
+                                    columnSet = (List<ScOperationPrinterCustomComponent>) tableRowSet.get("columnSet");
                                 } else {
                                     tableRowSet.put("columnSet", columnSet);
                                 }
@@ -352,23 +352,23 @@ public class PrinterTicketRest {
                                 } else {
                                     componentItem.put("tbody", tbody);
                                 }
-                                List<Map<String, List<ScShopPrinterCustomComponent>>> tbodyTableRowSet = new ArrayList<>(10);
+                                List<Map<String, List<ScOperationPrinterCustomComponent>>> tbodyTableRowSet = new ArrayList<>(10);
                                 if (tbody.containsKey("tableRowSet")) {
-                                    tbodyTableRowSet = (List<Map<String, List<ScShopPrinterCustomComponent>>>) tbody.get("tableRowSet");
+                                    tbodyTableRowSet = (List<Map<String, List<ScOperationPrinterCustomComponent>>>) tbody.get("tableRowSet");
                                 } else {
                                     tbody.put("tableRowSet", tbodyTableRowSet);
                                 }
-                                List<ScShopPrinterCustomComponent> tbodyColumnSet = new ArrayList<>(10);
-                                for (Map<String, List<ScShopPrinterCustomComponent>> tbodyColumnSetItem : tbodyTableRowSet) {
-                                    List<ScShopPrinterCustomComponent> oldTbodyColumnSet = tbodyColumnSetItem.get("columnSet");
-                                    for (ScShopPrinterCustomComponent anOldTbodyColumnSet : oldTbodyColumnSet) {
+                                List<ScOperationPrinterCustomComponent> tbodyColumnSet = new ArrayList<>(10);
+                                for (Map<String, List<ScOperationPrinterCustomComponent>> tbodyColumnSetItem : tbodyTableRowSet) {
+                                    List<ScOperationPrinterCustomComponent> oldTbodyColumnSet = tbodyColumnSetItem.get("columnSet");
+                                    for (ScOperationPrinterCustomComponent anOldTbodyColumnSet : oldTbodyColumnSet) {
                                         if (anOldTbodyColumnSet.getRow().equals(customComponent.getRow())) {
                                             tbodyColumnSet = oldTbodyColumnSet;
                                         }
                                     }
                                 }
                                 if (tbodyColumnSet.size() == 0) {
-                                    Map<String, List<ScShopPrinterCustomComponent>> tbodyColumnSetItem = new HashMap<>(16);
+                                    Map<String, List<ScOperationPrinterCustomComponent>> tbodyColumnSetItem = new HashMap<>(16);
                                     tbodyColumnSetItem.put("columnSet", tbodyColumnSet);
                                     tbodyTableRowSet.add(tbodyColumnSetItem);
                                 }
@@ -390,20 +390,20 @@ public class PrinterTicketRest {
                 previewRowsList = previewRowsMap.get(moduleId);
             }
             for (Object item : entry.getValue()) {
-                ScShopPrinterCustomComponent customComponent;
+                ScOperationPrinterCustomComponent customComponent;
                 if (item instanceof Map) {
                     Map<String, Object> component = (Map<String, Object>) item;
-                    customComponent = (ScShopPrinterCustomComponent) component.get("component");
+                    customComponent = (ScOperationPrinterCustomComponent) component.get("component");
                 } else {
-                    customComponent = (ScShopPrinterCustomComponent) item;
+                    customComponent = (ScOperationPrinterCustomComponent) item;
                     // 合并行
                     List<Object> oldComponents = new ArrayList<>(10);
                     for (Object previewRowItem : previewRowsList) {
                         Map<String, Object> previewRow = (Map<String, Object>) previewRowItem;
                         List<Object> components = (List<Object>) previewRow.get("components");
                         for (Object componentItem : components) {
-                            if (componentItem instanceof ScShopPrinterCustomComponent) {
-                                ScShopPrinterCustomComponent printerCustomComponent = (ScShopPrinterCustomComponent) componentItem;
+                            if (componentItem instanceof ScOperationPrinterCustomComponent) {
+                                ScOperationPrinterCustomComponent printerCustomComponent = (ScOperationPrinterCustomComponent) componentItem;
                                 if (printerCustomComponent.getRow().equals(customComponent.getRow())) {
                                     oldComponents = components;
                                     break;
@@ -446,17 +446,17 @@ public class PrinterTicketRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
+        ScOperationPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocument == null || !documentType.equals(templateDocument.getDocumentType())) {
             result.setMsg("模板不存在！");
             return result;
         }
 
-        List<ScShopPrinterCustomComponent> customComponentList = scShopPrinterCustomComponentService.listPrinterTemplateCustomComponentByTemplateId(templateId);
+        List<ScOperationPrinterCustomComponent> customComponentList = scShopPrinterCustomComponentService.listPrinterTemplateCustomComponentByTemplateId(templateId);
         Map<Integer, List<Object>> previewRowsMap = buildPreviewComponentStructure(customComponentList);
-        List<ScShopPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(templateDocument.getDocumentType());
+        List<ScOperationPrinterTemplateModule> moduleList = scShopPrinterTemplateModuleService.listPrinterTemplateModuleByDocumentId(templateDocument.getDocumentType());
         List<Map<String, Object>> modules = new ArrayList<>(10);
-        for (ScShopPrinterTemplateModule templateModule : moduleList) {
+        for (ScOperationPrinterTemplateModule templateModule : moduleList) {
             Map<String, Object> module = new HashMap<>(10);
             module.put("moduleId", templateModule.getId());
             module.put("moduleName", templateModule.getModuleName());
@@ -484,7 +484,7 @@ public class PrinterTicketRest {
         if (templateId == null) {
             return new Result(Result.RESULT_FAILURE,"缺少参数！");
         }
-        ScShopPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
+        ScOperationPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocument == null || Integer.valueOf(0).equals(templateDocument.getStatus()) || Integer.valueOf(0).equals(templateDocument.getShopId())) {
             return new Result(Result.RESULT_FAILURE, "模板不存在！");
         }
@@ -512,7 +512,7 @@ public class PrinterTicketRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterTemplateDocument templateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByName(name.trim());
+        ScOperationPrinterTemplateDocument templateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByName(name.trim());
         if (templateDocumentInfo != null) {
             if (Integer.valueOf(0).equals(templateId)) {
                 result.setMsg("模板名称已存在，请更换模板名称！");
@@ -541,7 +541,7 @@ public class PrinterTicketRest {
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
-        ScShopPrinterTemplateDocument printerTemplateDocument = customTemplateDocumentForm.convertToScShopPrinterTemplateDocument();
+        ScOperationPrinterTemplateDocument printerTemplateDocument = customTemplateDocumentForm.convertToScShopPrinterTemplateDocument();
 
         // 新增模板，处理模板组件
         Integer templateId = scShopPrinterTemplateDocumentService.saveShopPrinterTemplateDocument(printerTemplateDocument);
@@ -569,7 +569,7 @@ public class PrinterTicketRest {
      */
     private void handleCustomTemplateComponent (Integer templateId, String modulesStr) {
         JSONArray modules = JSONObject.parseArray(modulesStr);
-        List<ScShopPrinterCustomComponent> customComponentList = new ArrayList<>(100);
+        List<ScOperationPrinterCustomComponent> customComponentList = new ArrayList<>(100);
         for (Object item : modules) {
             JSONArray rows = ((JSONObject) item).getJSONArray("rows");
             for (Object row : rows) {
@@ -624,9 +624,9 @@ public class PrinterTicketRest {
      * @param componentStr 系统组件
      * @param customComponentList 自定义组件列表
      */
-    private void convertCustomComponent (Integer templateId, String componentStr, List<ScShopPrinterCustomComponent> customComponentList) {
-        ScShopPrinterSystemComponent templateComponent = JSONObject.parseObject(componentStr, ScShopPrinterSystemComponent.class);
-        ScShopPrinterCustomComponent customComponent = new ScShopPrinterCustomComponent();
+    private void convertCustomComponent (Integer templateId, String componentStr, List<ScOperationPrinterCustomComponent> customComponentList) {
+        ScOperationPrinterSystemComponent templateComponent = JSONObject.parseObject(componentStr, ScOperationPrinterSystemComponent.class);
+        ScOperationPrinterCustomComponent customComponent = new ScOperationPrinterCustomComponent();
         customComponent.setDocumentTemplateId(templateId);
         customComponent.setSystemComponentId(templateComponent.getId());
         customComponent.setValueStyle(templateComponent.getValueStyle());
@@ -645,7 +645,7 @@ public class PrinterTicketRest {
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
-        ScShopPrinterTemplateDocument oldTemplateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(documentForm.getTemplateId());
+        ScOperationPrinterTemplateDocument oldTemplateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(documentForm.getTemplateId());
         if (oldTemplateDocumentInfo == null || !documentForm.getShopId().equals(oldTemplateDocumentInfo.getShopId()) || Integer.valueOf(0).equals(oldTemplateDocumentInfo.getStatus())) {
             result.setCode(Result.RESULT_FAILURE);
             result.setMsg("模板不存在！");
@@ -686,7 +686,7 @@ public class PrinterTicketRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
+        ScOperationPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocument == null || !shopId.equals(templateDocument.getShopId())) {
             result.setMsg("模板不存在！");
             return result;
@@ -694,7 +694,7 @@ public class PrinterTicketRest {
         // 禁用其他模板
         Integer affectedRows = scShopPrinterTemplateDocumentService.updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(shopId, documentType);
         if (affectedRows > 0) {
-            ScShopPrinterTemplateDocument templateDocumentInfo = new ScShopPrinterTemplateDocument();
+            ScOperationPrinterTemplateDocument templateDocumentInfo = new ScOperationPrinterTemplateDocument();
             templateDocumentInfo.setId(templateId);
             templateDocumentInfo.setStatus(1);
             scShopPrinterTemplateDocumentService.updateShopPrinterTemplateDocumentByPrimaryId(templateDocumentInfo);
@@ -721,7 +721,7 @@ public class PrinterTicketRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterTemplateDocument templateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
+        ScOperationPrinterTemplateDocument templateDocumentInfo = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocumentInfo == null || Integer.valueOf(0).equals(templateDocumentInfo.getStatus()) || !shopId.equals(templateDocumentInfo.getShopId())) {
             result.setMsg("该模板为默认模板或者模板不存在！");
             return result;

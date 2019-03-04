@@ -1,6 +1,6 @@
 package com.maxzuo.printtemplate.form;
 
-import com.maxzuo.printtemplate.model.ScShopPrinterDevice;
+import com.maxzuo.printtemplate.model.ScOperationPrinterDevice;
 import com.maxzuo.printtemplate.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,10 +56,10 @@ public class SavePrinterDeviceForm {
 
     /**
      * 获取 打印机实体对象
-     * @return {@link ScShopPrinterDevice}
+     * @return {@link ScOperationPrinterDevice}
      */
-    public ScShopPrinterDevice getScShopPrinterDevice () {
-        ScShopPrinterDevice scShopPrinterDevice = new ScShopPrinterDevice();
+    public ScOperationPrinterDevice getScShopPrinterDevice () {
+        ScOperationPrinterDevice scShopPrinterDevice = new ScOperationPrinterDevice();
         scShopPrinterDevice.setDeviceName(deviceName);
         scShopPrinterDevice.setPrinterDeviceType(printerDeviceType);
         scShopPrinterDevice.setAddress(address);

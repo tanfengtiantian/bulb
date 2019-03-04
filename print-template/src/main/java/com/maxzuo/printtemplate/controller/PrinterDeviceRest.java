@@ -2,11 +2,11 @@ package com.maxzuo.printtemplate.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.maxzuo.printtemplate.api.IScShopPrinterDeviceService;
+import com.maxzuo.printtemplate.api.IScOperationPrinterDeviceService;
 import com.maxzuo.printtemplate.dto.Param;
 import com.maxzuo.printtemplate.form.SavePrinterDeviceForm;
 import com.maxzuo.printtemplate.form.UpdatePrinterDeviceForm;
-import com.maxzuo.printtemplate.model.ScShopPrinterDevice;
+import com.maxzuo.printtemplate.model.ScOperationPrinterDevice;
 import com.maxzuo.printtemplate.vo.PrinterDeviceVO;
 import com.maxzuo.printtemplate.vo.Result;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 public class PrinterDeviceRest {
 
     @Autowired
-    private IScShopPrinterDeviceService scShopPrinterDeviceService;
+    private IScOperationPrinterDeviceService scShopPrinterDeviceService;
 
     /**
      * 新增打印机
@@ -67,10 +67,10 @@ public class PrinterDeviceRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        PageInfo<ScShopPrinterDevice> pageInfo = scShopPrinterDeviceService.listPrinterDeviceByShopId(shopId, page, rows);
+        PageInfo<ScOperationPrinterDevice> pageInfo = scShopPrinterDeviceService.listPrinterDeviceByShopId(shopId, page, rows);
         if (pageInfo != null) {
             List<PrinterDeviceVO> printerDeviceVOList = new ArrayList<>(10);
-            for (ScShopPrinterDevice printerDevice : pageInfo.getList()) {
+            for (ScOperationPrinterDevice printerDevice : pageInfo.getList()) {
                 PrinterDeviceVO printerDeviceVO = new PrinterDeviceVO();
                 BeanUtils.copyProperties(printerDevice, printerDeviceVO);
                 printerDeviceVO.setCreateTime(DateFormatUtils.format(printerDevice.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
@@ -102,7 +102,7 @@ public class PrinterDeviceRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(printerDeviceId);
+        ScOperationPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(printerDeviceId);
         if (printerDevice == null || Integer.valueOf(1).equals(printerDevice.getDelete()) || !shopId.equals(printerDevice.getShopId())) {
             result.setMsg("打印机不存在！");
         } else {
@@ -128,7 +128,7 @@ public class PrinterDeviceRest {
         if (Result.RESULT_FAILURE.equals(result.getCode())) {
             return result;
         }
-        ScShopPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(updatePrinterDeviceForm.getId());
+        ScOperationPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(updatePrinterDeviceForm.getId());
         if (printerDevice == null || Integer.valueOf(1).equals(printerDevice.getDelete()) || !updatePrinterDeviceForm.getShopId().equals(printerDevice.getShopId())) {
             result.setCode(Result.RESULT_FAILURE);
             result.setMsg("打印机不存在！");
@@ -157,7 +157,7 @@ public class PrinterDeviceRest {
             result.setMsg("缺少参数！");
             return result;
         }
-        ScShopPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(printerDeviceId);
+        ScOperationPrinterDevice printerDevice = scShopPrinterDeviceService.getScShopPrinterDeviceByPrimaryKey(printerDeviceId);
         if (printerDevice == null || Integer.valueOf(1).equals(printerDevice.getDelete()) || !shopId.equals(printerDevice.getShopId())) {
             result.setMsg("打印机不存在！");
         } else {
