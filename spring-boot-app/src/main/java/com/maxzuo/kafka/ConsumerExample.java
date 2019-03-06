@@ -15,11 +15,14 @@ import java.util.concurrent.TimeUnit;
  * 消费者
  * Created by zfh on 2018/10/14
  */
-public class Consumer {
+public class ConsumerExample {
+
+    /** test：47.98.199.80:9092 cluster：192.168.3.192:9090,192.168.3.191:9090,192.168.3.181:9090 */
+    private static final String BOOTSTRAP_SERVERS = "47.98.199.80:9092";
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "47.98.199.80:9092");
+        props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
         props.put("group.id", "consumer-one");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");

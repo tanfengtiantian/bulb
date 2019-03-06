@@ -28,4 +28,10 @@ class MainTest {
         }
     }
 
+    @Test
+    void transformStream () {
+        byte[] bytes = {104, 101, 108, 108, 111, 32, 107, 97, 102, 107, 97};
+        String string = new String(bytes);
+        System.out.println("string: " + string);
+    }
 }
