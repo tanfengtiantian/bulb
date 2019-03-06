@@ -21,15 +21,15 @@ public class ClientExample {
      *  连接zookeeper集群：127.0.0.1:2181,127.0.0.2:2181,127.0.0.3:2181
      * </pre>
      */
-    private static final String CONNECT_STRING = "127.0.0.1:2181";
+    private static final String  CONNECT_STRING  = "127.0.0.1:2181";
 
     private static final Integer SESSION_TIMEOUT = 2000;
 
-    private static ZooKeeper zkClient;
+    private static ZooKeeper     zkClient;
 
     @DisplayName("初始化")
     @BeforeAll
-    static void init () {
+    static void init() {
         try {
             zkClient = new ZooKeeper(CONNECT_STRING, SESSION_TIMEOUT, new Watcher() {
                 @Override
@@ -53,9 +53,10 @@ public class ClientExample {
 
     @DisplayName("创建节点")
     @Test
-    void createNode () {
+    void createNode() {
         try {
-            String path = zkClient.create("/test", "hello world".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            String path = zkClient.create("/test", "hello world".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.PERSISTENT);
             System.out.println("path: " + path);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +65,7 @@ public class ClientExample {
 
     @DisplayName("判断节点是否存在")
     @Test
-    void getChildNodeAndWatch () {
+    void getChildNodeAndWatch() {
         try {
             // 参数二：是否监听
             Stat stat = zkClient.exists("/test", false);

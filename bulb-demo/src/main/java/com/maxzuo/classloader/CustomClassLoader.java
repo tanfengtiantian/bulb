@@ -16,7 +16,7 @@ class CustomClassLoader extends ClassLoader {
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
-            String fileName = CLASSPATH + name.replace(".","/") + ".class";
+            String fileName = CLASSPATH + name.replace(".", "/") + ".class";
             FileInputStream is = new FileInputStream(fileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             int len;
@@ -33,4 +33,3 @@ class CustomClassLoader extends ClassLoader {
         return super.findClass(name);
     }
 }
-

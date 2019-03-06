@@ -5,5 +5,7 @@ package com.maxzuo.bytebuddy.model;
  */
 public class UserType {
 
-    public String doSomething() { return null; }
+    public String doSomething() {
+        return null;
+    }
 }

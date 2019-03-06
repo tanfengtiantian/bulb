@@ -6,8 +6,7 @@ package com.maxzuo.basic;
  */
 public enum EnumAndInterface implements ConstructorStrategy {
 
-    NO_CONSTRUCTOR(1, "DAZUO"),
-    OVERWRITE_CONSTRUCTOR(2, "wang") {
+    NO_CONSTRUCTOR(1, "DAZUO"), OVERWRITE_CONSTRUCTOR(2, "wang") {
         @Override
         public void inject(String name) {
             System.out.println("hello " + name);
@@ -16,13 +15,12 @@ public enum EnumAndInterface implements ConstructorStrategy {
 
     private Integer code;
 
-    private String name;
+    private String  name;
 
-    EnumAndInterface (Integer code, String name) {
+    EnumAndInterface(Integer code, String name) {
         this.name = name;
         this.code = code;
     }
-
 
     @Override
     public void inject(String name) {
@@ -31,7 +29,7 @@ public enum EnumAndInterface implements ConstructorStrategy {
 }
 
 interface ConstructorStrategy {
-    void inject (String name);
+    void inject(String name);
 }
 
 class Main {

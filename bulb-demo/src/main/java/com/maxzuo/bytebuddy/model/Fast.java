@@ -5,11 +5,11 @@ package com.maxzuo.bytebuddy.model;
  */
 public class Fast {
 
-    public String m () {
+    public String m() {
         return "fast";
     }
 
-    public String m (String var1) {
+    public String m(String var1) {
         return var1 + " fast";
     }
 }

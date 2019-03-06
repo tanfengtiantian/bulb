@@ -18,13 +18,13 @@ class SelectorTest {
 
     @DisplayName("创建选择器")
     @Test
-    void testCreateSelector () throws IOException {
+    void testCreateSelector() throws IOException {
         Selector selector = Selector.open();
     }
 
     @DisplayName("向选择器注册通道")
     @Test
-    void testToSelectorRegisterChannel () throws IOException {
+    void testToSelectorRegisterChannel() throws IOException {
         // 创建一个套接字
         Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), 9998);
 

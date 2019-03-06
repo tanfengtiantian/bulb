@@ -14,7 +14,7 @@ class PathsTest {
 
     @DisplayName("Paths常用方法")
     @Test
-    void testPaths () {
+    void testPaths() {
         // 提供的 get() 方法用来获取 Path 对象：
         Path path = Paths.get("spring.png");
         System.out.println("path: " + path);
@@ -22,7 +22,7 @@ class PathsTest {
 
     @DisplayName("Path常用方法")
     @Test
-    void testPathCommonMethod () {
+    void testPathCommonMethod() {
         Path path = Paths.get("spring.png");
         Path path2 = Paths.get("F:\\bulb\\bulb-demo\\spring.png");
         // 输出：false

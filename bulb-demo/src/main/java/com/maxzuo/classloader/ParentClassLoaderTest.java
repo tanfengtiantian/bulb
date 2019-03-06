@@ -14,7 +14,7 @@ import java.util.Vector;
 class ParentClassLoaderTest {
 
     @Test
-    void main () {
+    void main() {
         // 获取一个系统类加载器
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         System.out.println(systemClassLoader.equals(getClass().getClassLoader()));
@@ -45,7 +45,7 @@ class ParentClassLoaderTest {
 
     @DisplayName("查看当前类加载器加载的类，不包含Bootstrap ClassLoader加载的")
     @Test
-    void getCurrentLoadClass () {
+    void getCurrentLoadClass() {
         try {
             /*
                 1.只有类的引用被解析的时候，才会去加载所需要的类。
@@ -54,7 +54,7 @@ class ParentClassLoaderTest {
              */
             Field f = ClassLoader.class.getDeclaredField("classes");
             f.setAccessible(true);
-            Vector vector = (Vector)f.get(ClassLoader.getSystemClassLoader());
+            Vector vector = (Vector) f.get(ClassLoader.getSystemClassLoader());
             System.out.println(vector);
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,7 +14,7 @@ public class BufferTest {
 
     @DisplayName("测试字节缓冲区")
     @Test
-    void testByteBuffer () {
+    void testByteBuffer() {
         // 分配一个指定大小的缓冲区
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         System.out.println("buffer中capacity大小：" + byteBuffer.capacity());
@@ -79,7 +79,7 @@ public class BufferTest {
 
     @DisplayName("测试直接缓冲区和非直接缓冲区")
     @Test
-    void compareBufferType () {
+    void compareBufferType() {
         /*
             非直接缓冲区：通过 allocate() 方法分配缓冲区，将缓冲区建立在 JVM 的内存中
             直接缓冲区：通过 allocateDirect() 方法分配直接缓冲区，将缓冲区建立在物理内存中。可以提高效率

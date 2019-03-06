@@ -6,5 +6,5 @@ package com.maxzuo.spi;
 public interface IDeveloper {
 
     /** 演示方法 */
-    void say ();
+    void say();
 }

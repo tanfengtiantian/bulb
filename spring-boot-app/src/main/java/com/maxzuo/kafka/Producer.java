@@ -12,15 +12,14 @@ import java.util.Properties;
 public class Producer {
 
     public static void main (String[] args) {
-        Properties var1 = new Properties();
-        var1.put("bootstrap.servers", "127.0.0.1:9092");
-        var1.put("metadata.broker.list", "localhost:9092");
-        var1.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
-        var1.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        Properties prop = new Properties();
+        prop.put("bootstrap.servers", "47.98.199.80:9092");
+        prop.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        KafkaProducer kafkaProducer = new KafkaProducer(var1);
+        KafkaProducer kafkaProducer = new KafkaProducer(prop);
         // 消息内容
-        ProducerRecord<String, String> record = new ProducerRecord<>("test-topic", "name", "hello");
+        ProducerRecord<String, String> record = new ProducerRecord<>("test", "user","hello kafka");
         kafkaProducer.send(record);
         kafkaProducer.close();
         System.out.println("Producer end ...");

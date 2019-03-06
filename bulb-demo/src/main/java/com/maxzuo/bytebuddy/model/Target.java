@@ -5,11 +5,11 @@ package com.maxzuo.bytebuddy.model;
  */
 public class Target {
 
-    public Target () {
+    public Target() {
         System.out.println("init target constructor");
     }
 
-    public String method (String name) {
+    public String method(String name) {
         return "init intecept " + name;
     }
 

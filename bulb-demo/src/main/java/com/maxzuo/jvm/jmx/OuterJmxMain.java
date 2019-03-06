@@ -43,7 +43,7 @@ public class OuterJmxMain {
      * 打印线程统计信息
      * @param jmxClient jmx客户端
      */
-    private static void printThreadsDetails (JmxClient jmxClient) throws Exception {
+    private static void printThreadsDetails(JmxClient jmxClient) throws Exception {
         ThreadMXBean threadMXBean = jmxClient.getThreadMXBean();
         long[] allThreadIds = threadMXBean.getAllThreadIds();
         ThreadInfo[] threadInfos = threadMXBean.getThreadInfo(allThreadIds);
@@ -65,7 +65,7 @@ public class OuterJmxMain {
      * 打印堆内存使用信息
      * @param jmxClient jmx客户端
      */
-    private static void printHeapInfo (JmxClient jmxClient) throws Exception {
+    private static void printHeapInfo(JmxClient jmxClient) throws Exception {
         MemoryPoolMXBean edenMemoryPool = jmxClient.getMemoryPoolManager().getEdenMemoryPool();
         long edenUsedBytes = edenMemoryPool.getUsage().getUsed();
         long edenMaxBytes = getMemoryPoolMaxOrCommited(edenMemoryPool);
@@ -78,9 +78,8 @@ public class OuterJmxMain {
         long oldUsedBytes = oldMemoryPool.getUsage().getUsed();
         long oldMaxBytes = getMemoryPoolMaxOrCommited(oldMemoryPool);
 
-        System.out.printf(" HEAP: %s/%s eden, %s/%s sur, %s/%s old%n", toMB(edenUsedBytes),
-                toMB(edenMaxBytes), toMB(surUsedBytes), toMB(surMaxBytes),
-                toMB(oldUsedBytes), toMB(oldMaxBytes));
+        System.out.printf(" HEAP: %s/%s eden, %s/%s sur, %s/%s old%n", toMB(edenUsedBytes), toMB(edenMaxBytes),
+            toMB(surUsedBytes), toMB(surMaxBytes), toMB(oldUsedBytes), toMB(oldMaxBytes));
     }
 
     /** 单位转换 */
@@ -102,7 +101,7 @@ public class OuterJmxMain {
      * 输出日志信息
      * @param msg 字符串消息
      */
-    private static void printLog (String msg) {
+    private static void printLog(String msg) {
         try {
             URL resource = OuterJmxMain.class.getResource("/config.properties");
             Properties properties = new Properties();

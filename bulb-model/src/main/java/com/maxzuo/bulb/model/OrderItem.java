@@ -13,25 +13,25 @@ public class OrderItem implements Serializable {
     private static final long serialVersionUID = 6478560018682239755L;
 
     /** 主键 */
-    private Integer id;
+    private Integer           id;
 
     /** 用户ID */
-    private Integer userId;
+    private Integer           userId;
 
     /** 订单号 */
-    private String orderNo;
+    private String            orderNo;
 
     /** 商品ID */
-    private Integer productId;
+    private Integer           productId;
 
     /** 价格 */
-    private BigDecimal price;
+    private BigDecimal        price;
 
     /** 创建时间 */
-    private Date createTime;
+    private Date              createTime;
 
     /** 更新时间 */
-    private Date updateTime;
+    private Date              updateTime;
 
     public Integer getId() {
         return id;
@@ -91,14 +91,7 @@ public class OrderItem implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", orderNo='" + orderNo + '\'' +
-                ", productId=" + productId +
-                ", price=" + price +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
+        return "OrderItem{" + "id=" + id + ", userId=" + userId + ", orderNo='" + orderNo + '\'' + ", productId="
+               + productId + ", price=" + price + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
 }

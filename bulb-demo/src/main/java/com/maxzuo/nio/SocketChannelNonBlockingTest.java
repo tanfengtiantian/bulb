@@ -17,7 +17,7 @@ class SocketChannelNonBlockingTest {
 
     @DisplayName("服务端")
     @Test
-    void testServer () throws IOException {
+    void testServer() throws IOException {
         // 1.获取通道
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
@@ -69,7 +69,7 @@ class SocketChannelNonBlockingTest {
 
     @DisplayName("客户端")
     @Test
-    void testClient () throws IOException {
+    void testClient() throws IOException {
         // 1.获取通道
         SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 8090));
         // 2.切换为非阻塞模式

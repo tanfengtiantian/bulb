@@ -18,7 +18,7 @@ class DateTimeTest {
 
     @DisplayName("获取日期时间的信息")
     @Test
-    void testTime () {
+    void testTime() {
         // LocalDate类获取日期信息。格式为 2018-09-06
         LocalDate nowDate = LocalDate.now();
         System.out.println("nowDate: " + nowDate);
@@ -34,7 +34,7 @@ class DateTimeTest {
 
     @DisplayName("时间戳")
     @Test
-    void testTimestamp () {
+    void testTimestamp() {
         // 输出格式：2019-02-22T02:07:32.398Z
         System.out.println("当前时间戳：" + Instant.now());
 
@@ -46,7 +46,7 @@ class DateTimeTest {
 
     @DisplayName("日期时间格式化")
     @Test
-    void testDateTimeFormat () {
+    void testDateTimeFormat() {
         /*
             阿里规约：SimpleDateFormat 是线程不安全的类，一般不要定义为 static 变量，如果定义为static，必须加锁，或者使用 DateUtils 工具类。
             说明：如果是 JDK8 的应用，可以使用 Instant 代替 Date， LocalDateTime 代替 Calendar，DateTimeFormatter 代替 SimpleDateFormat，

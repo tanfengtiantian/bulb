@@ -6,8 +6,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class DubboProvider {
 
-    public static void main (String[] args) {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-context.xml");
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+            "classpath:spring-context.xml");
         applicationContext.start();
         com.alibaba.dubbo.container.Main.main(args);
     }

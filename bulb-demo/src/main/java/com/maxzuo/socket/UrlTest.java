@@ -15,7 +15,7 @@ class UrlTest {
 
     @DisplayName("获取URL基本信息")
     @Test
-    void testUrlInfo () throws MalformedURLException {
+    void testUrlInfo() throws MalformedURLException {
         URL url = new URL("https://github.com/Corezuo");
         System.out.println("获取协议：" + url.getProtocol());
         System.out.println("获取主机：" + url.getHost());
@@ -28,7 +28,7 @@ class UrlTest {
 
     @DisplayName("获取网页内容")
     @Test
-    void getHtmlContent () throws IOException {
+    void getHtmlContent() throws IOException {
         URL url = new URL("https://github.com/Corezuo");
         InputStream inputStream = url.openStream();
         InputStreamReader is = new InputStreamReader(inputStream);

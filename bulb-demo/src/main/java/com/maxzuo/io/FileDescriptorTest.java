@@ -16,7 +16,7 @@ import java.io.*;
 class FileDescriptorTest {
 
     @Test
-    void test1 () throws Exception {
+    void test1() throws Exception {
         /*
             FileDescriptor
             (01) in  -- 标准输入(键盘)的描述符

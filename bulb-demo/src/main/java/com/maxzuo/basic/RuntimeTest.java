@@ -28,7 +28,7 @@ class RuntimeTest {
 
     @DisplayName("虚拟机关闭钩子")
     @Test
-    void testAddShutdownHook () {
+    void testAddShutdownHook() {
         /*
           钩子被调用的场景
             1.程序正常退出

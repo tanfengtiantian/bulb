@@ -14,7 +14,7 @@ class InvokerExample {
 
     @DisplayName("线程上下文类加载器")
     @Test
-    void testThreadContextClassLoader () {
+    void testThreadContextClassLoader() {
         // 线程上下文类加载器破坏了“双亲委派模型”，可以在执行线程中抛弃双亲委派加载链模式，使程序可以逆向使用类加载器。
         // 示例：父级类加载器加载的类 调用 子级类加载器加载的类
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
@@ -23,7 +23,7 @@ class InvokerExample {
 
     @DisplayName("测试不同类加载器加载类")
     @Test
-    void testMultipleClassFile () {
+    void testMultipleClassFile() {
         try {
             CustomClassLoader customClassLoader = new CustomClassLoader();
             Class<?> aClass = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader);
@@ -42,7 +42,7 @@ class InvokerExample {
 
     @DisplayName("动态加载外部class文件")
     @Test
-    void testLoadClassFile () {
+    void testLoadClassFile() {
         try {
             /*
                 PerfMonAgent类的加载过程：
@@ -74,10 +74,10 @@ class InvokerExample {
      */
     @DisplayName("动态加载外部jar文件")
     @Test
-    void testLoadJarFile () {
+    void testLoadJarFile() {
         try {
             URL urls = new URL("file:F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
-            URLClassLoader urlLoader = new URLClassLoader(new URL[]{urls});
+            URLClassLoader urlLoader = new URLClassLoader(new URL[] { urls });
             Class<?> aClass = urlLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
             System.out.println("类的加载器：" + aClass.getClassLoader());
             // 关闭，释放资源，此后将不能使用urlLoader类加载新类，但是已经加载的class不受影响。

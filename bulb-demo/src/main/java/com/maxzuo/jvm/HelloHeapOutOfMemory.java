@@ -34,4 +34,5 @@ public class HelloHeapOutOfMemory {
     }
 }
 
-class Person {}
+class Person {
+}

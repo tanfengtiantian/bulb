@@ -8,7 +8,7 @@ import java.util.List;
  * Created by zfh on 2019/01/30
  */
 public class ChangingLoggerInterceptor {
-    public static List<String> log (String info, @Super MemoryDatabase zuper) {
+    public static List<String> log(String info, @Super MemoryDatabase zuper) {
         System.out.println("Calling database");
         try {
             // 调用父类的方法

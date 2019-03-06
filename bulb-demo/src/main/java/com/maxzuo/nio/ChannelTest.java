@@ -19,7 +19,7 @@ class ChannelTest {
 
     @DisplayName("分散读取和聚集写入")
     @Test
-    void testGetChannel () throws IOException {
+    void testGetChannel() throws IOException {
         RandomAccessFile raf = new RandomAccessFile("demo.txt", "rw");
         // 1.获取通道
         FileChannel channel = raf.getChannel();
@@ -28,7 +28,7 @@ class ChannelTest {
         ByteBuffer byteBuffer1 = ByteBuffer.allocate(4);
         ByteBuffer byteBuffer2 = ByteBuffer.allocate(4);
 
-        ByteBuffer[] byteBuffers = new ByteBuffer[] {byteBuffer1, byteBuffer2};
+        ByteBuffer[] byteBuffers = new ByteBuffer[] { byteBuffer1, byteBuffer2 };
         // 3.读取通道中的数据
         channel.read(byteBuffers);
         System.out.println("读取的内容1：" + new String(byteBuffers[0].array(), 0, byteBuffers[0].limit()));
@@ -50,9 +50,10 @@ class ChannelTest {
 
     @DisplayName("通道之间的数据传输(直接缓冲区)")
     @Test
-    void testChannelDataTransport () throws IOException {
+    void testChannelDataTransport() throws IOException {
         FileChannel inChannel = FileChannel.open(Paths.get("spring.png"), StandardOpenOption.READ);
-        FileChannel outChannel = FileChannel.open(Paths.get("spring3.png"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+        FileChannel outChannel = FileChannel.open(Paths.get("spring3.png"), StandardOpenOption.WRITE,
+            StandardOpenOption.READ, StandardOpenOption.CREATE);
 
         // transferFrom：将数据从源通道传输到其他 Channel 中
         // transferTo()：将数据从源通道传输到其他 Channel 中
@@ -68,7 +69,8 @@ class ChannelTest {
         long start = System.currentTimeMillis();
 
         FileChannel inChannel = FileChannel.open(Paths.get("spring.png"), StandardOpenOption.READ);
-        FileChannel outChannel = FileChannel.open(Paths.get("spring2.png"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+        FileChannel outChannel = FileChannel.open(Paths.get("spring2.png"), StandardOpenOption.WRITE,
+            StandardOpenOption.READ, StandardOpenOption.CREATE);
 
         // 内存映射文件
         MappedByteBuffer inMappedBuf = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size());

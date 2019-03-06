@@ -9,7 +9,7 @@ class Junit5Test {
 
     @DisplayName("Junit5 集成到Spring 5.0项目")
     @Test
-    void testIntegrationSpring () {
+    void testIntegrationSpring() {
         /// 解释说明
         /*
             依赖包：spring-test-5.0.7.RELEASE.jar
@@ -25,7 +25,7 @@ class Junit5Test {
 
     @DisplayName("Junit5 集成到SpringBoot 2项目")
     @Test
-    void testIntegrationSpringBoot () {
+    void testIntegrationSpringBoot() {
         /// 解释说明
         /*
             依赖包：spring-test-5.0.7.RELEASE.jar
@@ -40,27 +40,27 @@ class Junit5Test {
 
     @DisplayName("使用指定的参数，多次执行")
     @ParameterizedTest
-    @CsvSource({"dazuo, 2", "wang, 3"})
+    @CsvSource({ "dazuo, 2", "wang, 3" })
     void testQueryData(String name, Integer age) {
         System.out.println("name: " + name);
     }
 
     @DisplayName("重复测试（注解的值表示执行的次数）")
     @RepeatedTest(2)
-    void testUsingRepeatedTest () {
+    void testUsingRepeatedTest() {
         System.out.println("hello world");
     }
 
     @DisplayName("@Disabled 等效于 junit4 中的@Ignore 注解，表示不执行当前方法")
     @Disabled
     @Test
-    void testUsingDisable () {
+    void testUsingDisable() {
         System.out.println("hello disable");
     }
 
     @DisplayName("使用Junit5 的断言")
     @Test
-    void testUsingAssertions () {
+    void testUsingAssertions() {
         String name = "dazuo";
         // org.junit.jupiter.api.Assertions;
     }
@@ -79,7 +79,7 @@ class Junit5Test {
 
         @Test
         @DisplayName("打印日志")
-        void printLog () {
+        void printLog() {
             System.out.println("hello printLog");
         }
     }
@@ -101,14 +101,14 @@ class Junit5Test {
     @Test
     @DisplayName("fast tag")
     @Tag("fast")
-    void testTagAnnotationFast () {
+    void testTagAnnotationFast() {
         System.out.println("fast tag");
     }
 
     @Test
     @DisplayName("flow tag")
     @Tag("slow")
-    void testTagAnotationSlow () {
+    void testTagAnotationSlow() {
         System.out.println("slow tag");
     }
 }

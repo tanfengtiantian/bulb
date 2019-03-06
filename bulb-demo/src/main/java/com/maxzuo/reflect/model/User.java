@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class User {
 
     private static final long serialVersionUID = 5800599219375047135L;
-    private Integer id;
+    private Integer           id;
 
-    private String name;
+    private String            name;
 
-    private Integer age;
+    private Integer           age;
 
     public User() {
     }
@@ -25,7 +25,7 @@ public class User {
     }
 
     @Token("hello method")
-    public String getParam (String param) {
+    public String getParam(String param) {
         return param + " dazuo";
     }
 
@@ -55,18 +55,16 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+        return "User{" + "id=" + id + ", name='" + name + '\'' + ", age=" + age + '}';
     }
 
-    public static class Goods {}
+    public static class Goods {
+    }
 
-    public class Order {}
+    public class Order {
+    }
 
-    public String message;
+    public String         message;
 
     public static Integer code;
 }

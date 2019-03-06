@@ -20,19 +20,19 @@ public interface IShopOrderInfoService {
      * @param id 主键
      * @return {@link ShopOrderInfo}
      */
-    ShopOrderInfo getShopOrderInfoByPrimaryKey (Integer id);
+    ShopOrderInfo getShopOrderInfoByPrimaryKey(Integer id);
 
     /**
      * 更新记录
      * @param orderInfo {@link ShopOrderInfo}
      * @return 受影响的条数
      */
-    Integer updateByPrimarySeletive (ShopOrderInfo orderInfo);
+    Integer updateByPrimarySeletive(ShopOrderInfo orderInfo);
 
     /**
      * 删除记录
      * @param id 主键
      * @return 受影响的条数
      */
-    Integer deleteByPrimaryKey (Integer id);
+    Integer deleteByPrimaryKey(Integer id);
 }

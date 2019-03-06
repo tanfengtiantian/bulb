@@ -1,6 +1,5 @@
 package com.maxzuo.log;
 
-
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -18,17 +17,17 @@ public class AccessLog {
 
     private static final Logger logger = LoggerFactory.getLogger(AccessLog.class);
 
-    public AccessLog () {
+    public AccessLog() {
         logger.info("AccessLog 类初始化");
     }
 
     @Before("execution(* com.maxzuo.service..*(..))")
-    public void recordAccessLog () {
+    public void recordAccessLog() {
         logger.info("AccessLog#recordAccessLog 前置通知");
     }
 
     @After("execution(* com.maxzuo.service..*(..))")
-    public void recordAccessLogAfter () {
+    public void recordAccessLogAfter() {
         logger.info("AccessLog#recordAccessLogAfter 后置通知");
     }
 }

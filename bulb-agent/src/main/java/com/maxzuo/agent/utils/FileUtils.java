@@ -14,7 +14,7 @@ public class FileUtils {
      * 将字节数组写入.class文件中
      * @param bytes 字节数组
      */
-    public static void writeToFile (byte[] bytes) {
+    public static void writeToFile(byte[] bytes) {
         File file = new File("F:\\bulb\\bulb-agent\\ByteBuddy.class");
         FileOutputStream fos = null;
         try {

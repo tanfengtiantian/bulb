@@ -8,17 +8,17 @@ public class BaseException extends RuntimeException {
 
     private static final long serialVersionUID = 1397997744978096749L;
 
-    private String errCode;
+    private String            errCode;
 
-    private String errMessage;
+    private String            errMessage;
 
-    BaseException (String errCode, String errMessage) {
+    BaseException(String errCode, String errMessage) {
         super(errMessage);
         this.errCode = errCode;
         this.errMessage = errMessage;
     }
 
-    BaseException (String errCode, String errMessage, Throwable e) {
+    BaseException(String errCode, String errMessage, Throwable e) {
         super(errMessage, e);
         this.errCode = errCode;
         this.errMessage = errMessage;

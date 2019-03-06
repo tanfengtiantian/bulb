@@ -5,7 +5,7 @@ package com.maxzuo.bytebuddy.model;
  */
 public class Slow {
 
-    public String m () {
+    public String m() {
         return "slow";
     }
 }

@@ -21,7 +21,7 @@ class ClassReflectTest {
 
     @DisplayName("获取Class对象")
     @Test
-    void testGetClass () {
+    void testGetClass() {
         // 方式一：通过类名获取
         Class<User> class1 = User.class;
 
@@ -45,7 +45,7 @@ class ClassReflectTest {
 
     @DisplayName("反射的基本信息")
     @Test
-    void testClassBaseInfo () {
+    void testClassBaseInfo() {
         Class<User> userClass = User.class;
         System.out.println("类全名：" + userClass.getName());
         System.out.println("类名：" + userClass.getSimpleName());
@@ -60,7 +60,7 @@ class ClassReflectTest {
 
     @DisplayName("构造方法的反射")
     @Test
-    void testConstructorReflect () {
+    void testConstructorReflect() {
         Class<User> userClass = User.class;
         // 获取公共的构造方法，包括继承的
         Constructor<?>[] constructors = userClass.getConstructors();
@@ -79,7 +79,7 @@ class ClassReflectTest {
 
     @DisplayName("成员变量的反射")
     @Test
-    void testFieldReflect () {
+    void testFieldReflect() {
         Class<User> userClass = User.class;
         // 获取当前类的公共变量，包含继承的成员变量
         Field[] fields = userClass.getFields();
@@ -88,12 +88,12 @@ class ClassReflectTest {
         Field[] declaredFields = userClass.getDeclaredFields();
         System.out.println("declaredFields count: " + declaredFields.length);
         System.out.println("第一个成员变量名字：" + declaredFields[0].getName());
-        System.out.println("第一个成员变量类型：" +  declaredFields[0].getType());
+        System.out.println("第一个成员变量类型：" + declaredFields[0].getType());
     }
 
     @DisplayName("成员变量的赋值")
     @Test
-    void testAssigmentField () {
+    void testAssigmentField() {
         Class<User> userClass = User.class;
         try {
             Field message = userClass.getField("message");
@@ -107,7 +107,7 @@ class ClassReflectTest {
 
     @DisplayName("静态成员变量赋值")
     @Test
-    void testAssigmentStaticField () {
+    void testAssigmentStaticField() {
         Class<User> userClass = User.class;
         try {
             Field code = userClass.getField("code");
@@ -120,7 +120,7 @@ class ClassReflectTest {
 
     @DisplayName("方法的反射")
     @Test
-    void testMethodReflect () {
+    void testMethodReflect() {
         Class<User> userClass = User.class;
         // 获取所有的公共方法，包括继承
         Method[] methods = userClass.getMethods();
@@ -146,7 +146,7 @@ class ClassReflectTest {
 
     @DisplayName("注解的反射")
     @Test
-    void testAnnatationReflect () {
+    void testAnnatationReflect() {
         Class<User> userClass = User.class;
         Annotation[] annotations = userClass.getAnnotations();
         // 如果存在指定类型的注解，返回注解，否则返回Null
@@ -161,7 +161,7 @@ class ClassReflectTest {
 
     @DisplayName("内部类的反射")
     @Test
-    void testInnerClassReflect () {
+    void testInnerClassReflect() {
         Class<User> userClass = User.class;
         Class<?>[] classes = userClass.getClasses();
         System.out.println(Arrays.toString(classes));

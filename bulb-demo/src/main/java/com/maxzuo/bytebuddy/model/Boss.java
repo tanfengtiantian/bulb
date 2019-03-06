@@ -7,15 +7,15 @@ public class Boss {
 
     private String name;
 
-    public Boss () {
+    public Boss() {
         System.out.println("this is Boss");
     }
 
-    public Boss (String name) {
+    public Boss(String name) {
         System.out.println("boss name: " + name);
     }
 
-    public void talk () {
+    public void talk() {
         System.out.println("I am boss");
     }
 }

@@ -38,7 +38,7 @@ class FileStreamTest {
 
     @DisplayName("测试字节流：FileInputStream 和 FileOutputStream")
     @Test
-    void testFileInputStreamAndOutputStream () throws IOException {
+    void testFileInputStreamAndOutputStream() throws IOException {
         File file = new File("demo.txt");
         if (!file.exists()) {
             file.createNewFile();
@@ -60,7 +60,7 @@ class FileStreamTest {
 
     @DisplayName("测试字符流缓冲区：BufferedReader/BufferedWriter")
     @Test
-    void testBufferReader () throws IOException {
+    void testBufferReader() throws IOException {
         File file = new File("demo.txt");
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
@@ -80,7 +80,7 @@ class FileStreamTest {
 
     @DisplayName("测试字节流缓冲区：BufferedInputStream和BufferedOutputStream")
     @Test
-    void testBufferInputStream () throws IOException {
+    void testBufferInputStream() throws IOException {
         File file = new File("spring.png");
         FileInputStream is = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(is);

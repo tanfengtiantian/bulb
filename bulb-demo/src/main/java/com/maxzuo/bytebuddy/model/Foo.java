@@ -5,13 +5,15 @@ package com.maxzuo.bytebuddy.model;
  */
 public class Foo {
 
-    public String bar () {
+    public String bar() {
         return null;
     }
-    public String foo () {
+
+    public String foo() {
         return null;
     }
-    public String foo (Object o) {
+
+    public String foo(Object o) {
         return null;
     }
 

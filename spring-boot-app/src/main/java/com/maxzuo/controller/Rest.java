@@ -1,6 +1,7 @@
 package com.maxzuo.controller;
 
 import com.maxzuo.form.Param;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,5 +23,11 @@ public class Rest {
         param.setVersion(request.getParameter("version"));
         request.setAttribute("param", param);
         return new ModelAndView("forward:/zxcity_restful/ws/" + param.getCmd());
+    }
+
+    @GetMapping("test")
+    public String test () {
+        System.out.println("hello springBoot");
+        return "springBoot";
     }
 }

@@ -24,7 +24,7 @@ class PrintStreamTest {
 
     @DisplayName("标准错误输出流")
     @Test
-    void testSystemError () {
+    void testSystemError() {
         // “标准”错误输出流。此流已打开并准备接受输出数据。
         // 通常，此流对应于显示器输出或者由主机环境或用户指定的另一个输出目标。按照惯例，此输出流用于显示错误消息，或者显示那些
         // 即使用户输出流（变量 out 的值）已经重定向到通常不被连续监视的某一文件或其他目标，也应该立刻引起用户注意的其他信息。
@@ -34,7 +34,7 @@ class PrintStreamTest {
 
     @DisplayName("标准输出流")
     @Test
-    void testSystemOut () {
+    void testSystemOut() {
         // “标准”输出流。此流已打开并准备接受输出数据。通常，此流对应于显示器输出或者由主机环境或用户指定的另一个输出目标。
         PrintStream out = System.out;
         out.println("hello world!");
@@ -42,7 +42,7 @@ class PrintStreamTest {
 
     @DisplayName("打印流")
     @Test
-    void testPrintStream () throws IOException {
+    void testPrintStream() throws IOException {
         File file = new File("test.txt");
         if (!file.exists()) {
             file.createNewFile();
@@ -55,7 +55,7 @@ class PrintStreamTest {
 
     @DisplayName("输出重定向")
     @Test
-    void testRedirectOutputStream () throws Exception {
+    void testRedirectOutputStream() throws Exception {
         PrintStream ps = new PrintStream("demo.txt");
         System.setOut(ps);
 
@@ -65,7 +65,7 @@ class PrintStreamTest {
 
     @DisplayName("输入重定向")
     @Test
-    void testRedirectInputStream () throws Exception {
+    void testRedirectInputStream() throws Exception {
         InputStream ps = new FileInputStream("demo.txt");
         System.setIn(ps);
 

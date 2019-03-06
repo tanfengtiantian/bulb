@@ -9,7 +9,7 @@ import com.maxzuo.thread.annations.ThreadSafe;
 @ThreadSafe
 public class SingletonExample1 {
 
-    private SingletonExample1 () {
+    private SingletonExample1() {
 
     }
 
@@ -30,7 +30,7 @@ public class SingletonExample1 {
 
     private static volatile SingletonExample1 instance = null;
 
-    public static SingletonExample1 getInstance () {
+    public static SingletonExample1 getInstance() {
         // 双重检测机制
         if (instance == null) {
             // 同步锁

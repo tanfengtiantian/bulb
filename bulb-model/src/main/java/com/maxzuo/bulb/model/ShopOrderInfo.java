@@ -12,19 +12,19 @@ public class ShopOrderInfo implements Serializable {
     private static final long serialVersionUID = 4860493305618315471L;
 
     /** 主键 */
-    private Integer id;
+    private Integer           id;
 
     /** 用户名 */
-    private String username;
+    private String            username;
 
     /** 数量 */
-    private Integer count;
+    private Integer           count;
 
     /** 订单编号 */
-    private String orderNo;
+    private String            orderNo;
 
     /** 创建时间 */
-    private Date createTime;
+    private Date              createTime;
 
     public Integer getId() {
         return id;
@@ -68,12 +68,7 @@ public class ShopOrderInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ShopOrderInfo{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", count=" + count +
-                ", orderNo='" + orderNo + '\'' +
-                ", createTime=" + createTime +
-                '}';
+        return "ShopOrderInfo{" + "id=" + id + ", username='" + username + '\'' + ", count=" + count + ", orderNo='"
+               + orderNo + '\'' + ", createTime=" + createTime + '}';
     }
 }

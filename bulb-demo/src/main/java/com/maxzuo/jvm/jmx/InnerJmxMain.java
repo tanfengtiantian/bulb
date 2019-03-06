@@ -17,14 +17,14 @@ public class InnerJmxMain {
     }
 
     /** 获取当前进程ID */
-    private static Integer getProcessID () {
+    private static Integer getProcessID() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         System.out.println(runtimeMXBean.getName());
         return Integer.valueOf(runtimeMXBean.getName().split("@")[0]);
     }
 
     /** 打印线程信息 */
-    private static void printThreadInfo () {
+    private static void printThreadInfo() {
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
         ThreadInfo[] threadInfo = threadMXBean.getThreadInfo(threadMXBean.getAllThreadIds());
         for (ThreadInfo item : threadInfo) {

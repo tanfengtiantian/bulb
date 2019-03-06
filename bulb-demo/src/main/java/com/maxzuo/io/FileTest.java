@@ -16,7 +16,7 @@ class FileTest {
 
     @DisplayName("文件路径")
     @Test
-    void testFilePath () {
+    void testFilePath() {
         // 1.文件的相对路径，是项目执行命令的路径：F:\bulb\bulb-demo
         new File("spring.png");
         // 2.文件的绝对路径

@@ -5,23 +5,22 @@ package com.maxzuo.basic;
  * Created by zfh on 2019/02/12
  */
 public enum EnumTest {
-    INSTANCE(1, "name"),
-    TEST(2, "age");
+    INSTANCE(1, "name"), TEST(2, "age");
 
     private Integer code;
 
-    private String name;
+    private String  name;
 
-    EnumTest (Integer code, String name) {
+    EnumTest(Integer code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public void assigment (String name) {
+    public void assigment(String name) {
         this.name = name;
     }
 
-    public void out () {
+    public void out() {
         System.out.println(name);
     }
 }

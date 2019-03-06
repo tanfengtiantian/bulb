@@ -6,5 +6,5 @@ package com.maxzuo.bytebuddy.model;
 public interface Employee {
 
     /** 行为 */
-    void listener ();
+    void listener();
 }

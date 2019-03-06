@@ -50,7 +50,7 @@ class TestTcpSocket {
 
     @DisplayName("客户端")
     @Test
-    void testClient () throws IOException {
+    void testClient() throws IOException {
         // 1.创建Socket对象
         Socket socket = new Socket("127.0.0.1", 8089);
         // 2.建立连接后，通过输出流向服务端发送请求信息

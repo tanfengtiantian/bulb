@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LoggerInterceptor {
 
-    public static List<String> log (@SuperCall Callable<List<String>> zuper) throws Exception {
+    public static List<String> log(@SuperCall Callable<List<String>> zuper) throws Exception {
         System.out.println("Calling database");
         try {
             TimeUnit.SECONDS.sleep(3);

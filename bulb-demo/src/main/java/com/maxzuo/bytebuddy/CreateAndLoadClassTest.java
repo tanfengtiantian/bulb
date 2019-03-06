@@ -35,15 +35,14 @@ class CreateAndLoadClassTest {
      */
     @DisplayName("创建类")
     @Test
-    void testCreateClass () {
+    void testCreateClass() {
         // 运行时创建动态类型（类）；使用 DynamicType.Unloaded 的实例表示。
         DynamicType.Unloaded<Employee> dynamicType = new ByteBuddy()
-                // 创建子类；如果提供的类型是接口，则创建实现此接口的类，不会实现接口中的方法！
-                .subclass(Employee.class, ConstructorStrategy.Default.NO_CONSTRUCTORS)
-                // 默认命名策略下，它基于动态类型的超类名称来随机生成类名。
-                // 可以提供的名称命名动态类型。名称需要是完全限定的。
-                .name("com.maxzuo.demo.ByteBuddyDemo")
-                .make();
+        // 创建子类；如果提供的类型是接口，则创建实现此接口的类，不会实现接口中的方法！
+            .subclass(Employee.class, ConstructorStrategy.Default.NO_CONSTRUCTORS)
+            // 默认命名策略下，它基于动态类型的超类名称来随机生成类名。
+            // 可以提供的名称命名动态类型。名称需要是完全限定的。
+            .name("com.maxzuo.demo.ByteBuddyDemo").make();
 
         /// 1.使用saveIn(File)方法将类存储在给定的文件夹中
         //dynamicType.saveIn(new File("bytecode"));
@@ -58,7 +57,7 @@ class CreateAndLoadClassTest {
      * 将字节数组写入.class文件中
      * @param bytes 字节数组
      */
-    private void writeToFile (byte[] bytes) {
+    private void writeToFile(byte[] bytes) {
         File file = new File("ByteBuddy.class");
         FileOutputStream fos = null;
         try {
@@ -80,14 +79,11 @@ class CreateAndLoadClassTest {
 
     @DisplayName("加载类")
     @Test
-    void testLoadClass () throws IllegalAccessException, InstantiationException {
-        Class<? extends Boss> aClass = new ByteBuddy()
-                .subclass(Boss.class)
-                .name("com.maxzuo.demo.ByteBuddyDemo")
-                .make()
-                // ClassLoadingStrategy 加载此类
-                .load(getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
-                .getLoaded();
+    void testLoadClass() throws IllegalAccessException, InstantiationException {
+        Class<? extends Boss> aClass = new ByteBuddy().subclass(Boss.class).name("com.maxzuo.demo.ByteBuddyDemo")
+            .make()
+            // ClassLoadingStrategy 加载此类
+            .load(getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
 
         Boss boss = aClass.newInstance();
         // 输出：i am boss
@@ -106,7 +102,7 @@ class CreateAndLoadClassTest {
      */
     @DisplayName("重新定义或者重定基底已经存在的类")
     @Test
-    void testRedefineAndRebase () {
+    void testRedefineAndRebase() {
         // 重定义类
         DynamicType.Unloaded<Object> dynamicType1 = new ByteBuddy().redefine(Object.class).make();
 
@@ -116,32 +112,28 @@ class CreateAndLoadClassTest {
 
     @DisplayName("操作没有加载的类")
     @Test
-    void testNotLoadClass () throws NoSuchFieldException {
+    void testNotLoadClass() throws NoSuchFieldException {
         TypePool typePool = TypePool.Default.ofClassPath();
         new ByteBuddy()
-                // 重定义类
-                .redefine(typePool.describe("com.maxzuo.bytebuddy.model.Boss").resolve(), ClassFileLocator.ForClassLoader.ofClassPath())
-                .defineField("age", Integer.class)
-                .make()
-                .load(ClassLoader.getSystemClassLoader());
+            // 重定义类
+            .redefine(typePool.describe("com.maxzuo.bytebuddy.model.Boss").resolve(),
+                ClassFileLocator.ForClassLoader.ofClassPath()).defineField("age", Integer.class).make()
+            .load(ClassLoader.getSystemClassLoader());
 
         System.out.println("字段名：" + Boss.class.getDeclaredField("age"));
     }
 
     @DisplayName("重新加载类")
     @Test
-    void testReloadClass () {
+    void testReloadClass() {
         // 安装代理，从代理中加载类型
         ByteBuddyAgent.install();
         Fast fast = new Fast();
         System.out.println("old result：" + fast.m());
         new ByteBuddy()
-                // 重定基底
-                .redefine(Slow.class)
-                .name(Fast.class.getName())
-                .make()
-                .load(ClassLoader.getSystemClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
+            // 重定基底
+            .redefine(Slow.class).name(Fast.class.getName()).make()
+            .load(ClassLoader.getSystemClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
         System.out.println("new result：" + fast.m());
     }
 }
-

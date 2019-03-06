@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 @ToString
 public class User {
 
-    private String name;
+    private String  name;
 
     private Integer age;
 }

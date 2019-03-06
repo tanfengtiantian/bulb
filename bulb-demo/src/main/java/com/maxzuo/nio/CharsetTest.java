@@ -16,7 +16,7 @@ public class CharsetTest {
 
     @DisplayName("测试字符编码")
     @Test
-    void testCharset () {
+    void testCharset() {
         SortedMap<String, Charset> map = Charset.availableCharsets();
         Set<Map.Entry<String, Charset>> entries = map.entrySet();
         for (Map.Entry<String, Charset> entry : entries) {

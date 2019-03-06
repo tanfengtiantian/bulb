@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 @Recommend
 public class SingletonExample2 {
 
-    private SingletonExample2 () {
+    private SingletonExample2() {
 
     }
 
     @Test
-    public static SingletonExample2 getInstance () {
+    public static SingletonExample2 getInstance() {
         return Singleton.INSTANCE.getInstance();
     }
 
@@ -27,11 +27,11 @@ public class SingletonExample2 {
         private SingletonExample2 singletion;
 
         /** JVM保证这个方法绝对只会执行一次 */
-        Singleton () {
+        Singleton() {
             singletion = new SingletonExample2();
         }
 
-        public SingletonExample2 getInstance () {
+        public SingletonExample2 getInstance() {
             return singletion;
         }
     }

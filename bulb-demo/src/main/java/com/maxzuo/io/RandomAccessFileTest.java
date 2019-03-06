@@ -16,7 +16,7 @@ class RandomAccessFileTest {
 
     @DisplayName("移动指针读文件")
     @Test
-    void testReadFile () throws IOException {
+    void testReadFile() throws IOException {
         RandomAccessFile raf = new RandomAccessFile("demo.txt", "rw");
         // 获取RandomAccessFile对象文件指针的位置，初始位置是0
         System.out.println("文件指针的初始位置：" + raf.getFilePointer());
@@ -30,7 +30,7 @@ class RandomAccessFileTest {
 
     @DisplayName("向文件尾部插入内容")
     @Test
-    void testWriteFile () throws IOException {
+    void testWriteFile() throws IOException {
         File file = new File("demo.txt");
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         raf.seek(raf.length());
@@ -40,7 +40,7 @@ class RandomAccessFileTest {
 
     @DisplayName("向文件的指定位置写入内容")
     @Test
-    void testWriteToSpecificPositionFile () throws IOException {
+    void testWriteToSpecificPositionFile() throws IOException {
         // 如果直接指定位置，会覆盖调指定位置后面的内容
         File file = new File("demo.txt");
         RandomAccessFile raf = new RandomAccessFile(file, "rw");

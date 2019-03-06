@@ -11,9 +11,9 @@ public class ThreadFactoryExample implements ThreadFactory {
 
     private final AtomicInteger nextId = new AtomicInteger(1);
 
-    private final String namePrefix;
+    private final String        namePrefix;
 
-    public ThreadFactoryExample (String name) {
+    public ThreadFactoryExample(String name) {
         namePrefix = "UserThreadFactory's " + name + "-Worker-";
     }
 

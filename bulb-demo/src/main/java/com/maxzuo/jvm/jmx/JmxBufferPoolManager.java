@@ -7,31 +7,32 @@ import java.lang.management.ManagementFactory;
 import java.util.List;
 
 public class JmxBufferPoolManager {
-	private static final String DIRECT = "direct";
-	private static final String MAPPED = "mapped";
-	
-	private BufferPoolMXBean directBufferPool = null;
-	private BufferPoolMXBean mappedBufferPool = null;
+    private static final String DIRECT           = "direct";
+    private static final String MAPPED           = "mapped";
 
-	public JmxBufferPoolManager(MBeanServerConnection connection) throws IOException {
-		
-		List<BufferPoolMXBean> bufferPoolMXBeans = ManagementFactory.getPlatformMXBeans(connection, BufferPoolMXBean.class);
-		for(BufferPoolMXBean bufferPool : bufferPoolMXBeans) {
-			String name = bufferPool.getName().trim();
-			String lowerCaseName = name.toLowerCase();
-			if (lowerCaseName.contains(DIRECT)) {
-				directBufferPool = bufferPool;
-			} else if (lowerCaseName.contains(MAPPED)) {
-				mappedBufferPool = bufferPool;
-			}
-		}
-	}
+    private BufferPoolMXBean    directBufferPool = null;
+    private BufferPoolMXBean    mappedBufferPool = null;
 
-	public BufferPoolMXBean getDirectBufferPool() {
-		return directBufferPool;
-	}
+    public JmxBufferPoolManager(MBeanServerConnection connection) throws IOException {
 
-	public BufferPoolMXBean getMappedBufferPool() {
-		return mappedBufferPool;
-	}
+        List<BufferPoolMXBean> bufferPoolMXBeans = ManagementFactory.getPlatformMXBeans(connection,
+            BufferPoolMXBean.class);
+        for (BufferPoolMXBean bufferPool : bufferPoolMXBeans) {
+            String name = bufferPool.getName().trim();
+            String lowerCaseName = name.toLowerCase();
+            if (lowerCaseName.contains(DIRECT)) {
+                directBufferPool = bufferPool;
+            } else if (lowerCaseName.contains(MAPPED)) {
+                mappedBufferPool = bufferPool;
+            }
+        }
+    }
+
+    public BufferPoolMXBean getDirectBufferPool() {
+        return directBufferPool;
+    }
+
+    public BufferPoolMXBean getMappedBufferPool() {
+        return mappedBufferPool;
+    }
 }

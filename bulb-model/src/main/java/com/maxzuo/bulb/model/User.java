@@ -12,19 +12,19 @@ public class User implements Serializable {
     private static final long serialVersionUID = -3612819328305649707L;
 
     /** 主键 */
-    private Integer id;
+    private Integer           id;
 
     /** 用户名 */
-    private String username;
+    private String            username;
 
     /** 密码 */
-    private String password;
+    private String            password;
 
     /** 创建时间 */
-    private Date createTime;
+    private Date              createTime;
 
     /** 更新时间 */
-    private Date updateTime;
+    private Date              updateTime;
 
     public Integer getId() {
         return id;
@@ -68,12 +68,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
+        return "User{" + "id=" + id + ", username='" + username + '\'' + ", password='" + password + '\''
+               + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
 }

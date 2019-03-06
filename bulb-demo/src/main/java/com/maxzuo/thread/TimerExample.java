@@ -21,7 +21,7 @@ public class TimerExample {
      * @param delay 执行任务之前的延迟
      * @param period 连续执行任务之间的时间
      */
-    private static void reminder (Integer delay, Integer period) {
+    private static void reminder(Integer delay, Integer period) {
         // 多线程并行处理定时任务时，Timer运行多个TimeTask时，只要其中之一没有捕获抛出的异常，其它任务便会自动终止运行；
         // 使用ScheduledExecutorService代替Timer则没有这个问题。
         Timer timer = new Timer();

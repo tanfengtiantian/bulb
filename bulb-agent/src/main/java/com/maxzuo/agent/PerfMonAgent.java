@@ -24,23 +24,23 @@ public class PerfMonAgent {
         System.out.println("========进入premain方法============");
 
         new AgentBuilder.Default()
-                // 匹配所有的注解类
-                .type(ElementMatchers.isAnnotation())
-                .transform(new AgentBuilder.Transformer() {
-                    @Override
-                    public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader, JavaModule module) {
-                        System.out.println("typeDescription: " + typeDescription);
-                        //System.out.println("classLoader: " + classLoader);
-                        //System.out.println("module: " + module);
+        // 匹配所有的注解类
+            .type(ElementMatchers.isAnnotation()).transform(new AgentBuilder.Transformer() {
+                @Override
+                public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder,
+                                                        TypeDescription typeDescription, ClassLoader classLoader,
+                                                        JavaModule module) {
+                    System.out.println("typeDescription: " + typeDescription);
+                    //System.out.println("classLoader: " + classLoader);
+                    //System.out.println("module: " + module);
 
-                        /// 篡改字节码文件
-                        //builder = builder.defineField("name", String.class, Visibility.PUBLIC);
-                        //FileUtils.writeToFile(builder.make().getBytes());
+                    /// 篡改字节码文件
+                    //builder = builder.defineField("name", String.class, Visibility.PUBLIC);
+                    //FileUtils.writeToFile(builder.make().getBytes());
 
-                        return builder;
-                    }
-                })
-                .installOn(inst);
+                    return builder;
+                }
+            }).installOn(inst);
     }
 
 }

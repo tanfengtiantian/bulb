@@ -14,7 +14,7 @@ class RegularTest {
 
     @DisplayName("正则语法")
     @Test
-    void testRegex () {
+    void testRegex() {
         // 使用String类的matches方法正则匹配
         String str = "863329112@qq.com";
         String regex = "\\d+@(qq.com|gmail.com)";
@@ -28,7 +28,7 @@ class RegularTest {
 
     @DisplayName("匹配日志")
     @Test
-    void testRegexLog () {
+    void testRegexLog() {
         String record = "2019-01-31 11:45:42,305 ERROR [com.zxcity.ws.cloudShop.ScShopActivePosterRest] - 参数解析错误";
 
         String dateStr = "2019-01-31 11:45:42,305";
@@ -49,13 +49,14 @@ class RegularTest {
     }
 
     @Test
-    void testTemp () {
-        String msg ="2019-02-01 16:14:10,005 [RMI TCP Connection(127.0.01:2181)[Catalina]] INFO [RMI TCP Connection(127.0.01:2181)[Catalina]] - 异常信息 \\njava.lang.RuntimeException: 异常信息\\n\\tat com.maxzuo.MainTest.testLog(MainTest.java:23)";
+    void testTemp() {
+        String msg = "2019-02-01 16:14:10,005 [RMI TCP Connection(127.0.01:2181)[Catalina]] INFO [RMI TCP Connection(127.0.01:2181)[Catalina]] - 异常信息 \\njava.lang.RuntimeException: 异常信息\\n\\tat com.maxzuo.MainTest.testLog(MainTest.java:23)";
         String regex = "(\\d|-)+\\s(\\d|:|,)+" + " " + "\\[.+]" + " " + "[A-Z\\s]+" + " " + "\\[.+]" + " - " + ".+";
         System.out.println(msg.matches(regex));
 
         String msg2 = "2019-02-11 14:11:33,714 [main] DEBUG com.maxzuo.MainTest (MainTest.java:18) - hello world";
-        String regex2 = "(\\d|-)+\\s(\\d|:|,)+" + " " + "\\[\\S+]" + " " + "[A-Z\\s]+" + " " + "[a-zA-Z0-9.]+" + " " + ".+";
+        String regex2 = "(\\d|-)+\\s(\\d|:|,)+" + " " + "\\[\\S+]" + " " + "[A-Z\\s]+" + " " + "[a-zA-Z0-9.]+" + " "
+                        + ".+";
         System.out.println("msg2: " + msg2.matches(regex2));
     }
 }

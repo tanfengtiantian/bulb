@@ -17,7 +17,7 @@ public class SemaphoreExample {
     /** 同时并发执行的线程数 */
     private final static Integer THREAD_TOTAL = 100;
 
-    private static Integer count = 0;
+    private static Integer       count        = 0;
 
     public static void main(String[] args) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(10);

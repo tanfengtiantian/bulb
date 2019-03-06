@@ -16,7 +16,7 @@ class FilesTest {
 
     @DisplayName("Files常用方法")
     @Test
-    void testFilesCommonMethod () throws IOException {
+    void testFilesCommonMethod() throws IOException {
         // 文件复制，成功后，返回拷贝的目标路径（如果文件已存在，会报错）
         Path copyPath = Files.copy(Paths.get("spring.png"), Paths.get("spring2.png"));
         System.out.println("copyPath: " + copyPath);

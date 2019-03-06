@@ -21,11 +21,12 @@ class SocketChannelBlockingTest {
 
     @DisplayName("服务端")
     @Test
-    void testServer () throws IOException {
+    void testServer() throws IOException {
         // 1.获取通道
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
-        FileChannel outChannel = FileChannel.open(Paths.get("spring2.png"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+        FileChannel outChannel = FileChannel.open(Paths.get("spring2.png"), StandardOpenOption.WRITE,
+            StandardOpenOption.CREATE);
 
         // 2.绑定连接
         serverSocketChannel.bind(new InetSocketAddress(8090));
@@ -51,7 +52,7 @@ class SocketChannelBlockingTest {
 
     @DisplayName("客户端")
     @Test
-    void testClient () throws IOException {
+    void testClient() throws IOException {
         // 1.获取通道
         SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 8090));
 

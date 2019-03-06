@@ -13,7 +13,7 @@ import java.util.Arrays;
 class InetAddressTest {
 
     @Test
-    void testHostInfo () throws UnknownHostException {
+    void testHostInfo() throws UnknownHostException {
         // 获取本地主机
         InetAddress host = InetAddress.getLocalHost();
         byte[] address = host.getAddress();

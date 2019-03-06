@@ -52,7 +52,7 @@ public class GenericityMain {
 
 /** 泛型类 */
 class GenericityOne<T> {
-    public void methodOne (T flag) {
+    public void methodOne(T flag) {
         System.out.println("methodOne：" + flag);
     }
 }
@@ -60,14 +60,14 @@ class GenericityOne<T> {
 /** 泛型方法 */
 class GenericityTwo<K> {
 
-    public <T> void methodOne (T fast, K slow) {
+    public <T> void methodOne(T fast, K slow) {
         System.out.println("methodOne flag：" + fast);
         System.out.println("methodOne slow：" + slow);
     }
 
     // 静态方法不能访问类上的泛型
 
-    public static <T> void methodTwo (T flag) {
+    public static <T> void methodTwo(T flag) {
         System.out.println("methodTwo：" + flag);
     }
 }
@@ -75,6 +75,5 @@ class GenericityTwo<K> {
 /** 泛型接口 */
 interface GenericityThree<T> {
 
-    void methodOne (T flag);
+    void methodOne(T flag);
 }
-

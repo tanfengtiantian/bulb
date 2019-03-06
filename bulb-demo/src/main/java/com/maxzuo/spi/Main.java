@@ -18,7 +18,7 @@ public class Main {
         }
     }
 
-    private void test () throws ClassNotFoundException, SQLException {
+    private void test() throws ClassNotFoundException, SQLException {
         /// 加载Class到classLoader
         //Class.forName("com.mysql.jdbc.Driver");
 

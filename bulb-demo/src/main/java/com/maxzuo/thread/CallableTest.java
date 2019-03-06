@@ -14,7 +14,7 @@ class CallableTest {
 
     @DisplayName("Callable的使用")
     @Test
-    void testUseCallable () {
+    void testUseCallable() {
         Callable<String> callable = new Callable<String>() {
             @Override
             public String call() {

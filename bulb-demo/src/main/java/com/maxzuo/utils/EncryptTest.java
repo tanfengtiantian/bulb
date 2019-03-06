@@ -19,7 +19,7 @@ public class EncryptTest {
      * {@link org.apache.commons.codec.digest.DigestUtils}
      */
     @Test
-    public void md5HexTest () {
+    public void md5HexTest() {
         String encryptStr = DigestUtils.md5Hex("hello world");
         System.out.println("encryptStr:" + encryptStr);
     }
@@ -29,7 +29,7 @@ public class EncryptTest {
      * {@link org.apache.commons.codec.binary.Base64}
      */
     @Test
-    public void testBase64 (){
+    public void testBase64() {
         Base64 base64 = new Base64();
         String base64EncodeStr = base64.encodeToString("hello world".getBytes());
         System.out.println("encode string: " + base64EncodeStr);
@@ -43,7 +43,7 @@ public class EncryptTest {
      * {@link org.apache.commons.codec.digest.DigestUtils}
      */
     @Test
-    public void testSha () {
+    public void testSha() {
         String sha1Hex = DigestUtils.sha1Hex("hello world");
         System.out.println("sha1Hex: " + sha1Hex);
 
@@ -57,7 +57,7 @@ public class EncryptTest {
      * {@link org.apache.commons.codec.net.URLCodec}
      */
     @Test
-    public void testUrlCodec () throws UnsupportedEncodingException, DecoderException {
+    public void testUrlCodec() throws UnsupportedEncodingException, DecoderException {
         URLCodec urlCodec = new URLCodec();
         String encodeStr = urlCodec.encode("a/b", "UTF-8");
         System.out.println("encodeStr: " + encodeStr);

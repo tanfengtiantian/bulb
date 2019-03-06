@@ -20,19 +20,19 @@ public interface IOrderItemService {
      * @param id 主键
      * @return {@link OrderItem}
      */
-    OrderItem getByPrimaryKey (Integer id);
+    OrderItem getByPrimaryKey(Integer id);
 
     /**
      * 更新记录
      * @param record {@link OrderItem}
      * @return 受影响的条数
      */
-    Integer updateByPrimarySeletive (OrderItem record);
+    Integer updateByPrimarySeletive(OrderItem record);
 
     /**
      * 删除记录
      * @param id 主键
      * @return 受影响的条数
      */
-    Integer deleteByPrimaryKey (Integer id);
+    Integer deleteByPrimaryKey(Integer id);
 }
