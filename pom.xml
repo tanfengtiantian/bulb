@@ -40,6 +40,7 @@
         <transmittable-thread-local.version>2.10.2</transmittable-thread-local.version>
         <commons-codec.version>1.11</commons-codec.version>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
+        <zkclient.version>0.1</zkclient.version>
     </properties>
 
     <modules>
@@ -272,6 +273,11 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.sgroschupf</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zkclient.version}</version>
             </dependency>
             <!--修改springBoot默认父POM-->
             <dependency>

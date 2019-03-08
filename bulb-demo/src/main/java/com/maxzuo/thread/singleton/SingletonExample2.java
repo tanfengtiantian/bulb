@@ -24,15 +24,15 @@ public class SingletonExample2 {
     private enum Singleton {
         INSTANCE;
 
-        private SingletonExample2 singletion;
+        private SingletonExample2 singleton;
 
         /** JVM保证这个方法绝对只会执行一次 */
         Singleton() {
-            singletion = new SingletonExample2();
+            singleton = new SingletonExample2();
         }
 
         public SingletonExample2 getInstance() {
-            return singletion;
+            return singleton;
         }
     }
 }
