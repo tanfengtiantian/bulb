@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopRest {
 
     @PostMapping("findTradingGiftList")
-    public Result findTradingGiftList (@RequestAttribute("param")Param param) {
+    public Result findTradingGiftList(@RequestAttribute("param") Param param) {
         JSONObject jsonObject = JSONObject.parseObject(param.getData().toString());
         Integer shopId = jsonObject.getInteger("shopId");
         if (Integer.valueOf(1).equals(shopId)) {

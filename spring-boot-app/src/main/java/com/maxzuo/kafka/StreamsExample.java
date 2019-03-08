@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class StreamsExample {
 
-    private static final Logger logger = LoggerFactory.getLogger(StreamsExample.class);
+    private static final Logger logger            = LoggerFactory.getLogger(StreamsExample.class);
 
     /** test：47.98.199.80:9092 cluster：192.168.3.192:9090,192.168.3.191:9090,192.168.3.181:9090 */
     private static final String BOOTSTRAP_SERVERS = "47.98.199.80:9092";

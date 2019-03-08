@@ -10,7 +10,7 @@ public class SubscribeMain {
 
     private static final String EXPIRED_EVENT_CHANNEL = "__keyevent@0__:expired";
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.out.println("SubscribeMain start ...");
         Jedis jedis = null;
         try {

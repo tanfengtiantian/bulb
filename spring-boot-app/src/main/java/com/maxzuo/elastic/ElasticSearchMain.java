@@ -21,24 +21,20 @@ import java.net.InetAddress;
  */
 public class ElasticSearchMain {
 
-    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchMain.class);
+    private static final Logger    logger     = LoggerFactory.getLogger(ElasticSearchMain.class);
 
-    private static final String INDEX_NAME = "test_zfh";
+    private static final String    INDEX_NAME = "test_zfh";
 
-    private static final String TYPE_NAME = "person";
+    private static final String    TYPE_NAME  = "person";
 
     private static TransportClient client;
 
     static {
-        Settings settings = Settings.settingsBuilder()
-                .put("client.transport.ignore_cluster_name", true)
-                .put("client.transport.sniff", true)
-                .build();
+        Settings settings = Settings.settingsBuilder().put("client.transport.ignore_cluster_name", true)
+            .put("client.transport.sniff", true).build();
         try {
-            client = TransportClient.builder()
-                    .settings(settings)
-                    .build()
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.186"), 9300));
+            client = TransportClient.builder().settings(settings).build()
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.186"), 9300));
         } catch (Exception e) {
             logger.error("ElasticSearch连接异常 errMessage = {}", e.getMessage(), e);
         }
@@ -75,7 +71,7 @@ public class ElasticSearchMain {
      * 通过ID更新记录
      * @param record {@link RecordDTO}
      */
-    private static UpdateResponse updateRecord (RecordDTO record) {
+    private static UpdateResponse updateRecord(RecordDTO record) {
         UpdateResponse response = null;
         if (client != null) {
             UpdateRequest updateRequest = new UpdateRequest();
@@ -97,10 +93,11 @@ public class ElasticSearchMain {
      * @param record {@link RecordDTO}
      * @return {@link IndexResponse}
      */
-    private static IndexResponse saveRecord (RecordDTO record) {
+    private static IndexResponse saveRecord(RecordDTO record) {
         IndexResponse response = null;
         if (client != null) {
-            response = client.prepareIndex(record.getIndex(), record.getType(), record.getId()).setSource(record.getDocument()).get();
+            response = client.prepareIndex(record.getIndex(), record.getType(), record.getId())
+                .setSource(record.getDocument()).get();
         }
         return response;
     }
@@ -112,7 +109,7 @@ public class ElasticSearchMain {
      * @param id 记录ID
      * @return {@link DeleteResponse}
      */
-    private static DeleteResponse removeRecordByPrimary (String index, String type, String id) {
+    private static DeleteResponse removeRecordByPrimary(String index, String type, String id) {
         DeleteResponse response = null;
         if (client != null) {
             response = client.prepareDelete(index, type, id).get();
@@ -127,19 +124,18 @@ public class ElasticSearchMain {
      * @param id 记录ID
      * @return {@link GetResponse}
      */
-    private static GetResponse getRecordByPrimaryKey (String index, String type, String id) {
+    private static GetResponse getRecordByPrimaryKey(String index, String type, String id) {
         GetResponse response = null;
         if (client != null) {
-             response = client.prepareGet(index, type, id).get();
+            response = client.prepareGet(index, type, id).get();
         }
         return response;
     }
 
     /** 关闭ElasticSearch连接 */
-    private static void close () {
+    private static void close() {
         if (client != null) {
             client.close();
         }
     }
 }
-

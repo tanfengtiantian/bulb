@@ -17,7 +17,7 @@ public class AccessLog {
     private static final Logger logger = LoggerFactory.getLogger("access");
 
     @Scheduled(cron = "0/5 * * * * ?")
-    private void recordLog () {
+    private void recordLog() {
         logger.debug("record Log：timestamp = {}", System.currentTimeMillis());
         logger.info("record Log：timestamp = {}", System.currentTimeMillis());
         logger.warn("record Log：timestamp = {}", System.currentTimeMillis());

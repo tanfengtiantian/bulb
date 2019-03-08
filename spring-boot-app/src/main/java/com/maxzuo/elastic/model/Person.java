@@ -46,10 +46,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "user='" + user + '\'' +
-                ", title='" + title + '\'' +
-                ", desc='" + desc + '\'' +
-                '}';
+        return "Person{" + "user='" + user + '\'' + ", title='" + title + '\'' + ", desc='" + desc + '\'' + '}';
     }
 }

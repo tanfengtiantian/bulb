@@ -12,7 +12,7 @@ public class JmxMemoryPoolManager {
     public static final String OLD                            = "old";
     public static final String TENURED                        = "tenured";               // 并行GC算法老生代的名称
     public static final String PERM                           = "perm";
-    public static final String METASPACE                      = "metaspace";              // JDK8永久代名称
+    public static final String METASPACE                      = "metaspace";             // JDK8永久代名称
     public static final String CODE_CACHE                     = "code cache";
     public static final String COMPRESSED_CLASS_SPACE         = "compressed class space";
 

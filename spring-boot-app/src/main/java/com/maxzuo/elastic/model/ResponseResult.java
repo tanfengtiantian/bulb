@@ -8,5 +8,5 @@ public class ResponseResult {
 
     private Integer code;
 
-    private String data;
+    private String  data;
 }

@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class RedisUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
+    private static final Logger  logger = LoggerFactory.getLogger(RedisUtils.class);
 
     private static final Integer EXPIRE = 20 * 60 * 60;
 
@@ -22,7 +22,7 @@ public class RedisUtils {
      * @param key   键
      * @param value 值
      */
-    public static void setStr (String key, String value) {
+    public static void setStr(String key, String value) {
         Jedis jedis = null;
         try {
             jedis = JedisPoolUtil.getJedis();
@@ -42,7 +42,7 @@ public class RedisUtils {
      * @param key   键
      * @return value 值
      */
-    public static String getStr (String key) {
+    public static String getStr(String key) {
         Jedis jedis = null;
         String value = null;
         try {
@@ -62,7 +62,7 @@ public class RedisUtils {
      * 删除key
      * @param key 键
      */
-    public static void delKey (String key) {
+    public static void delKey(String key) {
         Jedis jedis = null;
         try {
             jedis = JedisPoolUtil.getJedis();
@@ -81,7 +81,7 @@ public class RedisUtils {
      * @param channel 频道
      * @param message 消息
      */
-    public static void sendMessageToChannel (String channel, String message) {
+    public static void sendMessageToChannel(String channel, String message) {
         Jedis jedis = null;
         try {
             jedis = JedisPoolUtil.getJedis();
@@ -95,7 +95,7 @@ public class RedisUtils {
         }
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         Jedis jedis = JedisPoolUtil.getJedis();
         jedis.lpush("ten", "name");
         jedis.lpush("ten", "age");

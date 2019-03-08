@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class Consumer {
 
-    public static void main (String[] args) throws IOException, TimeoutException, InterruptedException {
+    public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         // 1.创建一个ConnectionFactory，并进行配置
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("47.98.199.80");

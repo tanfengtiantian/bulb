@@ -62,11 +62,7 @@ public class RecordDTO {
 
     @Override
     public String toString() {
-        return "RecordDTO{" +
-                "index='" + index + '\'' +
-                ", type='" + type + '\'' +
-                ", document='" + document + '\'' +
-                ", id='" + id + '\'' +
-                '}';
+        return "RecordDTO{" + "index='" + index + '\'' + ", type='" + type + '\'' + ", document='" + document + '\''
+               + ", id='" + id + '\'' + '}';
     }
 }

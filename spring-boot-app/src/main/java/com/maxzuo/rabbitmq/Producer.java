@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class Producer {
 
-    public static void main (String[] args) throws IOException, TimeoutException {
+    public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("47.98.199.80");
         factory.setPort(5672);
@@ -23,7 +23,7 @@ public class Producer {
         String exchangeName = "test_direct_exchange";
         String routingKey = "test.direct";
         // 发送数据，只需要往指定的交换机上投递，指定routingKey
-        channel.basicPublish(exchangeName, routingKey, null,  "hello RabbitMQ".getBytes());
+        channel.basicPublish(exchangeName, routingKey, null, "hello RabbitMQ".getBytes());
         // 关闭连接
         channel.close();
         connection.close();

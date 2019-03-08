@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Rest {
 
     @PostMapping("/zxcity_restful/ws/rest")
-    public ModelAndView restMain (HttpServletRequest request) {
+    public ModelAndView restMain(HttpServletRequest request) {
         Param param = new Param();
         param.setCmd(request.getParameter("cmd"));
         param.setData(request.getParameter("data"));
@@ -26,7 +26,7 @@ public class Rest {
     }
 
     @GetMapping("test")
-    public String test () {
+    public String test() {
         System.out.println("hello springBoot");
         return "springBoot";
     }

@@ -26,14 +26,14 @@ import java.util.Set;
 @RestController
 public class WebSocketController {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketController.class);
+    private static final Logger   logger = LoggerFactory.getLogger(WebSocketController.class);
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     /** 客户端点餐信息（websocket消息） */
     @MessageMapping("/message")
-    public void handlerWebSocketMessage (@Payload String body) {
+    public void handlerWebSocketMessage(@Payload String body) {
         logger.info("客户端说：" + body);
         messagingTemplate.convertAndSend("/topic/message", body);
     }

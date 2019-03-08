@@ -10,17 +10,17 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisPoolUtil {
 
-    private static final String HOST = "47.98.199.80";
+    private static final String  HOST     = "47.98.199.80";
 
-    private static final Integer PORT = 6379;
+    private static final Integer PORT     = 6379;
 
-    private static final Integer TIMEOUT = 2000;
+    private static final Integer TIMEOUT  = 2000;
 
-    private static final String PASSWORD = "dazuo.123";
+    private static final String  PASSWORD = "dazuo.123";
 
     private static final Integer DATABASE = 0;
 
-    private static JedisPool pool;
+    private static JedisPool     pool;
 
     static {
         init();
@@ -50,7 +50,7 @@ public class JedisPoolUtil {
      * 获取连接
      * @return Jedis
      */
-    public static Jedis getJedis () {
+    public static Jedis getJedis() {
         return pool.getResource();
     }
 }

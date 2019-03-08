@@ -56,7 +56,7 @@ public class RedisCluster {
     /**
      * 连接集群
      */
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         jedisCluster = getJedisCluster();
         Map<String, JedisPool> clusterNodes = jedisCluster.getClusterNodes();
 

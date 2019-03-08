@@ -1,11 +1,18 @@
 package com.maxzuo.websocket;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
+import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+
+import java.util.List;
 
 /**
  * WebSocket STOMP服务端
@@ -39,8 +46,37 @@ public class WebSocketServerConfig implements WebSocketMessageBrokerConfigurer {
         te.setPoolSize(1);
         te.setThreadNamePrefix("wss-heartbeat-thread-");
         te.initialize();
-        registry.enableSimpleBroker("/topic")
-                .setHeartbeatValue(new long[]{HEART_BEAT, HEART_BEAT})
+        registry.enableSimpleBroker("/topic").setHeartbeatValue(new long[] { HEART_BEAT, HEART_BEAT })
                 .setTaskScheduler(te);
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration webSocketTransportRegistration) {
+
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration channelRegistration) {
+
+    }
+
+    @Override
+    public void configureClientOutboundChannel(ChannelRegistration channelRegistration) {
+
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> list) {
+
+    }
+
+    @Override
+    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> list) {
+
+    }
+
+    @Override
+    public boolean configureMessageConverters(List<MessageConverter> list) {
+        return false;
     }
 }

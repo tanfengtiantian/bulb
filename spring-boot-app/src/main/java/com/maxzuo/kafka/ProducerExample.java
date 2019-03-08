@@ -24,7 +24,7 @@ public class ProducerExample {
         prop.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         KafkaProducer kafkaProducer = new KafkaProducer(prop);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             ProducerRecord<String, String> record = new ProducerRecord<>("test", "user","hello kafka" + "  i = " + i);
             kafkaProducer.send(record);
         }

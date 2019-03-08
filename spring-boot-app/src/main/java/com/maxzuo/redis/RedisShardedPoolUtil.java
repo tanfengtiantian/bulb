@@ -12,21 +12,21 @@ import java.util.List;
 
 public class RedisShardedPoolUtil {
 
-    private static final String HOST_1 = "47.98.199.80";
+    private static final String     HOST_1    = "47.98.199.80";
 
-    private static final Integer PORT_1 = 6377;
+    private static final Integer    PORT_1    = 6377;
 
-    private static final Integer TIMEOUT_1 = 2000;
+    private static final Integer    TIMEOUT_1 = 2000;
 
-    private static final String HOST_2 = "47.98.199.80";
+    private static final String     HOST_2    = "47.98.199.80";
 
-    private static final Integer PORT_2 = 6378;
+    private static final Integer    PORT_2    = 6378;
 
-    private static final Integer TIMEOUT_2 = 2000;
+    private static final Integer    TIMEOUT_2 = 2000;
 
-    private static final String PASSWORD = "dazuo.123";
+    private static final String     PASSWORD  = "dazuo.123";
 
-    private static final Integer DATABASE = 0;
+    private static final Integer    DATABASE  = 0;
 
     private static ShardedJedisPool pool;
 
@@ -67,11 +67,11 @@ public class RedisShardedPoolUtil {
      * 分片（hash一致算法）
      * @return ShardedJedis
      */
-    public static ShardedJedis getShardedJedis () {
+    public static ShardedJedis getShardedJedis() {
         return pool.getResource();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         ShardedJedis shardedJedis = getShardedJedis();
         shardedJedis.set("name", "dazuo");
         shardedJedis.close();
