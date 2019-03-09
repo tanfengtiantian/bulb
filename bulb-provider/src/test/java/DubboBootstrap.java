@@ -6,6 +6,8 @@ public class DubboBootstrap {
 
     public static void main(String[] args) {
         System.out.println("bulb-order-provider start...");
+
+        // Main中会根据配置加载容器模块
         com.alibaba.dubbo.container.Main.main(args);
     }
 }
