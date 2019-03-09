@@ -23,7 +23,7 @@ public class SemaphoreExample {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(10);
         ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
         RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 1000, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
+        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 500, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
 
         final Semaphore semaphore = new Semaphore(THREAD_TOTAL);
         CountDownLatch countDownLatch = new CountDownLatch(CLIENT_TOTAL);
@@ -53,7 +53,7 @@ public class SemaphoreExample {
 
     private static void add() throws InterruptedException {
         ++count;
-        System.out.println(count);
-        Thread.sleep(1000);
+        System.out.println(Thread.currentThread().getName() + " i = " + count);
+        //Thread.sleep(1000);
     }
 }
