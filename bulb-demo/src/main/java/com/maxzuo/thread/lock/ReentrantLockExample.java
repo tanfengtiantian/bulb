@@ -13,9 +13,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ReentrantLockExample {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReentrantLockExample.class);
+    private static final Logger        logger = LoggerFactory.getLogger(ReentrantLockExample.class);
 
-    private static final ReentrantLock LOCK = new ReentrantLock();
+    private static final ReentrantLock LOCK   = new ReentrantLock();
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
@@ -32,7 +32,7 @@ public class ReentrantLockExample {
     /**
      * task body
      */
-    private static void task () {
+    private static void task() {
         LOCK.lock();
         try {
             System.out.println(Thread.currentThread().getName() + " --------- in coming");

@@ -19,7 +19,7 @@ public class ConditionExample {
 
     private static final ReentrantLock LOCK = new ReentrantLock();
 
-    private static final Condition STOP = LOCK.newCondition();
+    private static final Condition     STOP = LOCK.newCondition();
 
     public static void main(String[] args) {
         // TODO: 使用线程池会有问题？

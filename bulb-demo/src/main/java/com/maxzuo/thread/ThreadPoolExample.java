@@ -27,7 +27,7 @@ public enum ThreadPoolExample {
         threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
     }
 
-    public void execute (Runnable task) {
+    public void execute(Runnable task) {
         threadPool.execute(task);
     }
 }
