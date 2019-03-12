@@ -30,6 +30,10 @@ $ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding
 ```
 $ nohup java -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main > /developer/logs/app.log 2>&1 &
 ```
+8.启动SpringBoot示例：
+```
+$ nohup /usr/local/java/bin/java  -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms1024m -Xmx1024m -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -jar /usr/local/spring_boot_app/zxcity_pay_boot-1.0-SNAPSHOT.jar --spring.config.name=application >/dev/null &
+```
 其中：
 * nohup 可以使得命令永远运行下去和用户终端没有关系。当我们断开ssh 连接的时候不会影响他的运行。
 * \> /developer/logs/app.log 指定输出的文件；补充，在类Unix系统中，/dev/null，或称空设备，是一个特殊的设备文件，它丢弃一切写入其中的数据（但报告写入操作成功），读取它则会立即得到一个EOF。
