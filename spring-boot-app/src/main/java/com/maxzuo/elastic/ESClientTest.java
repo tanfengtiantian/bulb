@@ -19,7 +19,7 @@ public class ESClientTest {
     }
 
     @Test
-    public void saveRecord () {
+    public void saveRecord() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", "dazuo");
         jsonObject.put("profession", "java工程师");

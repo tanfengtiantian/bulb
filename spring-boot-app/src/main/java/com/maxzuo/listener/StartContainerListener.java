@@ -19,21 +19,21 @@ import java.net.InetAddress;
 @Component
 public class StartContainerListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StartContainerListener.class);
+    private static final Logger logger       = LoggerFactory.getLogger(StartContainerListener.class);
 
-    private static final String FINAL_NAME = "bulb-web";
+    private static final String FINAL_NAME   = "bulb-web";
 
     private static final String CONNECT_ADDR = "127.0.0.1:2181";
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         // 防止重复执行
-        if(event.getApplicationContext().getParent() == null){
+        if (event.getApplicationContext().getParent() == null) {
             //collectAppBaseInfo();
         }
     }
 
-    private static void collectAppBaseInfo () {
+    private static void collectAppBaseInfo() {
         try {
             InetAddress address = InetAddress.getLocalHost();
             String hostname = address.getHostName();
@@ -47,7 +47,7 @@ public class StartContainerListener implements ApplicationListener<ContextRefres
     }
 
     /** 写入zookeeper */
-    private static void writerToZookeeper (String hostname, Integer pid) {
+    private static void writerToZookeeper(String hostname, Integer pid) {
         ZkClient zkClient = new ZkClient(new ZkConnection(CONNECT_ADDR), 10000);
         String basePath = "/zxcity/apm/" + hostname;
         if (!zkClient.exists(basePath)) {

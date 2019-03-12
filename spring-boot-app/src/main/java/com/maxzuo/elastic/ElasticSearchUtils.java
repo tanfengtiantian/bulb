@@ -15,11 +15,11 @@ import java.net.InetAddress;
  */
 public class ElasticSearchUtils {
 
-    private static final Logger    logger     = LoggerFactory.getLogger(ElasticSearchUtils.class);
+    private static final Logger    logger  = LoggerFactory.getLogger(ElasticSearchUtils.class);
 
-    private static final String ES_IP = "47.98.199.80";
+    private static final String    ES_IP   = "47.98.199.80";
 
-    private static final Integer ES_PROT = 9300;
+    private static final Integer   ES_PROT = 9300;
 
     private static TransportClient client;
 
@@ -30,7 +30,7 @@ public class ElasticSearchUtils {
             client = TransportClient.builder().settings(settings).build()
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(ES_IP), ES_PROT));
         } catch (Exception e) {
-            logger.error("ES连接异常",e);
+            logger.error("ES连接异常", e);
         }
     }
 

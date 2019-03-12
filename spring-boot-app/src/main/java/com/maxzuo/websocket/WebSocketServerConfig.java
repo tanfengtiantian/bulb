@@ -47,7 +47,7 @@ public class WebSocketServerConfig implements WebSocketMessageBrokerConfigurer {
         te.setThreadNamePrefix("wss-heartbeat-thread-");
         te.initialize();
         registry.enableSimpleBroker("/topic").setHeartbeatValue(new long[] { HEART_BEAT, HEART_BEAT })
-                .setTaskScheduler(te);
+            .setTaskScheduler(te);
     }
 
     @Override
