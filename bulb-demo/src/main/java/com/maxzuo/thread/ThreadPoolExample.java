@@ -1,8 +1,9 @@
 package com.maxzuo.thread;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 探索线程池
@@ -14,22 +15,19 @@ import java.util.concurrent.atomic.AtomicLong;
  * </pre>
  * Created by zfh on 2019/01/22
  */
-public class ThreadPoolExample {
+public enum ThreadPoolExample {
+    INSTANCE;
 
-    public static void main(String[] args) {
+    private ThreadPoolExecutor threadPool;
 
-        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(2);
+    ThreadPoolExample () {
+        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(1);
         ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
         RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
+        threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
+    }
 
-        for (int i = 0; i < 10; i++) {
-            threadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("线程执行");
-                }
-            });
-        }
+    public void execute (Runnable task) {
+        threadPool.execute(task);
     }
 }
