@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ConsumerExample {
 
     /** test：47.98.199.80:9092 cluster：192.168.3.192:9090,192.168.3.191:9090,192.168.3.181:9090 */
-    private static final String BOOTSTRAP_SERVERS = "47.98.199.80:9092";
+    private static final String BOOTSTRAP_SERVERS = "139.129.216.37:9092";
 
     public static void main(String[] args) {
         Properties props = new Properties();
@@ -32,7 +32,7 @@ public class ConsumerExample {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("test"), new ConsumerRebalanceListener() {
+        consumer.subscribe(Collections.singletonList("zxcity_jvm_monitor"), new ConsumerRebalanceListener() {
             @Override
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
             }
@@ -44,7 +44,7 @@ public class ConsumerExample {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
-                System.out.printf("partition = %d, offset = %d, key = %s, value = %s", record.partition(), record.offset(), record.key(), record.value());
+                System.out.printf("value = %s", record.value());
                 System.out.println();
             }
 

@@ -1,0 +1,11 @@
+server:
+  port: 8082
+spring:
+  http:
+    encoding:
+      enabled: true
+  rabbitmq:
+    host: 47.98.199.80
+    port: 5672
+    username: guest
+    password: guest
