@@ -36,7 +36,7 @@ import java.util.Map;
  * 打印机-出票口Rest
  * Created by zfh on 2019/01/09
  */
-@RequestMapping("/zxcity_restful/ws/printerKitchen")
+@RequestMapping("/zxcity_restful/ws/foodBoot/printerKitchen")
 @RestController
 public class PrinterKitchenRest {
 

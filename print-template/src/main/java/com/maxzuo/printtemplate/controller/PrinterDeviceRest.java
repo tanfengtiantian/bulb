@@ -24,7 +24,7 @@ import java.util.List;
  * 打印机Rest
  * Created by zfh on 2019/01/09
  */
-@RequestMapping("/zxcity_restful/ws/printerDevice")
+@RequestMapping("/zxcity_restful/ws/foodBoot/printerDevice")
 @RestController
 public class PrinterDeviceRest {
 

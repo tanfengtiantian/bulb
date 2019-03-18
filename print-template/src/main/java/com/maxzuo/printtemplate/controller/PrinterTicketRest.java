@@ -28,7 +28,7 @@ import java.util.*;
  * 打印机设置-票据样式管理Rest
  * Created by zfh on 2018/12/12
  */
-@RequestMapping("/zxcity_restful/ws/printerTicket")
+@RequestMapping("/zxcity_restful/ws/foodBoot/printerTicket")
 @RestController
 public class PrinterTicketRest {
 
