@@ -39,12 +39,13 @@ public interface IScOperationPrinterTemplateDocumentService {
     Integer updateShopPrinterTemplateDocumentByPrimaryId(ScOperationPrinterTemplateDocument scShopPrinterTemplateDocument);
 
     /**
-     * 根据店铺id和票据类型 更新模板状态
-     * @param shopId 店铺id
+     * 启用店铺模板
+     * @param shopId       店铺id
      * @param documentType 票据类型
+     * @param templateId   模板ID
      * @return 受影响条数
      */
-    Integer updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(Integer shopId, Integer documentType);
+    Integer enableShopPrinterTemplate(Integer shopId, Integer documentType, Integer templateId);
 
     /**
      * 移除自定义模板（软删除）

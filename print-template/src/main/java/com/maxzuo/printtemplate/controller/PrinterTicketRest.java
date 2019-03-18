@@ -688,17 +688,10 @@ public class PrinterTicketRest {
         }
         ScOperationPrinterTemplateDocument templateDocument = scShopPrinterTemplateDocumentService.getShopPrinterTemplateDocumentByPrimaryId(templateId);
         if (templateDocument == null || !shopId.equals(templateDocument.getShopId())) {
-            result.setMsg("模板不存在！");
+            result.setMsg("该模板为默认模板或者模板不存在！");
             return result;
         }
-        // 禁用其他模板
-        Integer affectedRows = scShopPrinterTemplateDocumentService.updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(shopId, documentType);
-        if (affectedRows > 0) {
-            ScOperationPrinterTemplateDocument templateDocumentInfo = new ScOperationPrinterTemplateDocument();
-            templateDocumentInfo.setId(templateId);
-            templateDocumentInfo.setStatus(1);
-            scShopPrinterTemplateDocumentService.updateShopPrinterTemplateDocumentByPrimaryId(templateDocumentInfo);
-        }
+        scShopPrinterTemplateDocumentService.enableShopPrinterTemplate(shopId, documentType, templateId);
         result.setCode(Result.RESULT_SUCCESS);
         result.setMsg("操作成功");
         return result;

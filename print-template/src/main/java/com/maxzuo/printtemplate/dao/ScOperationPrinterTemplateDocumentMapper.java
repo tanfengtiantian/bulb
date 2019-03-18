@@ -49,12 +49,20 @@ public interface ScOperationPrinterTemplateDocumentMapper {
     Integer updateShopPrinterTemplateDocumentStatusByPrimaryId(Integer id);
 
     /**
-     * 根据店铺id和票据类型 更新模板状态
-     * @param shopId 店铺id
-     * @param documentType 票据类型
+     * 禁用店铺指定类型的模板
+     * @param shopId       店铺ID
+     * @param templateType 模板类型
+     * @return 受影响的条数
+     */
+    Integer disableShopPrinterTemplateDocumentStatusByShopIdAndDocumentType (@Param("shopId") Integer shopId, @Param("documentType") Integer templateType);
+
+    /**
+     * 更新店铺模板 启用/禁用 状态
+     * @param templateId 模板ID
+     * @param status     1-启用 2-禁用
      * @return 受影响条数
      */
-    Integer updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(@Param("shopId") Integer shopId, @Param("documentType") Integer documentType);
+    Integer updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(@Param("templateId") Integer templateId, @Param("status") Integer status);
 
     /**
      * 查询店铺下模板列表和默认的模板

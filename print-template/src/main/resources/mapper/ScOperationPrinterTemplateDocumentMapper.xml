@@ -60,11 +60,17 @@
         WHERE id = #{id}
     </update>
 
-    <update id="updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType" parameterType="map">
+    <update id="disableShopPrinterTemplateDocumentStatusByShopIdAndDocumentType" parameterType="map">
         UPDATE sc_operation_printer_template_document
         SET status = 2
         WHERE shop_id = #{shopId}
         AND document_type = #{documentType}
+    </update>
+
+    <update id="updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType" parameterType="map">
+        UPDATE sc_operation_printer_template_document
+        SET status = #{status}
+        WHERE id = #{templateId}
     </update>
 
     <select id="selectPrinterTemplateDocumentByShopIdAndDocumentType" parameterType="map" resultMap="BaseResultMap">

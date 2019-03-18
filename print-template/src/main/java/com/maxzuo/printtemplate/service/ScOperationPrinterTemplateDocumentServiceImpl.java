@@ -40,8 +40,10 @@ public class ScOperationPrinterTemplateDocumentServiceImpl implements IScOperati
     }
 
     @Override
-    public Integer updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(Integer shopId, Integer documentType) {
-        return scOperationPrinterTemplateDocumentMapper.updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(shopId, documentType);
+    public Integer enableShopPrinterTemplate(Integer shopId, Integer documentType, Integer templateId) {
+        // 禁用已启用的模板
+        scOperationPrinterTemplateDocumentMapper.disableShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(shopId, documentType);
+        return scOperationPrinterTemplateDocumentMapper.updateShopPrinterTemplateDocumentStatusByShopIdAndDocumentType(templateId, 1);
     }
 
     @Override
