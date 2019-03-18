@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class MemoryDatabase {
 
-    public List<String> load(String info) {
-        return Arrays.asList(info + ": foo", info + ": bar");
+    public List<String> load(String var1) {
+        return Arrays.asList("one", "two", var1);
     }
 }
