@@ -3,9 +3,6 @@ package com.maxzuo.redis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
-
-import java.util.Set;
 
 /**
  * Redis操作工具类
@@ -15,12 +12,13 @@ public class RedisUtils {
 
     private static final Logger  logger = LoggerFactory.getLogger(RedisUtils.class);
 
+    /**
+     * 过期时间
+     */
     private static final Integer EXPIRE = 20 * 60 * 60;
 
     /**
-     * 设置key对应的缓存
-     * @param key   键
-     * @param value 值
+     * 设置Value
      */
     public static void setStr(String key, String value) {
         Jedis jedis = null;
@@ -38,9 +36,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取key对应的缓存
-     * @param key   键
-     * @return value 值
+     * 获取Value
      */
     public static String getStr(String key) {
         Jedis jedis = null;
@@ -60,7 +56,6 @@ public class RedisUtils {
 
     /**
      * 删除key
-     * @param key 键
      */
     public static void delKey(String key) {
         Jedis jedis = null;
@@ -78,8 +73,6 @@ public class RedisUtils {
 
     /**
      * 向特定频道发布消息
-     * @param channel 频道
-     * @param message 消息
      */
     public static void sendMessageToChannel(String channel, String message) {
         Jedis jedis = null;
@@ -93,12 +86,5 @@ public class RedisUtils {
                 jedis.close();
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Jedis jedis = JedisPoolUtil.getJedis();
-        jedis.lpush("ten", "name");
-        jedis.lpush("ten", "age");
-        System.out.println(jedis.rpop("ten"));
     }
 }

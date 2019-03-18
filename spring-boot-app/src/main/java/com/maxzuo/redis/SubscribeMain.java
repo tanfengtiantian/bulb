@@ -4,6 +4,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
 /**
+ * 键空间通知
  * Created by zfh on 2018/10/15
  */
 public class SubscribeMain {

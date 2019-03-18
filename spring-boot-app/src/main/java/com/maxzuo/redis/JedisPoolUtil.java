@@ -10,16 +10,19 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisPoolUtil {
 
-    private static final String  HOST     = "47.98.199.80";
+    private static final String  HOST     = "192.168.3.183";
 
     private static final Integer PORT     = 6379;
 
     private static final Integer TIMEOUT  = 2000;
 
-    private static final String  PASSWORD = "dazuo.123";
+    private static final String  PASSWORD = "myredis";
 
-    private static final Integer DATABASE = 0;
+    private static final Integer DATABASE = 1;
 
+    /**
+     * Redis连接池
+     */
     private static JedisPool     pool;
 
     static {
@@ -40,7 +43,7 @@ public class JedisPoolUtil {
         // 从jedis连接池获取连接时，是否进行验证操作。如果赋值true，则得到的jedis实例坑定是可用的。
         config.setTestOnBorrow(true);
         // 把连接放回jedis连接池时，是否进行验证操作。如果赋值为true，则放回jedisPool的jedis实例肯定是可用的。
-        config.setTestOnReturn(false);
+        config.setTestOnReturn(true);
         // 连接耗尽的时候，是否阻塞，false会抛出异常，true阻塞直到超时。默认为true。
         config.setBlockWhenExhausted(true);
         pool = new JedisPool(config, HOST, PORT, TIMEOUT, PASSWORD, DATABASE);
