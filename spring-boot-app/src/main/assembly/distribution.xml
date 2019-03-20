@@ -8,21 +8,27 @@
 	</formats>
 	<baseDirectory>${project.artifactId}</baseDirectory>
 	<files>
+        <file>
+            <source>README.md</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>README.md</destName>
+            <lineEnding>unix</lineEnding>
+        </file>
 		<file>
-			<source>src/main/assembly/start.sh</source>
-			<outputDirectory>/</outputDirectory>
-			<fileMode>0755</fileMode>
-			<lineEnding>unix</lineEnding>
-		</file>
-		<file>
-			<source>README.md</source>
-			<outputDirectory>/</outputDirectory>
-			<destName>README.md</destName>
-			<lineEnding>unix</lineEnding>
-		</file>
-		<file>
-			<source>${project.build.directory}/spring-boot-app.jar</source>
+			<source>${project.build.directory}/${project.artifactId}.jar</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
 	</files>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/scripts</directory>
+            <outputDirectory>/bin</outputDirectory>
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/config</directory>
+            <outputDirectory>/conf</outputDirectory>
+        </fileSet>
+    </fileSets>
 </assembly>
