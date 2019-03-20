@@ -7,7 +7,7 @@ import redis.clients.jedis.JedisPubSub;
  * 键空间通知
  * Created by zfh on 2018/10/15
  */
-public class SubscribeMain {
+public class WorkspaceNotifyExample {
 
     private static final String EXPIRED_EVENT_CHANNEL = "__keyevent@0__:expired";
 

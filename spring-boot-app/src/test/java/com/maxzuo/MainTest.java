@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.util.SafeEncoder;
+
+import java.util.Arrays;
 
 /**
  * Created by zfh on 2019/02/01
@@ -15,17 +18,8 @@ class MainTest {
 
     @Test
     void testLog() {
-        logger.debug("hello world");
-        logger.info("hello world");
-        logger.warn("hello wrold");
-        logger.error("hello world");
-        try {
-            if (System.currentTimeMillis() > 1) {
-                throw new RuntimeException("异常信息");
-            }
-        } catch (Exception e) {
-            logger.warn("异常信息 ", e.getMessage(), e);
-        }
+        byte[] hellos = SafeEncoder.encode("hello");
+        System.out.println(Arrays.toString(hellos));
     }
 
     @Test

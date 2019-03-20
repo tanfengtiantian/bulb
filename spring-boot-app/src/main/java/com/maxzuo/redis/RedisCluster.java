@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by zfh on 2018/10/17
+ * JedisCluster模块，对应Redis Cluster（集群模式）
  */
 public class RedisCluster {
 

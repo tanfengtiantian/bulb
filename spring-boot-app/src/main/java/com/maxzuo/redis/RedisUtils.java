@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 /**
- * Redis操作工具类
+ * Jedis操作工具类
  * Created by zfh on 2018/10/15
  */
 public class RedisUtils {

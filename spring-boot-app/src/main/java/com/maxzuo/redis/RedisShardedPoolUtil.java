@@ -10,6 +10,9 @@ import redis.clients.util.Sharded;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ShardedJedis模块，对应Redis Sharding（分片模式）
+ */
 public class RedisShardedPoolUtil {
 
     private static final String     HOST_1    = "47.98.199.80";

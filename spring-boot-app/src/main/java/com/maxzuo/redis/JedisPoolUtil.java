@@ -5,7 +5,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Redis连接池
+ * Jedis对应 Redis Standalone（单节点模式）
  * Created by zfh on 2018/10/15
  */
 public class JedisPoolUtil {
