@@ -46,7 +46,7 @@ class Adapter3 implements Ps3 {
 
     private Usb usb;
 
-    Adapter3 (Usb usb) {
+    Adapter3(Usb usb) {
         this.usb = usb;
     }
 

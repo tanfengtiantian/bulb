@@ -164,19 +164,16 @@ class DefineFieldAndMethodTest {
     @Test
     void testInvokeDelegationMethodAndAnnotationArgument() {
         try {
-            DynamicType.Unloaded<MemoryDatabase> dynamicType = new ByteBuddy()
-                    .subclass(MemoryDatabase.class)
-                    .method(named("load"))
-                    .intercept(MethodDelegation.withDefaultConfiguration().to(new LoggerInterceptor()))
-                    .name("com.maxzuo.bytebuddy.SourceSub")
-                    .make();
+            DynamicType.Unloaded<MemoryDatabase> dynamicType = new ByteBuddy().subclass(MemoryDatabase.class)
+                .method(named("load"))
+                .intercept(MethodDelegation.withDefaultConfiguration().to(new LoggerInterceptor()))
+                .name("com.maxzuo.bytebuddy.SourceSub").make();
 
             // 字节码文件
             writeToFile(dynamicType.getBytes());
 
-            MemoryDatabase memoryDatabase = dynamicType.load(ClassLoader.getSystemClassLoader())
-                    .getLoaded()
-                    .newInstance();
+            MemoryDatabase memoryDatabase = dynamicType.load(ClassLoader.getSystemClassLoader()).getLoaded()
+                .newInstance();
 
             List<String> list = memoryDatabase.load("three");
             System.out.println("list: " + list);

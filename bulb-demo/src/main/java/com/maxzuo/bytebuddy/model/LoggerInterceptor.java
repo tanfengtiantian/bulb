@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class LoggerInterceptor {
 
     @RuntimeType
-    public Object intercept (@SuperCall Callable<List<String>> zuper) throws Exception {
+    public Object intercept(@SuperCall Callable<List<String>> zuper) throws Exception {
         System.out.println("Calling database");
         TimeUnit.SECONDS.sleep(1);
         List<String> result = zuper.call();
