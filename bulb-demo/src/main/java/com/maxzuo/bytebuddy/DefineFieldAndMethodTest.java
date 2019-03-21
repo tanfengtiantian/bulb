@@ -165,7 +165,7 @@ class DefineFieldAndMethodTest {
     void testInvokeDelegationMethodAndAnnotationArgument() {
         try {
             DynamicType.Unloaded<MemoryDatabase> dynamicType = new ByteBuddy().subclass(MemoryDatabase.class)
-                .method(named("load"))
+                .method(named("queryOrder"))
                 .intercept(MethodDelegation.withDefaultConfiguration().to(new LoggerInterceptor()))
                 .name("com.maxzuo.bytebuddy.SourceSub").make();
 
@@ -175,8 +175,8 @@ class DefineFieldAndMethodTest {
             MemoryDatabase memoryDatabase = dynamicType.load(ClassLoader.getSystemClassLoader()).getLoaded()
                 .newInstance();
 
-            List<String> list = memoryDatabase.load("three");
-            System.out.println("list: " + list);
+            // 调用方法
+            memoryDatabase.queryOrder(3);
         } catch (Exception e) {
             logger.error("异常信息", e);
         }
