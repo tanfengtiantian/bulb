@@ -4,9 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.util.SafeEncoder;
-
-import java.util.Arrays;
 
 /**
  * Created by zfh on 2019/02/01
@@ -14,12 +11,11 @@ import java.util.Arrays;
 @DisplayName("测试主类")
 class MainTest {
 
-    private static final Logger logger = LoggerFactory.getLogger("access");
+    private static final Logger logger = LoggerFactory.getLogger(MainTest.class);
 
     @Test
     void testLog() {
-        byte[] hellos = SafeEncoder.encode("hello");
-        System.out.println(Arrays.toString(hellos));
+        logger.info("hello");
     }
 
     @Test
