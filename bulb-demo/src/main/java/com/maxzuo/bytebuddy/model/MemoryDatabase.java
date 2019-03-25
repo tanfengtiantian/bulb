@@ -12,7 +12,7 @@ public class MemoryDatabase {
         return Arrays.asList("one", "two", var1);
     }
 
-    public void queryOrder (Integer id) {
+    public void queryOrder(Integer id) {
         if (id > 5) {
             throw new RuntimeException("找不到订单");
         }

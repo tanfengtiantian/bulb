@@ -35,7 +35,7 @@ public class JedisClientExample {
     }
 
     @Test
-    public void clientBinaryClient () {
+    public void clientBinaryClient() {
         BinaryJedis binaryJedis = new BinaryJedis("192.168.3.183", 6379);
         binaryJedis.auth("myredis");
         binaryJedis.select(1);

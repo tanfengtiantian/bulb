@@ -22,7 +22,8 @@ public class LoggerInterceptor {
      * @throws Exception   抛出源方法的异常
      */
     @RuntimeType
-    public Object intercept(@This Object obj, @AllArguments Object[] allArguments, @SuperCall Callable<?> zuper, @Origin Method method) throws Exception {
+    public Object intercept(@This Object obj, @AllArguments Object[] allArguments, @SuperCall Callable<?> zuper,
+                            @Origin Method method) throws Exception {
         // 调用目标方法
         zuper.call();
         System.out.println("源参数：" + Arrays.toString(allArguments));
