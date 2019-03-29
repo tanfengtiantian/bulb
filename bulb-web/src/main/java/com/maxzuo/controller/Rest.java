@@ -1,28 +1,30 @@
 package com.maxzuo.controller;
 
-import com.maxzuo.bulb.api.IShopOrderInfoService;
-import com.maxzuo.bulb.model.ShopOrderInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.maxzuo.form.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by zfh on 2018/09/19
+ * 请求统一入口
+ * Created by zfh on 2018/12/30
  */
 @RestController
 public class Rest {
 
-    @Autowired
-    private IShopOrderInfoService shopOrderInfoService;
+    private static final Logger logger = LoggerFactory.getLogger(Rest.class);
 
-    @GetMapping("main")
-    public String main() {
-        try {
-            ShopOrderInfo orderInfo = shopOrderInfoService.getShopOrderInfoByPrimaryKey(1);
-            System.out.println("orderInfo: " + orderInfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "main rest";
+    @PostMapping("/zxcity_restful/ws/rest")
+    public ModelAndView restMain(HttpServletRequest request) {
+        Param param = new Param();
+        param.setCmd(request.getParameter("cmd"));
+        param.setData(request.getParameter("data"));
+        param.setVersion(request.getParameter("version"));
+        request.setAttribute("param", param);
+        return new ModelAndView("forward:/zxcity_restful/ws/" + param.getCmd());
     }
 }
