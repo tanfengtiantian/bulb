@@ -1,0 +1,15 @@
+# 对象
+engineer:
+  name: dazuo
+  age: 23
+  # 数组
+  attribute:
+    - computer
+    - game
+# 数组
+color:
+  - red
+  - blud
+  - green
+
+# 转换成Map的结果：{engineer={name=dazuo, age=23, attribute=[computer, game]}, color=[red, blud, green]}
