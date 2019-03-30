@@ -1,12 +1,7 @@
-package com.maxzuo.thread.concurrent;
-
-import com.maxzuo.thread.RejectedHandlerExample;
-import com.maxzuo.thread.ThreadFactoryExample;
-import org.apache.commons.lang3.RandomUtils;
+package com.maxzuo.juc;
 
 import java.util.Random;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * CountDownLatch使用案例：三个工人先全部干完活，老板才检查。

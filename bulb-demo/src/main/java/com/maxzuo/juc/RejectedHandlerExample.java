@@ -1,4 +1,4 @@
-package com.maxzuo.thread;
+package com.maxzuo.juc;
 
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;

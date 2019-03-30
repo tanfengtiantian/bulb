@@ -6,9 +6,10 @@ import java.io.Serializable;
  * Created by zfh on 2019/01/26
  */
 @Token("hello user")
-public class User {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 5800599219375047135L;
+
     private Integer           id;
 
     private String            name;

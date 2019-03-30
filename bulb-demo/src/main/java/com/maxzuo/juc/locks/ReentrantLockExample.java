@@ -1,10 +1,9 @@
-package com.maxzuo.thread.lock;
+package com.maxzuo.juc.locks;
 
 import com.maxzuo.thread.ThreadPoolExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -16,6 +15,8 @@ public class ReentrantLockExample {
     private static final Logger        logger = LoggerFactory.getLogger(ReentrantLockExample.class);
 
     private static final ReentrantLock LOCK   = new ReentrantLock();
+
+    private static Integer count = 0;
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
@@ -35,8 +36,7 @@ public class ReentrantLockExample {
     private static void task() {
         LOCK.lock();
         try {
-            System.out.println(Thread.currentThread().getName() + " --------- in coming");
-            TimeUnit.SECONDS.sleep(1);
+            System.out.format("count : %d threadId：%d \n", ++count, Thread.currentThread().getId());
         } catch (Exception e) {
             logger.error("发生异常", e);
         } finally {

@@ -6,10 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.Arrays;
 
 /**
@@ -165,5 +162,42 @@ class ClassReflectTest {
         Class<User> userClass = User.class;
         Class<?>[] classes = userClass.getClasses();
         System.out.println(Arrays.toString(classes));
+    }
+
+    @DisplayName("获取方法的参数名")
+    @Test
+    void testMethodParameterName () {
+        /*
+            1.在Java8之前，代码编译为class文件后，方法参数的类型固定，但是方法名称会丢失，方法名称会变成arg0、arg1....。而现在，
+              在Java8开始可以在class文件中保留参数名，这就给反射带来了极大的遍历
+            2.由于为了避免.class文件因为保留参数名而导致.class文件过大或者占用更多的内存，另外也避免有些参数（secrect/password)
+              泄露安全信息，JVM即使时1.8默认是不会保留参数名称的。
+            3.保留参数名 编译命令：
+              $ javac -parameters ClassReflectTest.java
+              参考：http://www.mamicode.com/info-detail-2162647.html
+         */
+        try {
+            Method method = User.class.getMethod("getParam", String.class);
+            Parameter[] parameters = method.getParameters();
+            for (Parameter item : parameters) {
+                System.out.println("item.getName(): " + item.getName());
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("获取方法调用栈")
+    @Test
+    void testMethodInvokeStack () {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement element : stackTrace) {
+            System.out.println("className：" + element.getClassName());
+            System.out.println("lineNumber：" + element.getLineNumber());
+            System.out.println("fileName：" + element.getFileName());
+            System.out.println("methodName：" + element.getMethodName());
+
+            System.out.println("***********************************************\n");
+        }
     }
 }

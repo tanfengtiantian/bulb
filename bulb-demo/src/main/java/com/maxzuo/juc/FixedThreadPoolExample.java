@@ -1,4 +1,4 @@
-package com.maxzuo.thread.pool;
+package com.maxzuo.juc;
 
 import java.util.concurrent.*;
 

@@ -1,4 +1,4 @@
-package com.maxzuo.thread.concurrent.atomic;
+package com.maxzuo.juc.atomic;
 
 import java.util.concurrent.atomic.AtomicReference;
 

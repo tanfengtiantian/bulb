@@ -1,7 +1,4 @@
-package com.maxzuo.thread.concurrent;
-
-import com.maxzuo.thread.RejectedHandlerExample;
-import com.maxzuo.thread.ThreadFactoryExample;
+package com.maxzuo.juc;
 
 import java.util.concurrent.*;
 

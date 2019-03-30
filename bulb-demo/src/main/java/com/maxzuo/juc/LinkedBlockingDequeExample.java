@@ -1,4 +1,4 @@
-package com.maxzuo.thread.concurrent;
+package com.maxzuo.juc;
 
 import org.junit.Test;
 

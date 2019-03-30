@@ -1,4 +1,4 @@
-package com.maxzuo.thread.lock;
+package com.maxzuo.juc.locks;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
