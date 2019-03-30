@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 public class FixedThreadPoolExample {
 
     /**
-     * 核心线程数量，也是最大线程数量，没有等待线程。
+     * 核心线程数量，也是最大线程数量，不存在空闲线程
      */
     private static final Integer MAX_NUM = 20;
 

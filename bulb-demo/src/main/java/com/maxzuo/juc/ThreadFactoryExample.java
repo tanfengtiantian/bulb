@@ -20,6 +20,8 @@ public class ThreadFactoryExample implements ThreadFactory {
     @Override
     public Thread newThread(Runnable task) {
         String name = namePrefix + nextId.getAndIncrement();
-        return new Thread(null, task, name, 0);
+        Thread thread = new Thread(null, task, name, 0);
+        thread.setDaemon(true);
+        return thread;
     }
 }
