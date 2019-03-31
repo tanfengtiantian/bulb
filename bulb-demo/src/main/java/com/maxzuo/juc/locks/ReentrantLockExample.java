@@ -16,7 +16,7 @@ public class ReentrantLockExample {
 
     private static final ReentrantLock LOCK   = new ReentrantLock();
 
-    private static Integer count = 0;
+    private static Integer             count  = 0;
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {

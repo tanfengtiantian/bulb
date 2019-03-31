@@ -13,14 +13,14 @@ public class LongEventProducer {
 
     private final RingBuffer<LongEvent> ringBuffer;
 
-    public LongEventProducer (RingBuffer<LongEvent> ringBuffer) {
+    public LongEventProducer(RingBuffer<LongEvent> ringBuffer) {
         this.ringBuffer = ringBuffer;
     }
 
     /**
      * 发布事件
      */
-    public void send (String message) {
+    public void send(String message) {
         /*
             通过顺序递增的序号来编号管理通过其进行交换的数据（事件），对数据(事件)的处理过程总是沿着序号逐个递增处理。一个 Sequence
             用于跟踪标识某个特定的事件处理者( RingBuffer/Consumer )的处理进度。虽然一个 AtomicLong 也可以用于标识进度，但定义 Sequence

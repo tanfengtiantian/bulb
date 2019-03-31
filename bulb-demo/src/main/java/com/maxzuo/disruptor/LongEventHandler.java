@@ -13,6 +13,7 @@ public class LongEventHandler implements EventHandler<LongEvent> {
 
     @Override
     public void onEvent(LongEvent event, long sequence, boolean endOfBatch) throws Exception {
-        System.out.format("Event value: %s  threadName = %s  sequence = %d\n", event.get(), Thread.currentThread().getName(), sequence);
+        System.out.format("Event value: %s  threadName = %s  sequence = %d\n", event.get(), Thread.currentThread()
+            .getName(), sequence);
     }
 }

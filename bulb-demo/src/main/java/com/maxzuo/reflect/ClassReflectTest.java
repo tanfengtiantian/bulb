@@ -166,7 +166,7 @@ class ClassReflectTest {
 
     @DisplayName("获取方法的参数名")
     @Test
-    void testMethodParameterName () {
+    void testMethodParameterName() {
         /*
             1.在Java8之前，代码编译为class文件后，方法参数的类型固定，但是方法名称会丢失，方法名称会变成arg0、arg1....。而现在，
               在Java8开始可以在class文件中保留参数名，这就给反射带来了极大的遍历
@@ -189,7 +189,7 @@ class ClassReflectTest {
 
     @DisplayName("获取方法调用栈")
     @Test
-    void testMethodInvokeStack () {
+    void testMethodInvokeStack() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         for (StackTraceElement element : stackTrace) {
             System.out.println("className：" + element.getClassName());

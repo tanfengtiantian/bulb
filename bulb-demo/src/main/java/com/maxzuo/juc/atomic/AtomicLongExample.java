@@ -16,7 +16,7 @@ public class AtomicLongExample {
      * 获取前一个值
      */
     @Test
-    public void testPreviousValue () {
+    public void testPreviousValue() {
         System.out.println("当前值：" + atomicLong.get());
         long andIncrement = atomicLong.getAndIncrement();
         System.out.println("previous value: " + andIncrement);
@@ -27,7 +27,7 @@ public class AtomicLongExample {
      * 更新并返回当前值
      */
     @Test
-    public void testUpdateValue () {
+    public void testUpdateValue() {
         long currentValue = atomicLong.incrementAndGet();
         System.out.println("currentValue：" + currentValue);
         System.out.println("get currentValue: " + atomicLong.get());

@@ -14,6 +14,10 @@ public class Monday {
 
     public Monday(String number) {
         logger.info("hello world");
+
+        // 获取上线文ClassLoader
+        // log4j.properties文件由线程上下文classLoader加载
+        logger.info("thread classLoader: " + Thread.currentThread().getContextClassLoader());
         this.number = number;
     }
 

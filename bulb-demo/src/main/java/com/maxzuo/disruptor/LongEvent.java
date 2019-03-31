@@ -21,8 +21,6 @@ public class LongEvent {
 
     @Override
     public String toString() {
-        return "LongEvent{" +
-                "message='" + message + '\'' +
-                '}';
+        return "LongEvent{" + "message='" + message + '\'' + '}';
     }
 }

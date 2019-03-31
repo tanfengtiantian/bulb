@@ -113,7 +113,6 @@ class InvokerExample {
             System.out.println(result.getClass().getClassLoader());
             // 输出：true，双亲委派，由AppClassLoader优先尝试加载
             System.out.println(this.getClass().getClassLoader() == result.getClass().getClassLoader());
-            // TODO: 思考URLClassLoader加载？
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,15 +138,38 @@ class InvokerExample {
     @DisplayName("通过UrlClassLoader加载引用的Slf4j")
     @Test
     void testUrlClassLoader() {
+        /*
+            ClassLoader和URLClassLoader的区别：
+              1.ClassLoader只能加载classpath下面的类。
+              2.URLClassLoader可以加载任意路径下的类，比如：
+                 文件: (从文件系统目录加载)
+        	     jar包: (从Jar包进行加载)
+        	     Http: (从远程的Http服务进行加载)
+         */
         try {
             String agentLibPath = "F:\\bulb\\bulb-agent\\target\\lib";
             List<URL> urls = resolveLib(agentLibPath);
-            URLClassLoader urlLoader = new URLClassLoader(urls.toArray(new URL[0]), this.getClass().getClassLoader());
+            URLClassLoader urlLoader = new URLClassLoader(urls.toArray(new URL[0]), null);
+
+            // 修改上下文ClassLoader
+            Thread.currentThread().setContextClassLoader(urlLoader);
+
             Class<?> aClass = urlLoader.loadClass("com.maxzuo.agent.model.Monday");
             Object o = aClass.getConstructor(String.class).newInstance("123");
             Object targetObject = aClass.getDeclaredMethod("getLogger").invoke(o);
 
-            // 输出：AppClassLoader
+            /*
+                分析：
+                  1.首先加载com.maxzuo.agent.model.Monday类，双亲委派首先由父类加载器（不一定是AppClassLoader）在当前classpath路径下尝试加载，
+                    若无法加载，再由URLClassLoader实行加载。
+                  2.在com.maxzuo.agent.model.Monday类中使用了log4j，则需要加载log4j对应的class文件，同样，先由父类加载器（不一定是AppClassLoader）尝试加载，
+                    如果无法加载，则由URLClassLoader进行加载。（注意：此时的父类加载器不一定要是AppClassLoader，可以是 BootstapClassLoader，那么加载的路径就和类加载器的有关
+                    不一定是当前项目的classpath）
+                  3.log4j需要log4j.properties配置，由线程上下文classLoader进行加载，同样委派给父类加载器（不一定是AppClassLoader）尝试加载，
+                    如果无法记载，则由URLClassLoader（线程上下文设置的类加载器）尝试加载。
+             */
+
+            // 输出：AppClassLoader；如果移除当前项目的log4j依赖，将会由URLClassLoader从F:\bulb\bulb-agent\target\lib路径中加载
             System.out.println("类的加载器：" + targetObject.getClass().getClassLoader());
         } catch (Exception e) {
             e.printStackTrace();
