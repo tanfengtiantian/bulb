@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -229,7 +230,7 @@ class InvokerExample {
     }
 
     /**
-     * 找到Jar文件
+     * 加载目录中的所有文件
      */
     private File[] findJar(File libDir) {
         return libDir.listFiles(new FileFilter() {
@@ -247,7 +248,7 @@ class InvokerExample {
     }
 
     /**
-     * 文件扩展名
+     * 过滤文件（文件扩展名）
      */
     private List<String> getDefaultFileExtensionList() {
         List<String> extensionList = new ArrayList<>(3);
