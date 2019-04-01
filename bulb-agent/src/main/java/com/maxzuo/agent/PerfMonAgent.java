@@ -9,7 +9,7 @@ import net.bytebuddy.utility.JavaModule;
 import java.lang.instrument.Instrumentation;
 
 /**
- * 性能监控探针
+ * Agent探针入口
  * Created by zfh on 2019/01/30
  */
 public class PerfMonAgent {
@@ -20,11 +20,12 @@ public class PerfMonAgent {
      * 运行jar前，启动探针：
      *   java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent-jar-with-dependencies.jar" -Dfile.encoding=UTF-8 -jar F:\bulb\spring-boot-app\target\spring-boot-app.jar
      */
-    public static void premain(String options, Instrumentation inst) {
+    public static void premain(String agentArgs, Instrumentation inst) {
         System.out.println("========进入premain方法============");
+        System.out.println("getClassLoader(): " + PerfMonAgent.class.getClassLoader());
+        System.out.println("getContextClassLoader()：" + Thread.currentThread().getContextClassLoader());
 
         new AgentBuilder.Default()
-        // 匹配所有的注解类
             .type(ElementMatchers.isAnnotation()).transform(new AgentBuilder.Transformer() {
                 @Override
                 public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder,

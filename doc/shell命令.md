@@ -14,11 +14,11 @@ $ java -classpath D:\repository\org\apache\commons\commons-lang3\3.8.1\commons-l
 ```
 4.运行Main.class前，运行探针
 ```
-$ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -classpath F:\bulb\bulb-demo\target\classes com.maxzuo.agent.Main
+$ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -classpath F:\\bulb\\bulb-demo\\target\\classes com.maxzuo.agent.Main
 ```
 5.运行jar文件前，运行探针
 ```
-$ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -jar F:\bulb\spring-boot-app\target\spring-boot-app.jar
+$ java "-javaagent:F:\bulb\bulb-agent\target\bulb-agent.jar=123" -Dfile.encoding=UTF-8 -jar F:\\bulb\\spring-boot-app\\target\\spring-boot-app.jar
 ```
 6.其中：
 * 指定探针路径和参数："-javaagent:F:\bulb-agent.jar=123"
