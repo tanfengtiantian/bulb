@@ -10,61 +10,80 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * 调用类的加载器
+ * 类的加载器的使用
+ * <p>
  * Created by zfh on 2019/02/23
  */
 class InvokerExample {
 
-    @DisplayName("线程上下文类加载器")
+    @DisplayName("ClassLoader加载资源文件")
     @Test
-    void testThreadContextClassLoader() {
-        // 线程上下文类加载器破坏了“双亲委派模型”，可以在执行线程中抛弃双亲委派加载链模式，使程序可以逆向使用类加载器。
-        // 示例：父级类加载器加载的类 调用 子级类加载器加载的类
-        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        System.out.println(contextClassLoader);
+    void testLoadResourceFile() {
+        ClassLoader classLoader = InvokerExample.class.getClassLoader();
+        // 输出：AppClassLoader
+        System.out.println("getClassLoader(): " + classLoader);
+
+        // 最终：AppClassLoader继承自URLClassLoader并没实现findResource()，因此最终调用的是URLClassLoader.findResource()方法
+        URL resource = InvokerExample.class.getClassLoader().getResource("spring.png");
+        if (resource != null) {
+            System.out.println(resource.getFile());
+        }
     }
 
-    @DisplayName("测试不同类加载器加载类")
+    @DisplayName("ClassLoader加载class文件，并转换为类的实例")
     @Test
-    void testMultipleClassFile() {
+    void testLoadClassFileAndConvertToInstance() {
+        CustomClassLoader customClassLoader = new CustomClassLoader();
         try {
-            CustomClassLoader customClassLoader = new CustomClassLoader();
-            Class<?> aClass = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader);
-            Class<?> aClass1 = customClassLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
-            // 输出：true
-            System.out.println(aClass == aClass1);
+            /*
+                类加载过程分析：
+                  1.首先调用CustomClassLoader.loadClass()方法，因为CustomClassLoader没有重写loadClass()方法（也不推荐重写）
+                    因此会调用父类ClassLoader中loadClass()方法。
+                  2.ClassLoader的loadClass()首先会调用 Class<?> c = findLoadedClass(name) 从缓存中查找。
+                    （不同的ClassLoader实例对象都拥有不同的独立的类名称空间，所以加载的class对象也会存在不同的类名空间中）
+                    从缓存查找，类名完整名称相同则不会再次被加载，因此我们必须绕过缓存查询才能重新加载class对象。当然也可直接调用
+                    findClass()方法，这样也避免从缓存查找。
+                  3.委派双亲查询，在都无法找到的情况下，会调用CustomClassLoader.findClass()方法执行加载逻辑以及获取字节码流的逻辑。
+             */
 
-            CustomClassLoader customClassLoader2 = new CustomClassLoader();
-            Class<?> aClass2 = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader2);
-            // 输出：false
-            System.out.println(aClass == aClass2);
-        } catch (Exception e) {
+            // 通过CustomClassLoader.findClass()加载
+            Class<?> aClass1 = customClassLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
+            // 从customClassLoader实例对象下的缓冲中加载
+            Class<?> aClass2 = customClassLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
+            // 跳过缓存，直接冲字节码中加载。如果已加载过，此时会抛出异常。
+            //Class<?> aClass3 = customClassLoader.findClass("com.maxzuo.agent.PerfMonAgent");
+
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    @DisplayName("动态加载外部class文件")
+    @DisplayName("使用Class.forName()加载类")
     @Test
-    void testLoadClassFile() {
+    void testClassForNameAndClassLoaderLoadClass() {
+        CustomClassLoader customClassLoader = new CustomClassLoader();
         try {
             /*
-                PerfMonAgent类的加载过程：
-                   1.启动JVM，加载主类Invoker，询问双亲加载Invoker类，最后由Launcher$AppClassLoader完成加载。
-                   2.执行Class.forName加载PerfMonAgent类，询问双亲，双亲都无法找到类。最后由自定义类加载器完成加载。
-             */
-            CustomClassLoader customClassLoader = new CustomClassLoader();
-            Class<?> aClass = Class.forName("com.maxzuo.agent.PerfMonAgent", true, customClassLoader);
-            System.out.println("加载Invoker类的类加载器：" + InvokerExample.class.getClassLoader());
-            System.out.println("加载PerfMonAgent类的类加载器：" + aClass.getClassLoader());
+                加载类，通过Reflection.getCallerClass()指定获取调用此方法的方法调用者的类，从而获取类加载器，
+                底层加载过程是native方法。该类的缓存存放在类加载器中。
 
-            /// 调用Class.forName，最终类的加载是由类加载器完成
-            Class<?> aClass1 = customClassLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
-            System.out.println(aClass1.getClassLoader());
+                默认进行类的初始化。
+             */
+            //Class<?> aClass1 = Class.forName("com.maxzuo.agent.PerfMonAgent");
+
+            /*
+                使用指定的类加载器强制加载，如果为true，初始化该类。
+             */
+            Class<?> aClass = Class.forName("com.maxzuo.agent.model.Thuesday", true, customClassLoader);
+
+            /*
+                使用ClassLoader加载类，默认不会初始化类
+             */
+            customClassLoader.loadClass("com.maxzuo.agent.model.Thuesday");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,12 +99,12 @@ class InvokerExample {
      *    Http: (从远程的Http服务进行加载)
      * </pre>
      */
-    @DisplayName("动态加载外部jar文件")
+    @DisplayName("使用URLClassLoader从外部jar文件中加载类")
     @Test
     void testLoadJarFile() {
         try {
             URL urls = new URL("file:F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
-            URLClassLoader urlLoader = new URLClassLoader(new URL[] { urls });
+            URLClassLoader urlLoader = new URLClassLoader(new URL[]{urls});
             Class<?> aClass = urlLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
             System.out.println("类的加载器：" + aClass.getClassLoader());
             // 关闭，释放资源，此后将不能使用urlLoader类加载新类，但是已经加载的class不受影响。
@@ -94,43 +113,42 @@ class InvokerExample {
             // 可以加载
             urlLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
             // 无法加载 java.lang.ClassNotFoundException
-            urlLoader.loadClass("com.maxzuo.agent.utils.FileUtils");
+            urlLoader.loadClass("com.maxzuo.agent.model.Thuesday");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @DisplayName("加载引用的Slf4j")
+    @DisplayName("线程上下文类加载器")
+    @Test
+    void testThreadContextClassLoader() {
+        // 线程上下文类加载器破坏了“双亲委派模型”，可以在执行线程中抛弃双亲委派加载链模式，使程序可以逆向使用类加载器。
+        // 示例：父级类加载器加载的类 调用 子级类加载器加载的类
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        System.out.println(contextClassLoader);
+    }
+
+    @DisplayName("隐式加载")
     @Test
     void testLoadReferenceClass() {
         try {
             CustomClassLoader customClassLoader = new CustomClassLoader();
-            Class<?> aClass = Class.forName("com.maxzuo.agent.model.Monday", true, customClassLoader);
-            Object o = aClass.getConstructor(String.class).newInstance("123");
-            Object result = aClass.getMethod("getLogger").invoke(o);
+            // 加载不会，初始化类
+            Class<?> aClass = customClassLoader.loadClass("com.maxzuo.agent.model.Monday");
+            System.out.println("getClassLoader()：" + aClass.getClassLoader());
+            System.out.println("getParent()：" + customClassLoader.getParent());
 
-            // 输出：AppClassLoader
-            System.out.println(result.getClass().getClassLoader());
-            // 输出：true，双亲委派，由AppClassLoader优先尝试加载
-            System.out.println(this.getClass().getClassLoader() == result.getClass().getClassLoader());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            /*
+                隐式加载分析：
+                  1.当实例化Monday类时，会初始化Thuesday类；隐式加载Thuesday类
+                  2.默认由尝试CustomClassLoader加载，由于需要遵循双亲委派模型，且CustomClassLoader继承自AppClassLoader，
+                    因此，由BootStrapClassLoader -> ExtClassLoader -> AppClassLoader依次尝试加载，直到都无法加载，
+                    最终由CustomClassLoader.findClass()方法进行加载。
 
-    @DisplayName("加载同包下的引用类")
-    @Test
-    void testLoadPackageClass() {
-        try {
-            CustomClassLoader customClassLoader = new CustomClassLoader();
-            Class<?> aClass = Class.forName("com.maxzuo.agent.model.Monday", true, customClassLoader);
-            Object o = aClass.getConstructor(String.class).newInstance("123");
-            Object targetObject = aClass.getDeclaredMethod("getThuesday").invoke(o);
-
-            // 输出：CustomClassLoader
-            // 原理：双亲委派，AppClassLoader优先尝试加载，若无法加载，再由CustomClassLoader进行加载
-            System.out.println("classLoader: " + targetObject.getClass().getClassLoader());
+                  3.注意：隐式加载 默认由CustomClassLoader尝试加载（既：由加载Monday类的ClassLoader 去执行隐式加载），和线程上下文中定义的ClassLoader无关。
+             */
+            aClass.getConstructor().newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,27 +169,10 @@ class InvokerExample {
             String agentLibPath = "F:\\bulb\\bulb-agent\\target\\lib";
             List<URL> urls = resolveLib(agentLibPath);
             URLClassLoader urlLoader = new URLClassLoader(urls.toArray(new URL[0]), null);
-
-            // 修改上下文ClassLoader
-            Thread.currentThread().setContextClassLoader(urlLoader);
+            System.out.println("getParent()：" + urlLoader.getParent());
 
             Class<?> aClass = urlLoader.loadClass("com.maxzuo.agent.model.Monday");
-            Object o = aClass.getConstructor(String.class).newInstance("123");
-            Object targetObject = aClass.getDeclaredMethod("getLogger").invoke(o);
-
-            /*
-                分析：
-                  1.首先加载com.maxzuo.agent.model.Monday类，双亲委派首先由父类加载器（不一定是AppClassLoader）在当前classpath路径下尝试加载，
-                    若无法加载，再由URLClassLoader实行加载。
-                  2.在com.maxzuo.agent.model.Monday类中使用了log4j，则需要加载log4j对应的class文件，同样，先由父类加载器（不一定是AppClassLoader）尝试加载，
-                    如果无法加载，则由URLClassLoader进行加载。（注意：此时的父类加载器不一定要是AppClassLoader，可以是 BootstapClassLoader，那么加载的路径就和类加载器的有关
-                    不一定是当前项目的classpath）
-                  3.log4j需要log4j.properties配置，由线程上下文classLoader进行加载，同样委派给父类加载器（不一定是AppClassLoader）尝试加载，
-                    如果无法记载，则由URLClassLoader（线程上下文设置的类加载器）尝试加载。
-             */
-
-            // 输出：AppClassLoader；如果移除当前项目的log4j依赖，将会由URLClassLoader从F:\bulb\bulb-agent\target\lib路径中加载
-            System.out.println("类的加载器：" + targetObject.getClass().getClassLoader());
+            aClass.getConstructor().newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }

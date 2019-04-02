@@ -5,4 +5,11 @@ package com.maxzuo.agent.model;
  */
 public class Thuesday {
 
+    static {
+        System.out.println("hello static thuesday");
+    }
+
+    public Thuesday () {
+        System.out.println("hello thuesday");
+    }
 }
