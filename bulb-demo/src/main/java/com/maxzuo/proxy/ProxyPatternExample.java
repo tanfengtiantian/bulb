@@ -3,7 +3,10 @@ package com.maxzuo.proxy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 /**
  * Java设计模式-代理模式
@@ -14,7 +17,7 @@ class ProxyPatternExample {
 
     @DisplayName("静态代理模式")
     @Test
-    void testStaticProxy () {
+    void testStaticProxy() {
         ProxySubject proxySubject = new ProxySubject(new RealSubject());
         // 由代理类，代理访问
         proxySubject.visit();
@@ -22,20 +25,43 @@ class ProxyPatternExample {
 
     @DisplayName("动态代理")
     @Test
-    void testDynamicProxy () {
-        /*
-            动态代理有别于静态代理，是根据代理的对象，动态创建代理类。这样，就可以避免静态代理中代理类接口过多的问题。
-            动态代理是实现方式，是通过反射来实现的，借助Java自带的java.lang.reflect.Proxy,通过固定的规则生成。
-         */
+    void testDynamicProxy() {
+        // 返回一个代理对象（Subject接口的实现类）
+        Subject subjectProxy = (Subject) Proxy.newProxyInstance(Subject.class.getClassLoader(), new Class[]{Subject.class},
+                new InvocationHandler() {
+                    /**
+                     * 将方法调用分派到的调用处理程序
+                     * @param proxy  表示真实对象的真实代理对象，jvm运行时动态生成的一个对象，也是Proxy.newProxyInstance()返回的对象
+                     * @param method 表示当前被调用方法的反射对象
+                     * @param args   表示当前被调用方法的参数
+                     * @return 表示当前被调用的方法的返回值
+                     * @throws Throwable
+                     */
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        System.out.println("inner: " + proxy.getClass().getName());
 
-        // 将方法调用分派到的调用处理程序
-        DynamicProxy proxy = new DynamicProxy();
+                        // 要代理的真实对象
+                        Subject subject = new Subject() {
+                            @Override
+                            public void visit() {
+                                System.out.println("hello subject");
+                            }
 
-        // 用于定义代理类的类加载器
-        ClassLoader classLoader = proxy.getClass().getClassLoader();
+                            @Override
+                            public String getSubject() {
+                                return "Subjec proxy";
+                            }
+                        };
+                        // 通过真实对象调用方法
+                        return method.invoke(subject, args);
+                    }
+                });
 
-        // 返回接口代理类的实例
-        Subject subject = (Subject) Proxy.newProxyInstance(classLoader, new Class[]{Subject.class}, proxy);
-        subject.visit();
+        // 代理对象无论调用什么方法，其实都是调用InvocationHandler.invoke()方法
+        System.out.println("outer：" + subjectProxy.getClass().getName());
+        subjectProxy.visit();
+        //System.out.println(subjectProxy.getSubject());
+        //System.out.println(subjectProxy.toString());
     }
 }

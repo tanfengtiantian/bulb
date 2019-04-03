@@ -17,4 +17,9 @@ public class ProxySubject implements Subject {
     public void visit() {
         subject.visit();
     }
+
+    @Override
+    public String getSubject() {
+        return "proxySubject";
+    }
 }

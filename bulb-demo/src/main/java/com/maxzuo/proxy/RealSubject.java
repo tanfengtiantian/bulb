@@ -11,4 +11,9 @@ public class RealSubject implements Subject {
     public void visit() {
         System.out.println("hello RealSubject");
     }
+
+    @Override
+    public String getSubject() {
+        return "realSubject";
+    }
 }

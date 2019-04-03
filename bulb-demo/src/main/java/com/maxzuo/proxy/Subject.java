@@ -8,4 +8,6 @@ package com.maxzuo.proxy;
 public interface Subject {
 
     void visit();
+
+    String getSubject ();
 }
