@@ -50,7 +50,7 @@
         <!--<module>bulb-common</module>-->
         <!--<module>bulb-provider</module>-->
         <!--<module>bulb-web</module>-->
-        <!--<module>bulb-agent</module>-->
+        <module>bulb-agent</module>
         <!--<module>bulb-demo</module>-->
         <module>bulb-spring</module>
         <!--<module>spring-boot-app</module>-->

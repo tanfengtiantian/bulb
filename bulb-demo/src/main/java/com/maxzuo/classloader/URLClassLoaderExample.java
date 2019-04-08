@@ -51,6 +51,43 @@ class URLClassLoaderExample {
         }
     }
 
+    @DisplayName("加载资源文件")
+    @Test
+    void testLoadResource () {
+        File file = new File("F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
+        try {
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()});
+            /// 优先从父ClassLoader中加载
+            //URL resource = classLoader.getResource("log4j.properties");
+
+            URL resource = classLoader.getResource("test.txt");
+            System.out.println(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @DisplayName("class文件所在的jar包")
+    @Test
+    void testClassFilePath () {
+        File file = new File("F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
+        try {
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()});
+            Class<?> aClass = classLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
+            System.out.println("getClassLoader(): " + aClass.getClassLoader());
+            URL resource = aClass.getClassLoader().getResource("test.txt");
+            System.out.println(resource);
+
+            System.out.println("=============================");
+
+            // 上下文ClassLoader是AppClassLoader，无法找到文件
+            URL resource1 = Thread.currentThread().getContextClassLoader().getResource("test.txt");
+            System.out.println(resource1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @DisplayName("测试URI和URL")
     @Test
     void testFileUri () {
