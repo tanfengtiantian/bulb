@@ -3,6 +3,8 @@ package com.maxzuo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.maxzuo.form.Param;
 import com.maxzuo.vo.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/zxcity_restful/ws/shop")
 public class ShopRest {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShopRest.class);
+
     @PostMapping("findTradingGiftList")
     public Result findTradingGiftList(@RequestAttribute("param") Param param) {
-        JSONObject jsonObject = JSONObject.parseObject(param.getData().toString());
-        Integer shopId = jsonObject.getInteger("shopId");
-        if (Integer.valueOf(1).equals(shopId)) {
-            throw new RuntimeException("hello Exception");
-        }
+        JSONObject.parseObject(param.getData().toString());
+
+        logger.error("hello findTradingGiftList");
         return new Result(Result.RESULT_SUCCESS, "ok");
     }
 }

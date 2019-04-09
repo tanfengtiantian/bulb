@@ -5,6 +5,8 @@ import com.maxzuo.bulb.api.IShopOrderInfoService;
 import com.maxzuo.bulb.model.ShopOrderInfo;
 import com.maxzuo.form.Param;
 import com.maxzuo.vo.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/zxcity_restful/ws/shop")
 public class ShopRest {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShopRest.class);
+
     @Autowired
     private IShopOrderInfoService shopOrderInfoService;
 
@@ -27,7 +31,11 @@ public class ShopRest {
         JSONObject jsonObject = JSONObject.parseObject(param.getData().toString());
         Integer shopId = jsonObject.getInteger("shopId");
         if (Integer.valueOf(1).equals(shopId)) {
-            throw new RuntimeException("hello Exception");
+            try {
+                throw new RuntimeException("hello Exception");
+            } catch (Exception e) {
+                logger.error("hello exception", e);
+            }
         }
 
         ShopOrderInfo orderInfo = shopOrderInfoService.getShopOrderInfoByPrimaryKey(1);
