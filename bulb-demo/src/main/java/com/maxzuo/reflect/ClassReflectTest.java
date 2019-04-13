@@ -95,7 +95,8 @@ class ClassReflectTest {
         Class<User> userClass = User.class;
         try {
             Field message = userClass.getDeclaredField("name");
-            // 获取私有成员变量。参数设置为true，禁止访问控制检查
+            // 获取私有成员变量。参数设置为true，禁止访问控制检查；
+            // TODO: 访问私有成员方法同理
             message.setAccessible(true);
 
             User user = userClass.newInstance();
