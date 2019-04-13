@@ -4,6 +4,7 @@ import com.maxzuo.reflect.model.Token;
 import com.maxzuo.reflect.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import sun.reflect.Reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -93,10 +94,13 @@ class ClassReflectTest {
     void testAssigmentField() {
         Class<User> userClass = User.class;
         try {
-            Field message = userClass.getField("message");
+            Field message = userClass.getDeclaredField("name");
+            // 获取私有成员变量。参数设置为true，禁止访问控制检查
+            message.setAccessible(true);
+
             User user = userClass.newInstance();
             message.set(user, "hello field");
-            System.out.println("out: " + user.message);
+            System.out.println("out: " + user.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,5 +203,13 @@ class ClassReflectTest {
 
             System.out.println("***********************************************\n");
         }
+    }
+
+    @DisplayName("找到方法调用者的类")
+    @Test
+    void testCallerClass () {
+        //Class<?> callerClass = Reflection.getCallerClass(1);
+        //System.out.println(callerClass);
+        User.getCallerClass();
     }
 }

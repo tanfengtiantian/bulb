@@ -1,5 +1,7 @@
 package com.maxzuo.reflect.model;
 
+import sun.reflect.Reflection;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +17,8 @@ public class User implements Serializable {
     private String            name;
 
     private Integer           age;
+
+    public static Integer code;
 
     public User() {
     }
@@ -59,13 +63,11 @@ public class User implements Serializable {
         return "User{" + "id=" + id + ", name='" + name + '\'' + ", age=" + age + '}';
     }
 
-    public static class Goods {
+    public static void getCallerClass () {
+        Class<?> firstLevelClass = Reflection.getCallerClass(1);
+        System.out.println("firstLevelClass: " + firstLevelClass);
+
+        Class<?> secondLevelClass = Reflection.getCallerClass(2);
+        System.out.println("secondLevelClass: " + secondLevelClass);
     }
-
-    public class Order {
-    }
-
-    public String         message;
-
-    public static Integer code;
 }
