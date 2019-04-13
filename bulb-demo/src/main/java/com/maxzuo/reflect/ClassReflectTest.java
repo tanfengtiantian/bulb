@@ -209,8 +209,13 @@ class ClassReflectTest {
     @DisplayName("找到方法调用者的类")
     @Test
     void testCallerClass () {
-        //Class<?> callerClass = Reflection.getCallerClass(1);
-        //System.out.println(callerClass);
+        /*
+            Reflection.getCallerClass(i)方法
+              0 和 小于 0：返回sun.reflect.Reflection
+              1：返回当前类的Class对象
+              2：返回调用该方法的Class对象
+              3. 4. ....层层上传
+         */
         User.getCallerClass();
     }
 }

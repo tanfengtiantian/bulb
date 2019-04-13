@@ -64,6 +64,9 @@ public class User implements Serializable {
     }
 
     public static void getCallerClass () {
+        Class<?> callerClass = Reflection.getCallerClass(0);
+        System.out.println("callerClass: " + callerClass);
+
         Class<?> firstLevelClass = Reflection.getCallerClass(1);
         System.out.println("firstLevelClass: " + firstLevelClass);
 
