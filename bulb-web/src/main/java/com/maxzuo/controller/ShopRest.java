@@ -2,7 +2,6 @@ package com.maxzuo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.maxzuo.bulb.api.IShopOrderInfoService;
-import com.maxzuo.bulb.model.ShopOrderInfo;
 import com.maxzuo.form.Param;
 import com.maxzuo.vo.Result;
 import org.slf4j.Logger;
@@ -30,16 +29,11 @@ public class ShopRest {
     public Result findTradingGiftList(@RequestAttribute("param") Param param) {
         JSONObject jsonObject = JSONObject.parseObject(param.getData().toString());
         Integer shopId = jsonObject.getInteger("shopId");
-        if (Integer.valueOf(1).equals(shopId)) {
-            try {
-                throw new RuntimeException("hello Exception");
-            } catch (Exception e) {
-                logger.error("hello exception", e);
-            }
+        try {
+            shopOrderInfoService.getShopOrderInfoByPrimaryKey(shopId);
+        } catch (Exception e) {
+            logger.error("发生异常", e);
         }
-
-        ShopOrderInfo orderInfo = shopOrderInfoService.getShopOrderInfoByPrimaryKey(1);
-        System.out.println("orderInfo: " + orderInfo);
         return new Result(Result.RESULT_SUCCESS, "ok");
     }
 }
