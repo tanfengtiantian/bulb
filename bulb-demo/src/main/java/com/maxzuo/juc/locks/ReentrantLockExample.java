@@ -1,9 +1,10 @@
 package com.maxzuo.juc.locks;
 
-import com.maxzuo.thread.ThreadPoolExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -20,7 +21,8 @@ public class ReentrantLockExample {
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            ThreadPoolExample.INSTANCE.execute(new Runnable() {
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     task();
