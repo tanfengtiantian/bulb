@@ -4,15 +4,13 @@ cd ..
 DEPLOY_DIR=`pwd`
 CONF_DIR=$DEPLOY_DIR/conf
 
-SERVER_NAME=`sed '/application.name/!d;s/.*=//' conf/app.properties | tr -d '\r'`
-
 PIDS=`ps  --no-heading -C java -f --width 1000 | grep "$DEPLOY_DIR" |awk '{print $2}'`
 if [ -z "$PIDS" ]; then
-    echo "ERROR: The $SERVER_NAME does not started!"
+    echo "ERROR: The service does not started!"
     exit 1
 fi
 
-echo -e "Stopping the $SERVER_NAME ...\c"
+echo -e "Stopping the service ...\c"
 for PID in $PIDS ; do
 	kill $PID > /dev/null 2>&1
 done

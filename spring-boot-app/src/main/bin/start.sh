@@ -5,15 +5,9 @@ cd ..
 DEPLOY_DIR=`pwd`
 CONF_DIR=$DEPLOY_DIR/conf
 
-SERVER_NAME=`sed '/application.name/!d;s/.*=//' conf/app.properties | tr -d '\r'`
-if [ -z "$SERVER_NAME" ]; then
-	echo "ERROR: The SERVER_NAME not configured!"
-    exit 1
-fi
-
 PIDS=`ps  --no-heading -C java -f --width 1000 | grep "$DEPLOY_DIR" |awk '{print $2}'`
 if [ -n "$PIDS" ]; then
-    echo "ERROR: The $SERVER_NAME already started!"
+    echo "ERROR: The service already started!"
     echo "PID: $PIDS"
     exit 1
 fi
@@ -29,13 +23,16 @@ if [ ! -d $LOGS_DIR ]; then
 fi
 STDOUT_FILE=$LOGS_DIR/stdout.log
 
+LIB_DIR=$DEPLOY_DIR/lib
+LIB_JARS=`ls $LIB_DIR|grep .jar|awk '{print "'$LIB_DIR'/"$0}'|tr "\n" ":"`
+
 JAVA_OPTS=" -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true "
 JAVA_DEBUG_OPTS=""
 JAVA_JMX_OPTS=""
-JAVA_MEM_OPTS=" -server -Xmx256m -Xms256m "
+JAVA_MEM_OPTS=" -server -Xmx256m -Xms256m -XX:PermSize=64m -XX:SurvivorRatio=2 -XX:+UseParallelGC "
 
-echo -e "Starting the $SERVER_NAME ...\c"
-nohup java -Dappname=$SERVER_NAME $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -jar $DEPLOY_DIR"/"$SERVER_NAME.jar > $STDOUT_FILE 2>&1 &
+echo -e "Starting the service ...\c"
+nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.maxzuo.AppApplication > $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do
