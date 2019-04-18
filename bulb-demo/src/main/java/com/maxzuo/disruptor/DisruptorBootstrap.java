@@ -4,7 +4,7 @@ import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
-import com.maxzuo.juc.ThreadFactoryExample;
+import com.maxzuo.juc.NamedThreadFactory;
 
 /**
  * 启动disruptor
@@ -15,7 +15,7 @@ public class DisruptorBootstrap {
 
     public static void main(String[] args) {
         EventFactory<LongEvent> eventFactory = new LongEventFactory();
-        ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
+        NamedThreadFactory threadFactory = new NamedThreadFactory("一号机房");
         int ringBufferSize = 1024 * 1024;
         Disruptor<LongEvent> disruptor = new Disruptor<>(eventFactory, ringBufferSize, threadFactory);
 

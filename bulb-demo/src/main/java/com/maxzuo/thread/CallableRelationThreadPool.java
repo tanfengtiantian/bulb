@@ -1,12 +1,13 @@
 package com.maxzuo.thread;
 
+import com.maxzuo.juc.NamedThreadFactory;
 import com.maxzuo.juc.RejectedHandlerExample;
-import com.maxzuo.juc.ThreadFactoryExample;
 
 import java.util.concurrent.*;
 
 /**
  * 探索Callable、Future和FutureTask
+ *
  * @See http://www.cnblogs.com/dolphin0520/p/3949310.html
  * Created by zfh on 2019/1/22
  */
@@ -14,7 +15,7 @@ public class CallableRelationThreadPool {
 
     public static void main(String[] args) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(2);
-        ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
+        NamedThreadFactory threadFactory = new NamedThreadFactory("一号机房");
         RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 10, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
 

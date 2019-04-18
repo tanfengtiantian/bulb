@@ -18,7 +18,7 @@ public class SemaphoreExample {
 
     public static void main(String[] args) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(10);
-        ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
+        NamedThreadFactory threadFactory = new NamedThreadFactory("一号机房");
         RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 500, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
 

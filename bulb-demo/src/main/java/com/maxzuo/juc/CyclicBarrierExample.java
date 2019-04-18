@@ -1,6 +1,9 @@
 package com.maxzuo.juc;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by zfh on 2019/02/24
@@ -13,11 +16,7 @@ public class CyclicBarrierExample {
     private static CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
 
     public static void main(String[] args) {
-        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(10);
-        ThreadFactoryExample threadFactory = new ThreadFactoryExample("一号机房");
-        RejectedHandlerExample rejectHandler = new RejectedHandlerExample();
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 100, 60, TimeUnit.SECONDS, queue, threadFactory, rejectHandler);
-
+        ExecutorService threadPool = Executors.newCachedThreadPool(new NamedThreadFactory());
         for (int i = 0; i < CLIENT_TOTAL; i++) {
             int threadNum = i;
             threadPool.execute(new Runnable() {
