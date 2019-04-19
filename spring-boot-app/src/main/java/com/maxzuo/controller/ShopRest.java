@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 店铺Rest
@@ -29,7 +26,7 @@ public class ShopRest {
 
     private static final Logger logger = LoggerFactory.getLogger(ShopRest.class);
 
-    private final ThreadPoolExecutor executor = new CachedThreadPool().getExecutor("一号机房");
+    private final ExecutorService executor = new CachedThreadPool().getExecutor("一号机房");
 
     @PostMapping("findTradingGiftList")
     public Result findTradingGiftList(@RequestAttribute("param") Param param) {

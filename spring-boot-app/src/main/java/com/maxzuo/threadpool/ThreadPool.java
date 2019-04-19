@@ -26,9 +26,9 @@ public interface ThreadPool {
     /**
      * Thread pool
      *
-     * @param name 线程名前缀
+     * @param config 初始化配置
      * @return thread pool
      */
-    Executor getExecutor(String name);
+    Executor getExecutor(ThreadPoolConfig config);
 
 }
