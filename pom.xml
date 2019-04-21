@@ -50,8 +50,8 @@
         <!--<module>bulb-common</module>-->
         <!--<module>bulb-provider</module>-->
         <!--<module>bulb-web</module>-->
-        <module>bulb-agent</module>
-        <!--<module>bulb-demo</module>-->
+        <!--<module>bulb-agent</module>-->
+        <module>bulb-demo</module>
         <!--<module>bulb-spring</module>-->
         <!--<module>spring-boot-app</module>-->
     </modules>
@@ -331,22 +331,22 @@
                 </configuration>
             </plugin>
             <!-- formatter and sortpom -->
-            <!--<plugin>-->
-                <!--<groupId>com.googlecode.maven-java-formatter-plugin</groupId>-->
-                <!--<artifactId>maven-java-formatter-plugin</artifactId>-->
-                <!--<version>0.4</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>format</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<configFile>${user.dir}/.middleware-common/AlipayFormatter120.xml</configFile>-->
-                    <!--<encoding>${file_encoding}</encoding>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <version>0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configFile>${user.dir}/.middleware-common/AlipayFormatter120.xml</configFile>
+                    <encoding>${file_encoding}</encoding>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

@@ -17,7 +17,7 @@ public class FileFilterTest {
             @Override
             public boolean accept(File pathname) {
                 String fileName = pathname.getName();
-                if(fileName.contains("junit")) {
+                if (fileName.contains("junit")) {
                     return true;
                 } else {
                     return false;
@@ -31,4 +31,3 @@ public class FileFilterTest {
         }
     }
 }
-

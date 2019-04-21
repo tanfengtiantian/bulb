@@ -47,9 +47,9 @@ class CountTask extends RecursiveTask<Integer> {
      */
     private static final int THREAD_HOLD = 2;
 
-    private Integer start;
+    private Integer          start;
 
-    private Integer end;
+    private Integer          end;
 
     public CountTask(Integer start, Integer end) {
         this.start = start;

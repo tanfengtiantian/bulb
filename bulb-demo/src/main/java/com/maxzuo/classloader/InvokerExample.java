@@ -104,7 +104,7 @@ class InvokerExample {
     void testLoadJarFile() {
         try {
             URL urls = new URL("file:F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
-            URLClassLoader urlLoader = new URLClassLoader(new URL[]{urls});
+            URLClassLoader urlLoader = new URLClassLoader(new URL[] { urls });
             Class<?> aClass = urlLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
             System.out.println("类的加载器：" + aClass.getClassLoader());
             // 关闭，释放资源，此后将不能使用urlLoader类加载新类，但是已经加载的class不受影响。

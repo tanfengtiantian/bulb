@@ -17,7 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConditionExample {
 
-    private static final ReentrantLock LOCK = new ReentrantLock();
+    private static final ReentrantLock LOCK     = new ReentrantLock();
 
     private static final Condition     STOP_ONE = LOCK.newCondition();
 

@@ -53,10 +53,10 @@ class URLClassLoaderExample {
 
     @DisplayName("加载资源文件")
     @Test
-    void testLoadResource () {
+    void testLoadResource() {
         File file = new File("F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
         try {
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()});
+            URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
             /// 优先从父ClassLoader中加载
             //URL resource = classLoader.getResource("log4j.properties");
 
@@ -69,10 +69,10 @@ class URLClassLoaderExample {
 
     @DisplayName("class文件所在的jar包")
     @Test
-    void testClassFilePath () {
+    void testClassFilePath() {
         File file = new File("F:\\bulb\\bulb-agent\\target\\bulb-agent.jar");
         try {
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()});
+            URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
             Class<?> aClass = classLoader.loadClass("com.maxzuo.agent.PerfMonAgent");
             System.out.println("getClassLoader(): " + aClass.getClassLoader());
             URL resource = aClass.getClassLoader().getResource("test.txt");
@@ -90,7 +90,7 @@ class URLClassLoaderExample {
 
     @DisplayName("测试URI和URL")
     @Test
-    void testFileUri () {
+    void testFileUri() {
         File file = new File("F:/bulb/bulb-agent/target/lib/byte-buddy-1.7.11.jar");
         URI uri = file.toURI();
         System.out.println("scheme: " + uri.getScheme());

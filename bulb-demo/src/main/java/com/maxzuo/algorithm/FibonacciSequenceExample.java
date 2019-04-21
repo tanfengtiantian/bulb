@@ -22,11 +22,11 @@ public class FibonacciSequenceExample {
      * 递归算法，利用f(n) = f(n-1) + f(n-2)的特性来进行递归
      * 缺陷：当n比较大时递归非常慢，因为递归过程中存在很多重复计算。
      */
-    private static long recursiveAlgorithm (int n) {
-        if(n <= 0) {
+    private static long recursiveAlgorithm(int n) {
+        if (n <= 0) {
             return 0;
         }
-        if(n == 1) {
+        if (n == 1) {
             return 1;
         }
         return recursiveAlgorithm(n - 1) + recursiveAlgorithm(n - 2);

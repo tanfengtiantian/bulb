@@ -9,5 +9,5 @@ public interface Subject {
 
     void visit();
 
-    String getSubject ();
+    String getSubject();
 }

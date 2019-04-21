@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     private Integer           age;
 
-    public static Integer code;
+    public static Integer     code;
 
     public User() {
     }
@@ -63,7 +63,7 @@ public class User implements Serializable {
         return "User{" + "id=" + id + ", name='" + name + '\'' + ", age=" + age + '}';
     }
 
-    public static void getCallerClass () {
+    public static void getCallerClass() {
         Class<?> callerClass = Reflection.getCallerClass(0);
         System.out.println("callerClass: " + callerClass);
 

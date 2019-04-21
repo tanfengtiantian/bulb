@@ -21,7 +21,7 @@ public class InnerClassExample {
      */
     class Fast {
 
-        public Fast () {
+        public Fast() {
             System.out.println("Fast class init ...");
         }
     }
@@ -31,7 +31,7 @@ public class InnerClassExample {
      */
     static class Slow {
 
-        public Slow () {
+        public Slow() {
             System.out.println("Slow class init ...");
         }
     }

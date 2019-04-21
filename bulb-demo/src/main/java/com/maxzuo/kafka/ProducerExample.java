@@ -2,10 +2,7 @@ package com.maxzuo.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.utils.Utils;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 /**

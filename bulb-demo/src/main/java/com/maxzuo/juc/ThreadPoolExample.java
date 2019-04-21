@@ -82,10 +82,11 @@ public class ThreadPoolExample {
         // 线程数最大Integer.MAX_VALUE，是高度可伸缩的线程池，存在OOM风险。keepAliveTime默认为60秒，工作线程处于空闲状态，则回收工作线程。如果任务数增加，再次创建新线程处理任务。
         Executors.newCachedThreadPool();
 
-            /*
-                ScheduledExecutorService 的主要作用就是可以将定时任务与线程池功能结合使用。
-             */
-        ScheduledExecutorService scheduled = new ScheduledThreadPoolExecutor(5, new NamedThreadFactory("一号机房"), new RejectedHandlerExample());
+        /*
+            ScheduledExecutorService 的主要作用就是可以将定时任务与线程池功能结合使用。
+         */
+        ScheduledExecutorService scheduled = new ScheduledThreadPoolExecutor(5, new NamedThreadFactory("一号机房"),
+            new RejectedHandlerExample());
         scheduled.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {

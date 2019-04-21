@@ -62,7 +62,7 @@ class RegularTest {
 
     @DisplayName("提取指定的字符串")
     @Test
-    void extractString () {
+    void extractString() {
         String message = "ERROR - ScSysUserYxstautsController.mockClient$original$EYDFbfPe(260) | traceId=10000.88.15553224020090762 Stream closed traceId=30000.88.15553224020090763";
         String regex = "traceId=([.\\d]*)";
         String subString = getSubUtilSimple(message, regex);
@@ -72,10 +72,10 @@ class RegularTest {
     /**
      * 返回单个字符串，若匹配到多个的话就返回第一个
      */
-    private String getSubUtilSimple(String soap,String rgex){
+    private String getSubUtilSimple(String soap, String rgex) {
         Pattern pattern = Pattern.compile(rgex);
         Matcher m = pattern.matcher(soap);
-        while(m.find()){
+        while (m.find()) {
             return m.group(1);
         }
         return "";

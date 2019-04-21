@@ -10,15 +10,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class NamedThreadFactory implements ThreadFactory {
 
-    protected static final AtomicInteger POOL_SEQ = new AtomicInteger(1);
+    protected static final AtomicInteger POOL_SEQ   = new AtomicInteger(1);
 
-    protected final AtomicInteger mThreadNum = new AtomicInteger(1);
+    protected final AtomicInteger        mThreadNum = new AtomicInteger(1);
 
-    public final String mPrefix;
+    public final String                  mPrefix;
 
-    public final boolean mDaemon;
+    public final boolean                 mDaemon;
 
-    protected final ThreadGroup mGroup;
+    protected final ThreadGroup          mGroup;
 
     public NamedThreadFactory() {
         this("pool-" + POOL_SEQ.getAndIncrement(), false);
