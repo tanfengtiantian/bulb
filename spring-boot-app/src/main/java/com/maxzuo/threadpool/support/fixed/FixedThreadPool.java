@@ -1,10 +1,10 @@
 package com.maxzuo.threadpool.support.fixed;
 
-import com.zxcity.common.threadpool.Constants;
-import com.zxcity.common.threadpool.NamedThreadFactory;
-import com.zxcity.common.threadpool.ThreadPool;
-import com.zxcity.common.threadpool.ThreadPoolConfig;
-import com.zxcity.common.threadpool.support.AbortPolicyWithReport;
+import com.maxzuo.threadpool.Constants;
+import com.maxzuo.threadpool.NamedThreadFactory;
+import com.maxzuo.threadpool.ThreadPool;
+import com.maxzuo.threadpool.ThreadPoolConfig;
+import com.maxzuo.threadpool.support.AbortPolicyWithReport;
 
 import java.util.concurrent.*;
 

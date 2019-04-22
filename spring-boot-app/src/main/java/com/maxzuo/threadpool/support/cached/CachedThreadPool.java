@@ -16,8 +16,11 @@
  */
 package com.maxzuo.threadpool.support.cached;
 
-import com.zxcity.common.threadpool.*;
-import com.zxcity.common.threadpool.support.AbortPolicyWithReport;
+import com.maxzuo.threadpool.Constants;
+import com.maxzuo.threadpool.NamedThreadFactory;
+import com.maxzuo.threadpool.ThreadPool;
+import com.maxzuo.threadpool.ThreadPoolConfig;
+import com.maxzuo.threadpool.support.AbortPolicyWithReport;
 
 import java.util.concurrent.*;
 
