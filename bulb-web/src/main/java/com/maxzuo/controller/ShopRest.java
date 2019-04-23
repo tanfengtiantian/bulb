@@ -27,13 +27,20 @@ public class ShopRest {
 
     @PostMapping("findTradingGiftList")
     public Result findTradingGiftList(@RequestAttribute("param") Param param) {
+        Result result = new Result(Result.RESULT_FAILURE, "系统繁忙！");
         JSONObject jsonObject = JSONObject.parseObject(param.getData().toString());
         Integer shopId = jsonObject.getInteger("shopId");
+        if (Integer.valueOf(12).equals(shopId)) {
+            result.setMsg("店铺不存在！");
+            return result;
+        }
         try {
             shopOrderInfoService.getShopOrderInfoByPrimaryKey(shopId);
+            result.setCode(Result.RESULT_SUCCESS);
+            result.setMsg("查询成功！");
         } catch (Exception e) {
             logger.error("发生异常", e);
         }
-        return new Result(Result.RESULT_SUCCESS, "ok");
+        return result;
     }
 }
