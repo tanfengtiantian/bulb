@@ -147,5 +147,9 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.6.10.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+        </dependency>
     </dependencies>
 </project>
