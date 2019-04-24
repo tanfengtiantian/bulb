@@ -20,6 +20,7 @@
 
     <!-- Continue editing here -->
     <plugins>
-        <plugin interceptor="com.maxzuo.bulb.intercepter.MybatisShardingIntercepter" />
+        <!--<plugin interceptor="com.maxzuo.bulb.intercepter.MybatisQueryIntercepter" />-->
+        <plugin interceptor="com.maxzuo.bulb.intercepter.MybatisSaveIntercepter" />
     </plugins>
 </configuration>

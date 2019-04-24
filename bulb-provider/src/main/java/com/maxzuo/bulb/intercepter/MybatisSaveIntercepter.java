@@ -1,6 +1,5 @@
 package com.maxzuo.bulb.intercepter;
 
-import com.maxzuo.bulb.utils.DateTimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -11,12 +10,9 @@ import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -24,13 +20,12 @@ import java.util.Properties;
  * <p>
  * Created by zfh on 2019/04/24
  */
-@Intercepts({@Signature(
-        type= Executor.class,
-        method = "query",
-        args = {MappedStatement.class,Object.class, RowBounds.class, ResultHandler.class})})
-public class MybatisShardingIntercepter implements Interceptor {
+@Intercepts({@Signature(type = Executor.class,
+        method = "update",
+        args = {MappedStatement.class, Object.class})})
+public class MybatisSaveIntercepter implements Interceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(MybatisShardingIntercepter.class);
+    private static final Logger logger = LoggerFactory.getLogger(MybatisSaveIntercepter.class);
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -38,9 +33,13 @@ public class MybatisShardingIntercepter implements Interceptor {
         if (StringUtils.isBlank(currentSql)) {
             return invocation.proceed();
         }
+        if (currentSql.startsWith("INSERT")) {
+            System.err.println("ok -------------------");
+        }
         try {
-            String newSql = currentSql.replace("shop_order_info", "shop_order_info" + DateTimeUtils.dateToString(new Date(), "yyyyMMdd"));
-            resetSqlInvocation(invocation, newSql);
+            /// 篡改SQL
+            //String newSql = currentSql.replace("shop_order_info", "shop_order_info" + DateTimeUtils.dateToString(new Date(), "yyyyMMdd"));
+            resetSqlInvocation(invocation, currentSql);
         } catch (Exception e) {
             logger.info("【篡改SQL执行异常】", e);
         }
