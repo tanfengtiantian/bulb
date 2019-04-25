@@ -118,7 +118,8 @@ public class ShardingJDBCExample {
      */
     private static void readTable (Connection connection) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM t_order WHERE user_id = ?");
+            // 分页修正：https://shardingsphere.apache.org/document/current/cn/features/sharding/principle/rewrite/
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM t_order WHERE user_id = ? ORDER BY id DESC LIMIT 1, 2");
             preparedStatement.setInt(1, 1);
             ResultSet resultSet = preparedStatement.executeQuery();
             // sharding-jdbc不支持结果集指针位置判断
