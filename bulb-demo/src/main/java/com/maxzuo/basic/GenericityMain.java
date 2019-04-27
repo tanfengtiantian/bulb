@@ -1,10 +1,10 @@
 package com.maxzuo.basic;
 
 /**
- * 泛型类、泛型接口、泛型方法（注意：静态泛型方法不能访问类上定义的泛型）
+ * 泛型类、泛型接口、泛型方法
+ * <p>
  * Created by zfh on 2019/02/13
  */
-
 public class GenericityMain {
 
     public static void main(String[] args) {
@@ -15,15 +15,9 @@ public class GenericityMain {
         new GenericityOne<Boolean>().methodOne(true);
 
         System.out.println("****************泛型方法****************");
-
-        new GenericityTwo<Integer>().methodOne(1234, 1);
-        new GenericityTwo<String>().methodOne("hello", "h");
-        new GenericityTwo<Boolean>().methodOne(true, false);
-
-        System.out.println("****************静态泛型方法***************");
-        GenericityTwo.methodTwo(123);
-        GenericityTwo.methodTwo("hello");
-        GenericityTwo.methodTwo(true);
+        new GenericityTwo<Integer>().methodOne(1);
+        new GenericityTwo<Integer>().methodTwo("name");
+        GenericityTwo.methodThree(123);
 
         System.out.println("****************泛型接口****************");
 
@@ -50,29 +44,45 @@ public class GenericityMain {
     }
 }
 
-/** 泛型类 */
+/**
+ * 泛型类
+ */
 class GenericityOne<T> {
-    public void methodOne(T flag) {
+    void methodOne(T flag) {
         System.out.println("methodOne：" + flag);
     }
 }
 
-/** 泛型方法 */
+/**
+ * 泛型方法
+ */
 class GenericityTwo<K> {
 
-    public <T> void methodOne(T fast, K slow) {
-        System.out.println("methodOne flag：" + fast);
-        System.out.println("methodOne slow：" + slow);
+    /**
+     * 使用类上的泛型
+     */
+    void methodOne(K msg) {
+        System.out.println("methodOne msg：" + msg);
     }
 
-    // 静态方法不能访问类上的泛型
+    /**
+     * 实例调用；入参决定类型
+     */
+    <L> void methodTwo(L msg) {
+        System.out.println("methodTwo: " + msg);
+    }
 
-    public static <T> void methodTwo(T flag) {
-        System.out.println("methodTwo：" + flag);
+    /**
+     * 静态方法不能访问类上的泛型；静态调用，入参决定类型
+     */
+    public static <T> void methodThree(T msg) {
+        System.out.println("methodThree：" + msg);
     }
 }
 
-/** 泛型接口 */
+/**
+ * 泛型接口
+ */
 interface GenericityThree<T> {
 
     void methodOne(T flag);
