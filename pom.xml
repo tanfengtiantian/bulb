@@ -45,6 +45,7 @@
         <disruptor.version>3.4.2</disruptor.version>
         <snakeyaml.version>1.24</snakeyaml.version>
         <sharding-jdbc-core.version>4.0.0-RC1</sharding-jdbc-core.version>
+        <poi.version>3.17</poi.version>
     </properties>
 
     <modules>
@@ -311,6 +312,16 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-core</artifactId>
                 <version>${sharding-jdbc-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
