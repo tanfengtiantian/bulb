@@ -46,6 +46,7 @@
         <snakeyaml.version>1.24</snakeyaml.version>
         <sharding-jdbc-core.version>4.0.0-RC1</sharding-jdbc-core.version>
         <poi.version>3.17</poi.version>
+        <ooxml-schemas.version>1.3</ooxml-schemas.version>
     </properties>
 
     <modules>
@@ -322,6 +323,21 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-excelant</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>ooxml-schemas</artifactId>
+                <version>${ooxml-schemas.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

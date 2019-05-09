@@ -1,24 +1,40 @@
 package com.maxzuo.excel;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.converter.ExcelToHtmlConverter;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.URL;
 
 /**
- * 使用POI克隆Excel表格
+ * 使用POI克隆Excel表格；且将Excel转换成HTML
  * <p>
  * Created by zfh on 2019/05/09
  */
 public class POIReadExcelExample {
 
+    /**
+     * 注意：暂时只支持 *.xls（2003版本文件），不支持 *.xlsx（2007版本文件）
+     */
     public static void main(String[] args) {
         try {
-            URL templateResource = POIReadExcelExample.class.getResource("template/applyTableTemplate.xlsx");
-            cloneExcelFile(templateResource.getFile());
+            URL templateResource = POIReadExcelExample.class.getResource("template/applyTableTemplate.xls");
+
+            // 通过模板克隆Excel
+            String cloneFile = cloneExcelFile(templateResource.getFile());
+            // 将Excel转换成Html
+            String htmlFilePath ="F:\\bulb\\bulb-demo\\applyTableTemplate.html";
+            convertExcelToHtml(cloneFile, htmlFilePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,28 +66,31 @@ public class POIReadExcelExample {
 
     /**
      * 进行模板的克隆，填充克隆后的模板
+     * @return 返回新文件路径
      */
-    private static void cloneExcelFile(String filePath) throws Exception {
-        XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(filePath));
-        XSSFSheet sheet = wb.cloneSheet(0);
+    private static String cloneExcelFile(String filePath) throws Exception {
+        HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(filePath));
+        HSSFSheet sheet = wb.cloneSheet(0);
         wb.setSheetName(0, "Sheet1");
 
+        // 填充数据
         replaceCellValue(sheet);
 
-        // 输出新的Excel
-        String fileName = System.currentTimeMillis() + ".xlsx";
-        OutputStream out = new FileOutputStream("F:\\bulb\\bulb-demo\\" + fileName);
+        // 克隆的Excel
+        String cloneFile = "F:\\bulb\\bulb-demo\\clone-" + System.currentTimeMillis() + ".xls";
+        OutputStream out = new FileOutputStream(cloneFile);
         // 移除workbook中的模板sheet
         wb.removeSheetAt(0);
         wb.write(out);
         out.flush();
         out.close();
+        return cloneFile;
     }
 
     /**
      * 替换单元格
      */
-    private static void replaceCellValue(XSSFSheet sheet) {
+    private static void replaceCellValue(HSSFSheet sheet) {
         // 获取mock的填充数据
         ApplyTableExcelVO excelVO = mockFillData();
         sheet.getRow(1).getCell(1).setCellValue(excelVO.getCompany());
@@ -334,5 +353,31 @@ public class POIReadExcelExample {
                     ", financial='" + financial + '\'' +
                     '}';
         }
+    }
+
+    /**
+     * 将Excel转html
+     * @param excelFilePath excel文件路径
+     * @param htmlFilePath  生成的HTML文件路径
+     */
+    private static void convertExcelToHtml (String excelFilePath, String htmlFilePath) throws Exception {
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook(new FileInputStream(excelFilePath));
+        // 不显示顶部Sheet标题
+        hssfWorkbook.setSheetName(0, " ");
+        ExcelToHtmlConverter converter = new ExcelToHtmlConverter(DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
+        converter.setOutputColumnHeaders(false);
+        converter.setOutputRowNumbers(false);
+        converter.processWorkbook(hssfWorkbook);
+
+        StringWriter  writer = new StringWriter();
+        Transformer serializer = TransformerFactory.newInstance().newTransformer();
+        serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+        serializer.setOutputProperty(OutputKeys.METHOD, "html");
+        serializer.transform(new DOMSource(converter.getDocument()), new StreamResult(writer));
+
+        FileOutputStream out = new FileOutputStream(htmlFilePath);
+        out.write(writer.toString().getBytes("UTF-8"));
+        out.flush();
     }
 }
